@@ -11,8 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import org.fxmisc.richtext.StyleClassedTextArea;
 
 
@@ -23,6 +23,7 @@ public class MainView implements ViewInterface{
     private Presenter presenter = null;
     private StyleClassedTextArea area;
     private VBox layout;
+    private StyleClassedTextArea choiceField;
 
     /**
      * Initializing main layout and text area
@@ -48,11 +49,14 @@ public class MainView implements ViewInterface{
     /**
      * Initializing text area
      */
-    private void initTextField(){
+    private StyleClassedTextArea initTextField(){
         area.setWrapText(true);
         area.setEditable(false);
-        area.setPadding(new Insets(30, 15, 15, 30));
+        area.setPadding(new Insets(10, 10, 10, 10));
         area.setPrefSize(700, 400);
+        area.setBorder(new Border(new BorderStroke(
+                Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY, BorderWidths.DEFAULT
+        )));
 
         //Setting pop-up menu, which will offer user select one of Means of expressiveness
         ContextMenu menu = initContextMenu();
@@ -63,6 +67,7 @@ public class MainView implements ViewInterface{
             }
         });
 
+        return area;
     }
 
     /**
@@ -79,7 +84,7 @@ public class MainView implements ViewInterface{
             item.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    System.out.println(area.getSelectedText() + " is " + item.getText());
+                    choiceField.appendText(item.getText().toUpperCase() + " is\n" + area.getSelectedText().trim() + "\n\n");
                 }
             });
             menu.getItems().add(item);
@@ -94,10 +99,12 @@ public class MainView implements ViewInterface{
      * TextArea, button to show text
      */
     private void initWindow(){
-        initTextField();
+        area = initTextField();
+        choiceField = initChoiceTextField();
         HBox textBox = new HBox(15);
+        textBox.setPadding(new Insets(30, 30, 30, 30));
 
-        textBox.getChildren().add(area);
+        textBox.getChildren().addAll(area, choiceField);
         layout.getChildren().add(textBox);
 
         HBox buttonsBox = new HBox(15);
@@ -111,6 +118,25 @@ public class MainView implements ViewInterface{
         buttonsBox.getChildren().add(bGetText);
 
         layout.getChildren().add(buttonsBox);
+    }
+
+    /**
+     * Initializing text file where will display user's choice
+     * @return
+     */
+    private StyleClassedTextArea initChoiceTextField() {
+        choiceField = new StyleClassedTextArea();
+
+        choiceField.setMinWidth(300);
+        choiceField.setMinHeight(300);
+        choiceField.setWrapText(true);
+        choiceField.setEditable(false);
+        choiceField.setPadding(new Insets(10, 10, 10, 10));
+        choiceField.setBorder(new Border(new BorderStroke(
+                Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY, BorderWidths.DEFAULT
+        )));
+
+        return choiceField;
     }
 
     private void getTextFromPresenter(){
