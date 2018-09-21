@@ -39,6 +39,7 @@ public class LessonsView implements ViewInterface{
      * Getting the layout to put it into Stage
      * @return
      */
+    @Override
     public VBox getLayout(){
         initWindow();
 
