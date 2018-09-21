@@ -18,7 +18,7 @@ public class Main extends Application {
         LogInView view = new LogInView(presenter);
         presenter.setView(view);
 
-        primaryStage.setTitle("Linguistic project");
+        primaryStage.setTitle("Log in");
 
         Scene scene = new Scene(view.getLogInView());
         primaryStage.setScene(scene);
