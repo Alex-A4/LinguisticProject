@@ -20,7 +20,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("Log in");
 
-        Scene scene = new Scene(view.getLogInView());
+        Scene scene = new Scene(view.getLayout());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
