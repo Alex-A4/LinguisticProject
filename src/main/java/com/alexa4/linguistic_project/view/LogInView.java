@@ -25,7 +25,12 @@ public class LogInView implements ViewInterface{
         this.presenter = presenter;
     }
 
-    public VBox getLogInView(){
+    /**
+     * Return the layout which will set to stage
+     * @return the layout of this window
+     */
+    @Override
+    public VBox getLayout(){
         VBox layout = new VBox(20);
         layout.setPadding(new Insets(20, 20, 20,20));
         layout.setAlignment(Pos.CENTER);
@@ -40,10 +45,15 @@ public class LogInView implements ViewInterface{
         return layout;
     }
 
+    /**
+     * Initializing box with buttons
+     * @return the box with buttons
+     */
     private HBox initButtonBox() {
         HBox mButtonBox = new HBox(20);
         mButtonBox.setAlignment(Pos.CENTER);
 
+        //Button sign in if user was not registered
         Label mHaveAccount = new Label("Have no account?");
         mHaveAccount.setTextFill(Paint.valueOf("#0000AF"));
         mHaveAccount.setCursor(Cursor.CLOSED_HAND);
@@ -55,7 +65,8 @@ public class LogInView implements ViewInterface{
         });
 
 
-        Button mSignInButton = new Button("Sign in");
+        //Button to log in account
+        Button mSignInButton = new Button("Log in");
         mSignInButton.setTextFill(Paint.valueOf("#ffffff"));
         mSignInButton.setStyle("-fx-background-color: #28A745;");
         mSignInButton.setFont(new Font(14));
@@ -87,6 +98,13 @@ public class LogInView implements ViewInterface{
         return mButtonBox;
     }
 
+
+    /**
+     * Call Dialog Alert if something happens
+     * @param title the title of Alert
+     * @param header the header of Alert
+     * @param content the content text of Alert
+     */
     private void callAlert(String title, String header, String content){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -96,6 +114,11 @@ public class LogInView implements ViewInterface{
         alert.showAndWait();
     }
 
+
+    /**
+     * Initializing box with welcome label
+     * @return
+     */
     private HBox initTopLabel() {
         HBox labelBox = new HBox(15);
         labelBox.setAlignment(Pos.CENTER);
@@ -108,6 +131,11 @@ public class LogInView implements ViewInterface{
     }
 
 
+
+    /**
+     * Initializing grid pane with fields to write login and password
+     * @return
+     */
     private GridPane initGridPane(){
         GridPane pane = new GridPane();
         pane.setHgap(10);
@@ -117,6 +145,7 @@ public class LogInView implements ViewInterface{
         Label mLUserName = new Label("User login:");
         mLUserName.setFont(new Font(13));
 
+        //Text field to enter login
         mTaUserSecondName = new TextArea("");
         mTaUserSecondName.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -133,9 +162,11 @@ public class LogInView implements ViewInterface{
         mTaUserSecondName.setWrapText(true);
         mTaUserSecondName.setTooltip(new Tooltip("Enter your login"));
 
+
         Label mLUserPassword = new Label("Password:");
         mLUserPassword.setFont(new Font(13));
 
+        //Text field to enter password
         mPfPassword = new PasswordField();
         mPfPassword.setMaxWidth(200);
         mPfPassword.setTooltip(new Tooltip("Enter your password"));
@@ -149,16 +180,26 @@ public class LogInView implements ViewInterface{
     }
 
 
+    /**
+     * Reaction on positive logging
+     */
     @Override
     public void logIn() {
         presenter.startLessonsView();
     }
 
+    /**
+     * Reaction on negative logging
+     */
     @Override
     public void logInError() {
         callAlert("Logging error", "This account does'nt exist", "Check your data and try again");
     }
 
+
+    /**
+     * Detach presenter from the view
+     */
     @Override
     public void detachPresenter() {
         presenter = null;
