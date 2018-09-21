@@ -87,6 +87,16 @@ public class Model {
         return nonMarkedText;
     }
 
+    public interface LogInCallback{
+        void sendLogInResponse(boolean response);
+    }
+
+    public void tryToLogIn(String userName, String userPassword, LogInCallback callback) {
+        if (userName.length() % 2 == 0)
+            callback.sendLogInResponse(true);
+        else callback.sendLogInResponse(false);
+    }
+
 
 
 }
