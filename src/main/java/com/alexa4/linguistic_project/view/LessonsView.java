@@ -19,7 +19,7 @@ import org.fxmisc.richtext.StyleClassedTextArea;
 /**
  * Class is responsible for displaying window
  */
-public class MainView implements ViewInterface{
+public class WorkView implements ViewInterface{
     private Presenter presenter = null;
     private StyleClassedTextArea area;
     private VBox layout;
@@ -29,7 +29,7 @@ public class MainView implements ViewInterface{
      * Initializing main layout and text area
      * @param presenter
      */
-    public MainView(Presenter presenter){
+    public WorkView(Presenter presenter){
         this.presenter = presenter;
         area = new StyleClassedTextArea();
         layout = new VBox(15);
