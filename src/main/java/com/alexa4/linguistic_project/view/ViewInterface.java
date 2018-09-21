@@ -1,5 +1,7 @@
 package com.alexa4.linguistic_project.view;
 
+import javafx.scene.Parent;
+
 /**
  * Interface needs to flexible connecting between presenter and view
  */
@@ -24,4 +26,8 @@ public interface ViewInterface {
      * Detach presenter from view to lost link
      */
     default void detachPresenter(){}
+
+
+    default Parent getLayout(){return new Parent() {
+    };}
 }
