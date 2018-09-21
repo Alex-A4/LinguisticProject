@@ -66,6 +66,6 @@ public class Presenter {
     public void startLessonsView(){
         view.detachPresenter();
         view = new LessonsView(this);
-        stage.setScene(new Scene(((LessonsView) view).getLayout()));
+        stage.setScene(new Scene(view.getLayout()));
     }
 }
