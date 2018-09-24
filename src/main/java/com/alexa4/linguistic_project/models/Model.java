@@ -9,6 +9,12 @@ import java.util.Scanner;
 
 public class Model {
 
+    private String currentUserName;
+
+    public String getCurrentUserName() {
+        return currentUserName;
+    }
+
     /**
      * LIst of means of expressiveness
      */
@@ -87,16 +93,51 @@ public class Model {
         return nonMarkedText;
     }
 
+    /**
+     * Send response to presenter was the log in successful or not
+     */
     public interface LogInCallback{
         void sendLogInResponse(boolean response);
     }
 
+
+    /**
+     * Trying to log in user if account contains in DB.
+     * If success then set currentUserName and send response
+     * @param userName the user name
+     * @param userPassword the user password
+     * @param callback the callback to send response to presenter
+     */
     public void tryToLogIn(String userName, String userPassword, LogInCallback callback) {
-        if (userName.length() % 2 == 0)
+        if (userName.length() % 2 == 0) {
+            currentUserName = userName;
             callback.sendLogInResponse(true);
+        }
         else callback.sendLogInResponse(false);
     }
 
+    /**
+     * Send response to presenter was the sign in successful or not
+     */
+    public interface SignInCallback {
+        void sendSignInResponse(boolean response);
+    }
+
+
+    /**
+     * Trying to sign up new account.
+     * If success then set currentUserName and send response
+     * @param userName the user name
+     * @param userPassword the user password
+     * @param callback the callback to send response to presenter
+     */
+    public void tryToSignIn(String userName, String userPassword, SignInCallback callback) {
+        if (userName.length() % 2 == 0) {
+            currentUserName = userName;
+            callback.sendSignInResponse(true);
+        }
+        else callback.sendSignInResponse(false);
+    }
 
 
 }
