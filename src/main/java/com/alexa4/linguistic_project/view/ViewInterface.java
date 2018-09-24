@@ -23,11 +23,23 @@ public interface ViewInterface {
     default void logInError(){}
 
     /**
-     * Detach presenter from view to lost link
+     * Default method to detach presenter from view to lost link
      */
-    default void detachPresenter(){}
+    void detachPresenter();
 
+    /**
+     * Call view method if sign in response is true
+     */
+    default void signIn(){}
 
-    default Parent getLayout(){return new Parent() {
-    };}
+    /**
+     * Call view method if sign in response is false
+     */
+    default void signInError(){}
+
+    /**
+     * Default method to get basic layout
+     * @return
+     */
+    Parent getLayout();
 }
