@@ -1,6 +1,7 @@
 package com.alexa4.linguistic_project.presenter;
 
 import com.alexa4.linguistic_project.models.Model;
+import com.alexa4.linguistic_project.view.SignInView;
 import com.alexa4.linguistic_project.view.ViewInterface;
 import com.alexa4.linguistic_project.view.LessonsView;
 import javafx.scene.Scene;
@@ -44,6 +45,7 @@ public class Presenter {
 
     /**
      * Trying to login by check does this account contains in DataBase
+     * If success then notify view about it
      * @param userName the name of user account
      * @param userPassword the password of user account
      * @return is this account contains in DB
@@ -61,11 +63,37 @@ public class Presenter {
 
 
     /**
+     * Trying to sign in new account in DB
+     * If success then notify view about it
+     */
+    public void tryToSignIn(String userName, String userPassword){
+        model.tryToSignIn(userName, userPassword, new Model.SignInCallback() {
+            @Override
+            public void sendSignInResponse(boolean response) {
+                if (response)
+                    view.signIn();
+                else view.signInError();
+            }
+        });
+    }
+
+
+    /**
      * Starting lessonsView which needs to work
      */
     public void startLessonsView(){
         view.detachPresenter();
         view = new LessonsView(this);
+        stage.setScene(new Scene(view.getLayout()));
+    }
+
+
+    /**
+     * Starting signInView which needs to sign up new user
+     */
+    public void startSignInView(){
+        view.detachPresenter();
+        view = new SignInView(this);
         stage.setScene(new Scene(view.getLayout()));
     }
 }
