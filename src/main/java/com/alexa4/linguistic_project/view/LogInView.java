@@ -53,14 +53,14 @@ public class LogInView implements ViewInterface{
         HBox mButtonBox = new HBox(20);
         mButtonBox.setAlignment(Pos.CENTER);
 
-        //Button sign in if user was not registered
+        //Button sign in if user was not registered, will start new View to sign up new user
         Label mHaveAccount = new Label("Have no account?");
         mHaveAccount.setTextFill(Paint.valueOf("#0000AF"));
         mHaveAccount.setCursor(Cursor.CLOSED_HAND);
         mHaveAccount.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("YOU CLICKED!!!");
+                presenter.startSignInView();
             }
         });
 
