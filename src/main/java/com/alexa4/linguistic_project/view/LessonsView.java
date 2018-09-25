@@ -3,7 +3,6 @@ package com.alexa4.linguistic_project.view;
 import com.alexa4.linguistic_project.models.Model;
 import com.alexa4.linguistic_project.presenter.Presenter;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,8 +16,6 @@ import javafx.scene.paint.Paint;
 import org.fxmisc.richtext.StyleClassedTextArea;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 
 /**
