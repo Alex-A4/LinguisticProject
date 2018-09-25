@@ -3,17 +3,22 @@ package com.alexa4.linguistic_project.view;
 import com.alexa4.linguistic_project.models.Model;
 import com.alexa4.linguistic_project.presenter.Presenter;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import org.fxmisc.richtext.StyleClassedTextArea;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
@@ -100,13 +105,17 @@ public class LessonsView implements ViewInterface{
      * TextArea, button to show text
      */
     private void initWindow(){
-        area = initTextField();
-        choiceField = initChoiceTextField();
+        HBox mHatBox = initHatBox();
+
         HBox textBox = new HBox(15);
         textBox.setPadding(new Insets(30, 30, 30, 30));
 
+        area = initTextField();
+        choiceField = initChoiceTextField();
+
+
         textBox.getChildren().addAll(area, choiceField);
-        layout.getChildren().add(textBox);
+        layout.getChildren().addAll(mHatBox, textBox);
 
         HBox buttonsBox = new HBox(15);
         buttonsBox.setAlignment(Pos.CENTER_RIGHT);
@@ -119,6 +128,34 @@ public class LessonsView implements ViewInterface{
         buttonsBox.getChildren().add(bGetText);
 
         layout.getChildren().add(buttonsBox);
+    }
+
+    private HBox initHatBox() {
+        HBox mHatBox = new HBox(20);
+        mHatBox.setAlignment(Pos.CENTER_RIGHT);
+        mHatBox.setPadding(new Insets(10, 30, 0, 30));
+
+        System.out.println(new File("").getAbsolutePath() + "/src/main/resources/defaultUserIcon.jpg");
+
+
+        ImageView mImageView = new ImageView();
+        Image  image = null;
+        try {
+            File way = new File(new File("").getAbsolutePath() + "/src/main/resources/defaultUserIcon.jpg");
+            image = new Image(way.toURI().toURL().toString());
+        } catch (Exception e) {
+            callAlert("Read exception", "File not found", "The user\'s icon won\'t be display");
+        }
+        mImageView.setImage(image);
+        mImageView.setFitWidth(24);
+        mImageView.setFitHeight(24);
+
+        Label mUserNameLabel = new Label();
+        mUserNameLabel.setText(presenter.getUserName());
+
+        mHatBox.getChildren().addAll(mImageView, mUserNameLabel);
+
+        return mHatBox;
     }
 
     /**
@@ -142,6 +179,22 @@ public class LessonsView implements ViewInterface{
 
     private void getTextFromPresenter(){
         presenter.getText();
+    }
+
+
+    /**
+     * Call Dialog Alert if something happens
+     * @param title the title of Alert
+     * @param header the header of Alert
+     * @param content the content text of Alert
+     */
+    private void callAlert(String title, String header, String content){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        if (header != null)
+            alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     /**
