@@ -15,7 +15,7 @@ import javafx.scene.text.Font;
 
 public class SignInView implements ViewInterface {
     private Presenter presenter;
-    private TextArea mTaUserSecondName;
+    private TextField mTaUserSecondName;
     private PasswordField mPfPassword;
     private PasswordField mPfConfirmPassword;
 
@@ -131,7 +131,7 @@ public class SignInView implements ViewInterface {
         mLUserName.setFont(new Font(13));
 
         //Text field to enter login
-        mTaUserSecondName = new TextArea("");
+        mTaUserSecondName = new TextField("");
         mTaUserSecondName.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -144,7 +144,6 @@ public class SignInView implements ViewInterface {
         mTaUserSecondName.setMaxWidth(200);
         mTaUserSecondName.setFont(new Font(13));
         mTaUserSecondName.setPrefHeight(10);
-        mTaUserSecondName.setWrapText(true);
         mTaUserSecondName.setTooltip(new Tooltip("Enter your login"));
 
 
