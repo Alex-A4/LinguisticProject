@@ -43,6 +43,11 @@ public class Presenter {
         view.setText(model.getText());
     }
 
+    public String getUserName(){
+        return model.getCurrentUserName();
+    }
+
+
     /**
      * Trying to login by check does this account contains in DataBase
      * If success then notify view about it
