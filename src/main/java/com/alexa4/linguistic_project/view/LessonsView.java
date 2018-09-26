@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import org.fxmisc.richtext.StyleClassedTextArea;
 
 import java.io.File;
@@ -25,7 +26,7 @@ public class LessonsView implements ViewInterface{
     private Presenter presenter = null;
     private StyleClassedTextArea area;
     private VBox layout;
-    private StyleClassedTextArea choiceField;
+    private VBox choiceField;
 
     /**
      * Initializing main layout and text area
@@ -58,7 +59,8 @@ public class LessonsView implements ViewInterface{
         area.setPadding(new Insets(10, 10, 10, 10));
         area.setPrefSize(700, 400);
         area.setBorder(new Border(new BorderStroke(
-                Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY, BorderWidths.DEFAULT
+                Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY,
+                BorderWidths.DEFAULT
         )));
 
         //Setting pop-up menu, which will offer user select one of Means of expressiveness
@@ -66,7 +68,8 @@ public class LessonsView implements ViewInterface{
         area.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
             public void handle(ContextMenuEvent event) {
-                menu.show(area, event.getScreenX(), event.getScreenY());
+                menu.show(area, event.getScreenX(),
+                        event.getScreenY());
             }
         });
 
@@ -87,7 +90,17 @@ public class LessonsView implements ViewInterface{
             item.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    choiceField.appendText(item.getText().toUpperCase() + " is\n" + area.getSelectedText().trim() + "\n\n");
+                    Text textMeans = new Text();
+                    textMeans.setText(item.getText().toUpperCase() +
+                            " is\n");
+                    textMeans.setWrappingWidth(choiceField.getWidth()-30);
+                    textMeans.setFill(presenter.getTextColors());
+
+                    Text userSelectedText = new Text();
+                    userSelectedText.setText(area.getSelectedText().trim() + "\n");
+                    userSelectedText.setWrappingWidth(choiceField.getWidth()-30);
+
+                    choiceField.getChildren().addAll(textMeans, userSelectedText);
                 }
             });
             menu.getItems().add(item);
@@ -108,10 +121,18 @@ public class LessonsView implements ViewInterface{
         textBox.setPadding(new Insets(30, 30, 30, 30));
 
         area = initTextField();
-        choiceField = initChoiceTextField();
+        choiceField = initChoiceVBox();
+        ScrollPane choicePane = new ScrollPane();
+        choicePane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        choicePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        choicePane.setContent(choiceField);
+        choicePane.setBorder(new Border(new BorderStroke(
+                Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY,
+                BorderWidths.DEFAULT
+        )));
 
 
-        textBox.getChildren().addAll(area, choiceField);
+        textBox.getChildren().addAll(area, choicePane);
         layout.getChildren().addAll(mHatBox, textBox);
 
         HBox buttonsBox = new HBox(15);
@@ -132,16 +153,15 @@ public class LessonsView implements ViewInterface{
         mHatBox.setAlignment(Pos.CENTER_RIGHT);
         mHatBox.setPadding(new Insets(10, 30, 0, 30));
 
-        System.out.println(new File("").getAbsolutePath() + "/src/main/resources/defaultUserIcon.jpg");
-
-
         ImageView mImageView = new ImageView();
         Image  image = null;
         try {
-            File way = new File(new File("").getAbsolutePath() + "/src/main/resources/defaultUserIcon.jpg");
+            File way = new File(new File("").getAbsolutePath() +
+                    "/src/main/resources/defaultUserIcon.jpg");
             image = new Image(way.toURI().toURL().toString());
         } catch (Exception e) {
-            callAlert("Read exception", "File not found", "The user\'s icon won\'t be display");
+            callAlert("Read exception", "File not found",
+                    "The user\'s icon won\'t be display");
         }
         mImageView.setImage(image);
         mImageView.setFitWidth(24);
@@ -159,17 +179,12 @@ public class LessonsView implements ViewInterface{
      * Initializing text file where will display user's choice
      * @return
      */
-    private StyleClassedTextArea initChoiceTextField() {
-        choiceField = new StyleClassedTextArea();
+    private VBox initChoiceVBox() {
+        choiceField = new VBox();
 
-        choiceField.setMinWidth(300);
-        choiceField.setMinHeight(300);
-        choiceField.setWrapText(true);
-        choiceField.setEditable(false);
+        choiceField.setPrefWidth(300);
+
         choiceField.setPadding(new Insets(10, 10, 10, 10));
-        choiceField.setBorder(new Border(new BorderStroke(
-                Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY, BorderWidths.DEFAULT
-        )));
 
         return choiceField;
     }
