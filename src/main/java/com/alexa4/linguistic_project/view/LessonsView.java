@@ -165,9 +165,10 @@ public class LessonsView implements ViewInterface{
         HBox mHatBox = initHatBox();
 
         HBox textBox = new HBox(15);
-        textBox.setPadding(new Insets(30, 30, 30, 30));
+        textBox.setPadding(new Insets(0, 30, 30, 30));
 
         area = initTextField();
+
         choiceField = initChoiceVBox();
         ScrollPane choicePane = new ScrollPane();
         choicePane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
