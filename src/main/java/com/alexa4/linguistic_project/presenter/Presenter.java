@@ -5,6 +5,7 @@ import com.alexa4.linguistic_project.view.SignInView;
 import com.alexa4.linguistic_project.view.ViewInterface;
 import com.alexa4.linguistic_project.view.LessonsView;
 import javafx.scene.Scene;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 /**
@@ -45,6 +46,10 @@ public class Presenter {
 
     public String getUserName(){
         return model.getCurrentUserName();
+    }
+
+    public Paint getTextColors() {
+        return model.getRandomTextColors();
     }
 
 
