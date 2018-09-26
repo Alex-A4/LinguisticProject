@@ -11,14 +11,32 @@ import java.util.Scanner;
 
 public class Model {
 
+    //Current user name
     private String currentUserName;
 
+
+    //Map contains text, which user select
+    //Key is a means of choice, value is a list with texts which user select
+    private HashMap<String, ArrayList<String>> userChoiceList;
+
+
+    /**
+     * Getter of current user name
+     * @return the current user name
+     */
     public String getCurrentUserName() {
         return currentUserName;
     }
 
+
+    public Model() {
+        userChoiceList = new HashMap<>();
+    }
+
+
     /**
      * LIst of means of expressiveness
+     * text field is a parameter which need to display means in text form
      */
     public enum MeansOfExpressiveness{
         METAPHOR ("metaphor"),
@@ -50,6 +68,7 @@ public class Model {
             return text;
         }
     }
+
 
 
     //Text with the markers of means
@@ -175,5 +194,23 @@ public class Model {
         else callback.sendSignInResponse(false);
     }
 
+
+
+
+    /**
+     * Add user's choice to collection
+     * @param means the means which user choose
+     * @param text the text which user select
+     */
+    public void setUserChoice(String means, String text) {
+        if (userChoiceList.containsKey(means))
+            userChoiceList.get(means).add(text);
+        else {
+            ArrayList<String> temp = new ArrayList<>();
+            temp.add(text);
+            userChoiceList.put(means, temp);
+        }
+        System.out.println(userChoiceList);
+    }
 
 }
