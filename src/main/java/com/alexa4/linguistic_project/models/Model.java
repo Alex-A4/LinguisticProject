@@ -123,7 +123,6 @@ public class Model {
         String color = "";
         for (int i = 0; i < 6; i++)
             color = color.concat(getNextColorChar());
-        System.out.println("#" + color);
 
         return Paint.valueOf("#" + color);
     }
@@ -210,7 +209,19 @@ public class Model {
             temp.add(text);
             userChoiceList.put(means, temp);
         }
-        System.out.println(userChoiceList);
+    }
+
+    /**
+     * Delete user choice from collection
+     * @param means the removable means
+     * @param text the removable text
+     */
+    public void deleteUserChoice(String means, String text) {
+        ArrayList<String> temp = userChoiceList.get(means);
+        for (int i = 0; i < temp.size(); i++) {
+            if (temp.get(i).equals(text))
+                temp.remove(i);
+        }
     }
 
 }
