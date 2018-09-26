@@ -1,10 +1,12 @@
 package com.alexa4.linguistic_project.models;
 
 import com.alexa4.linguistic_project.adapters.TextAdapter;
+import javafx.scene.paint.Paint;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Model {
@@ -93,13 +95,45 @@ public class Model {
         return nonMarkedText;
     }
 
+
+    /**
+     * Get random color which will set somewhere
+     * @return new color
+     */
+    public Paint getRandomTextColors() {
+        String color = "";
+        for (int i = 0; i < 6; i++)
+            color = color.concat(getNextColorChar());
+        System.out.println("#" + color);
+
+        return Paint.valueOf("#" + color);
+    }
+
+    /**
+     * Generate color char from 0 to f in dex
+     * @return next color char
+     */
+    private String getNextColorChar() {
+        Random colorRandom = new Random();
+        int nextColor = colorRandom.nextInt(256);
+        switch (nextColor%16) {
+            case 10: return "a";
+            case 11: return "b";
+            case 12: return "c";
+            case 13: return "d";
+            case 14: return "e";
+            case 15: return "f";
+            default: return String.valueOf(nextColor%16);
+        }
+    }
+
+
     /**
      * Send response to presenter was the log in successful or not
      */
     public interface LogInCallback{
         void sendLogInResponse(boolean response);
     }
-
 
     /**
      * Trying to log in user if account contains in DB.
@@ -116,13 +150,15 @@ public class Model {
         else callback.sendLogInResponse(false);
     }
 
+
+
+
     /**
      * Send response to presenter was the sign in successful or not
      */
     public interface SignInCallback {
         void sendSignInResponse(boolean response);
     }
-
 
     /**
      * Trying to sign up new account.
