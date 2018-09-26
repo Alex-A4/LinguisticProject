@@ -61,7 +61,7 @@ public class LessonsView implements ViewInterface{
         area.setWrapText(true);
         area.setEditable(false);
         area.setPadding(new Insets(10, 10, 10, 10));
-        area.setPrefSize(700, 400);
+        area.setPrefSize(600, 400);
         area.setBorder(new Border(new BorderStroke(
                 Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY,
                 BorderWidths.DEFAULT
