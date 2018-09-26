@@ -99,6 +99,8 @@ public class LessonsView implements ViewInterface{
                     Text userSelectedText = new Text();
                     userSelectedText.setText(area.getSelectedText().trim() + "\n");
                     userSelectedText.setWrappingWidth(choiceField.getWidth()-30);
+                    
+                    presenter.setUserChoice(item.getText(), area.getSelectedText());
 
                     choiceField.getChildren().addAll(textMeans, userSelectedText);
                 }
