@@ -106,4 +106,15 @@ public class Presenter {
         view = new SignInView(this);
         stage.setScene(new Scene(view.getLayout()));
     }
+
+
+
+    /**
+     * Add user's choice of means to model container
+     * @param means the means of expressiveness that user choose
+     * @param text the text which user select
+     */
+    public void setUserChoice(String means, String text) {
+        model.setUserChoice(means, text);
+    }
 }
