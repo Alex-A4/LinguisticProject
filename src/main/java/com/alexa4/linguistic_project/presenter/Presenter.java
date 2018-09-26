@@ -117,4 +117,13 @@ public class Presenter {
     public void setUserChoice(String means, String text) {
         model.setUserChoice(means, text);
     }
+
+    /**
+     * Delete user's choice of means from model's container
+     * @param means the means which need delete
+     * @param text the text which need delete
+     */
+    public void deleteUserChoice(String means, String text) {
+        model.deleteUserChoice(means, text);
+    }
 }
