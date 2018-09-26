@@ -7,12 +7,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.fxmisc.richtext.StyleClassedTextArea;
 
@@ -27,6 +29,8 @@ public class LessonsView implements ViewInterface{
     private StyleClassedTextArea area;
     private VBox layout;
     private VBox choiceField;
+
+    private int CHOICE_FIELD_WIDTH = 350;
 
     /**
      * Initializing main layout and text area
@@ -87,22 +91,63 @@ public class LessonsView implements ViewInterface{
             //Initializing menuItem with title of Means. First character is in up case
             MenuItem item = new MenuItem(means.getText().substring(0, 1)
                     .toUpperCase().concat(means.getText().substring(1)));
+            //If user choose some selected text, then add he's choice to choiceField and to collection
             item.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
+                    /**
+                     * Make new record box which contains:
+                     * ------------------------------
+                     * textMeans        |  Button X |
+                     * userSelectedText |           |
+                     * ------------------------------
+                     */
+                    HBox newRecordBox = new HBox(10);
+                    newRecordBox.setAlignment(Pos.CENTER_LEFT);
+
                     Text textMeans = new Text();
-                    textMeans.setText(item.getText().toUpperCase() +
-                            " is\n");
-                    textMeans.setWrappingWidth(choiceField.getWidth()-30);
+                    Text userSelectedText = new Text();
+
+                    //Button X will delete current box from list
+                    Button deleteRecordButton = new Button("X");
+                    deleteRecordButton.setStyle("-fx-background-color: #00000000;");
+                    deleteRecordButton.setCursor(Cursor.CLOSED_HAND);
+                    deleteRecordButton.setTextFill(Paint.valueOf("#ff0000"));
+                    deleteRecordButton.setFont(new Font(20));
+
+                    //If user pressed X button, then delete this box and delete user's choice
+                    //which connect with that record
+                    deleteRecordButton.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            presenter.deleteUserChoice(item.getText().toLowerCase(),
+                                    userSelectedText.getText());
+                            choiceField.getChildren().remove(newRecordBox);
+                        }
+                    });
+
+
+                    //Box with means name and with text which user selected
+                    VBox textBox = new VBox();
+
+                    //textMeans will display which means of expressiveness user select
+                    textMeans.setText("\n" + item.getText().toUpperCase() +
+                            " is");
+                    textMeans.setWrappingWidth(CHOICE_FIELD_WIDTH-70);
                     textMeans.setFill(presenter.getTextColors());
 
-                    Text userSelectedText = new Text();
-                    userSelectedText.setText(area.getSelectedText().trim() + "\n");
-                    userSelectedText.setWrappingWidth(choiceField.getWidth()-30);
-                    
-                    presenter.setUserChoice(item.getText(), area.getSelectedText());
+                    //userSelectedText will display which text user select
+                    userSelectedText.setWrappingWidth(CHOICE_FIELD_WIDTH-70);
+                    userSelectedText.setText(area.getSelectedText().trim());
 
-                    choiceField.getChildren().addAll(textMeans, userSelectedText);
+                    textBox.getChildren().addAll(textMeans, userSelectedText);
+                    newRecordBox.getChildren().addAll(textBox, deleteRecordButton);
+
+                    //Add current text to collection
+                    presenter.setUserChoice(item.getText().toLowerCase(), area.getSelectedText());
+
+                    //Add current box to view
+                    choiceField.getChildren().addAll(newRecordBox);
                 }
             });
             menu.getItems().add(item);
@@ -184,7 +229,8 @@ public class LessonsView implements ViewInterface{
     private VBox initChoiceVBox() {
         choiceField = new VBox();
 
-        choiceField.setPrefWidth(300);
+        choiceField.setPrefWidth(CHOICE_FIELD_WIDTH);
+        choiceField.setMaxWidth(CHOICE_FIELD_WIDTH);
 
         choiceField.setPadding(new Insets(10, 10, 10, 10));
 
