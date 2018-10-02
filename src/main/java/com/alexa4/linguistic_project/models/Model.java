@@ -121,7 +121,7 @@ public class Model {
      * Get random color which will set somewhere
      * @return new color
      */
-    public Paint getRandomTextColors() {
+    public Paint getRandomColor() {
         String color = "";
         for (int i = 0; i < 6; i++)
             color = color.concat(getNextColorChar());

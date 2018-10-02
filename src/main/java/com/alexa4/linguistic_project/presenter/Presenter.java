@@ -53,7 +53,7 @@ public class Presenter {
     }
 
     public Paint getTextColors() {
-        return model.getRandomTextColors();
+        return model.getRandomColor();
     }
 
 
