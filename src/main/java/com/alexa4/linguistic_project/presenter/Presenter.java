@@ -48,6 +48,10 @@ public class Presenter {
         return model.getCurrentUserName();
     }
 
+    public int getUserMode() {
+        return model.getCurrentUserMode();
+    }
+
     public Paint getTextColors() {
         return model.getRandomTextColors();
     }
