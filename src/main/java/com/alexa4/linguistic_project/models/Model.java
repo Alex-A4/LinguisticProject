@@ -1,6 +1,7 @@
 package com.alexa4.linguistic_project.models;
 
 import com.alexa4.linguistic_project.adapters.TextAdapter;
+import com.alexa4.linguistic_project.data_stores.User;
 import javafx.scene.paint.Paint;
 
 import java.io.File;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 public class Model {
 
     //Current user name
-    private String currentUserName;
+    private User currentUser;
 
 
     //Map contains text, which user select
@@ -25,7 +26,7 @@ public class Model {
      * @return the current user name
      */
     public String getCurrentUserName() {
-        return currentUserName;
+        return currentUser.getUserName();
     }
 
 
@@ -162,7 +163,7 @@ public class Model {
      */
     public void tryToLogIn(String userName, String userPassword, LogInCallback callback) {
         if (userName.length() % 2 == 0) {
-            currentUserName = userName;
+            currentUser = new User(userName, User.STUDENT_MODE);
             callback.sendLogInResponse(true);
         }
         else callback.sendLogInResponse(false);
@@ -187,7 +188,7 @@ public class Model {
      */
     public void tryToSignIn(String userName, String userPassword, SignInCallback callback) {
         if (userName.length() % 2 == 0) {
-            currentUserName = userName;
+            currentUser = new User(userName, User.STUDENT_MODE);
             callback.sendSignInResponse(true);
         }
         else callback.sendSignInResponse(false);
