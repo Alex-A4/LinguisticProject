@@ -29,6 +29,7 @@ public class Model {
         return currentUser.getUserName();
     }
 
+    public int getCurrentUserMode() {return currentUser.getUserMode(); }
 
     public Model() {
         userChoiceList = new HashMap<>();
