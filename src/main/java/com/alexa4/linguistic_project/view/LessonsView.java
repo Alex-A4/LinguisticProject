@@ -1,5 +1,6 @@
 package com.alexa4.linguistic_project.view;
 
+import com.alexa4.linguistic_project.data_stores.User;
 import com.alexa4.linguistic_project.models.Model;
 import com.alexa4.linguistic_project.presenter.Presenter;
 
@@ -69,6 +70,7 @@ public class LessonsView implements ViewInterface{
 
         //Setting pop-up menu, which will offer user select one of Means of expressiveness
         ContextMenu menu = initContextMenu();
+
         area.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
             public void handle(ContextMenuEvent event) {
@@ -87,71 +89,75 @@ public class LessonsView implements ViewInterface{
     private ContextMenu initContextMenu(){
         ContextMenu menu = new ContextMenu();
 
-        for (Model.MeansOfExpressiveness means: Model.MeansOfExpressiveness.values()) {
-            //Initializing menuItem with title of Means. First character is in up case
-            MenuItem item = new MenuItem(means.getText().substring(0, 1)
-                    .toUpperCase().concat(means.getText().substring(1)));
-            //If user choose some selected text, then add he's choice to choiceField and to collection
-            item.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    /**
-                     * Make new record box which contains:
-                     * ------------------------------
-                     * textMeans        |  Button X |
-                     * userSelectedText |           |
-                     * ------------------------------
-                     */
-                    HBox newRecordBox = new HBox(10);
-                    newRecordBox.setAlignment(Pos.CENTER_LEFT);
+            for (Model.MeansOfExpressiveness means : Model.MeansOfExpressiveness.values()) {
+                //Initializing menuItem with title of Means. First character is in up case
+                MenuItem item = new MenuItem(means.getText().substring(0, 1)
+                        .toUpperCase().concat(means.getText().substring(1)));
+                //If user choose some selected text, then add he's choice to choiceField and to collection
+                item.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
 
-                    Text textMeans = new Text();
-                    Text userSelectedText = new Text();
+                        //If selected text is not empty, then display user choice
+                        if (!area.getSelectedText().trim().equals("")) {
+                            /**
+                             * Make new record box which contains:
+                             * ------------------------------
+                             * textMeans        |  Button X |
+                             * userSelectedText |           |
+                             * ------------------------------
+                             */
+                            HBox newRecordBox = new HBox(10);
+                            newRecordBox.setAlignment(Pos.CENTER_LEFT);
 
-                    //Button X will delete current box from list
-                    Button deleteRecordButton = new Button("X");
-                    deleteRecordButton.setStyle("-fx-background-color: #00000000;");
-                    deleteRecordButton.setCursor(Cursor.CLOSED_HAND);
-                    deleteRecordButton.setTextFill(Paint.valueOf("#ff0000"));
-                    deleteRecordButton.setFont(new Font(20));
+                            Text textMeans = new Text();
+                            Text userSelectedText = new Text();
 
-                    //If user pressed X button, then delete this box and delete user's choice
-                    //which connect with that record
-                    deleteRecordButton.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            presenter.deleteUserChoice(item.getText().toLowerCase(),
-                                    userSelectedText.getText());
-                            choiceField.getChildren().remove(newRecordBox);
+                            //Button X will delete current box from list
+                            Button deleteRecordButton = new Button("X");
+                            deleteRecordButton.setStyle("-fx-background-color: #00000000;");
+                            deleteRecordButton.setCursor(Cursor.CLOSED_HAND);
+                            deleteRecordButton.setTextFill(Paint.valueOf("#ff0000"));
+                            deleteRecordButton.setFont(new Font(20));
+
+                            //If user pressed X button, then delete this box and delete user's choice
+                            //which connect with that record
+                            deleteRecordButton.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                    presenter.deleteUserChoice(item.getText().toLowerCase(),
+                                            userSelectedText.getText());
+                                    choiceField.getChildren().remove(newRecordBox);
+                                }
+                            });
+
+
+                            //Box with means name and with text which user selected
+                            VBox textBox = new VBox();
+
+                            //textMeans will display which means of expressiveness user select
+                            textMeans.setText("\n" + item.getText().toUpperCase() +
+                                    " is");
+                            textMeans.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
+                            textMeans.setFill(presenter.getTextColors());
+
+                            //userSelectedText will display which text user select
+                            userSelectedText.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
+                            userSelectedText.setText(area.getSelectedText().trim());
+
+                            textBox.getChildren().addAll(textMeans, userSelectedText);
+                            newRecordBox.getChildren().addAll(textBox, deleteRecordButton);
+
+                            //Add current text to collection
+                            presenter.setUserChoice(item.getText().toLowerCase(), area.getSelectedText());
+
+                            //Add current box to view
+                            choiceField.getChildren().addAll(newRecordBox);
                         }
-                    });
-
-
-                    //Box with means name and with text which user selected
-                    VBox textBox = new VBox();
-
-                    //textMeans will display which means of expressiveness user select
-                    textMeans.setText("\n" + item.getText().toUpperCase() +
-                            " is");
-                    textMeans.setWrappingWidth(CHOICE_FIELD_WIDTH-70);
-                    textMeans.setFill(presenter.getTextColors());
-
-                    //userSelectedText will display which text user select
-                    userSelectedText.setWrappingWidth(CHOICE_FIELD_WIDTH-70);
-                    userSelectedText.setText(area.getSelectedText().trim());
-
-                    textBox.getChildren().addAll(textMeans, userSelectedText);
-                    newRecordBox.getChildren().addAll(textBox, deleteRecordButton);
-
-                    //Add current text to collection
-                    presenter.setUserChoice(item.getText().toLowerCase(), area.getSelectedText());
-
-                    //Add current box to view
-                    choiceField.getChildren().addAll(newRecordBox);
-                }
-            });
-            menu.getItems().add(item);
-        }
+                    }
+                });
+                menu.getItems().add(item);
+            }
 
         return menu;
     }
@@ -196,10 +202,13 @@ public class LessonsView implements ViewInterface{
         layout.getChildren().add(buttonsBox);
     }
 
+    /**
+     * Initializing the hat of window. It contains data about current user and MenuBar
+     * @return the hat of window
+     */
     private HBox initHatBox() {
-        HBox mHatBox = new HBox(20);
-        mHatBox.setAlignment(Pos.CENTER_RIGHT);
-        mHatBox.setPadding(new Insets(10, 30, 0, 30));
+        HBox mUserBox = new HBox(20);
+        mUserBox.setAlignment(Pos.CENTER_RIGHT);
 
         ImageView mImageView = new ImageView();
         Image  image = null;
@@ -216,12 +225,79 @@ public class LessonsView implements ViewInterface{
         mImageView.setFitHeight(24);
 
         Label mUserNameLabel = new Label();
-        mUserNameLabel.setText(presenter.getUserName());
 
-        mHatBox.getChildren().addAll(mImageView, mUserNameLabel);
+        String userMode = presenter.getUserMode() == User.STUDENT_MODE ? "Student:  " : "Teacher:  ";
+        mUserNameLabel.setText(userMode + presenter.getUserName());
+
+        HBox menuBox = initMenuBar();
+
+        mUserBox.getChildren().addAll(mImageView, mUserNameLabel);
+
+        HBox mHatBox = new HBox(10);
+        mHatBox.setPadding(new Insets(10, 30, 0, 30));
+        mHatBox.setHgrow(menuBox, Priority.ALWAYS);
+        mHatBox.setHgrow(mUserBox, Priority.ALWAYS);
+        mHatBox.getChildren().addAll(menuBox, mUserBox);
 
         return mHatBox;
     }
+
+    /**
+     * Creating menu bar
+     * @return the menu bar
+     */
+    private HBox initMenuBar() {
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().add(createTasksMenu());
+        //Create teacher bar if Mode equals to TEACHER_MODE
+        if (presenter.getUserMode() == User.TEACHER_MODE)
+            menuBar.getMenus().add(createTeacherMenu());
+
+
+        HBox barBox = new HBox(5);
+        barBox.setAlignment(Pos.CENTER_LEFT);
+        barBox.getChildren().addAll(menuBar);
+
+        return barBox;
+    }
+
+    /**
+     * Creating menu with tasks
+     * @return
+     */
+    private Menu createTasksMenu() {
+        Menu taskMenu = new Menu("Lessons");
+
+        for (int i = 0; i < 5; i++) {
+            MenuItem item = new MenuItem("Hi there " + i);
+            item.setOnAction(event -> {
+                System.out.println("You clicked " + item.getText());
+            });
+
+            taskMenu.getItems().add(item);
+        }
+
+        return taskMenu;
+    }
+
+
+    /**
+     * Creating menu to check works, ONLY for teacher mode
+     * @return
+     */
+    private Menu createTeacherMenu() {
+        Menu teacherMenu = new Menu("Check works");
+
+        for (int i = 0; i < 5; i++) {
+            MenuItem item = new MenuItem("Test works " + i);
+            item.setOnAction(event -> {
+                System.out.println(item.getText());
+            });
+            teacherMenu.getItems().add(item);
+        }
+        return teacherMenu;
+    }
+    
 
     /**
      * Initializing text file where will display user's choice
