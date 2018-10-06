@@ -1,6 +1,7 @@
 package com.alexa4.linguistic_project.presenter;
 
 import com.alexa4.linguistic_project.models.Model;
+import com.alexa4.linguistic_project.view.FilesRedactor;
 import com.alexa4.linguistic_project.view.SignInView;
 import com.alexa4.linguistic_project.view.ViewInterface;
 import com.alexa4.linguistic_project.view.LessonsView;
@@ -104,6 +105,7 @@ public class Presenter {
     public void startLessonsView(){
         view.detachPresenter();
         view = new LessonsView(this);
+        stage.setTitle("Lessons");
         stage.setScene(new Scene(view.getLayout()));
     }
 
@@ -114,9 +116,16 @@ public class Presenter {
     public void startSignInView(){
         view.detachPresenter();
         view = new SignInView(this);
+        stage.setTitle("Sign in");
         stage.setScene(new Scene(view.getLayout()));
     }
 
+    public void createNewTasksFile() {
+        view.detachPresenter();
+        view = new FilesRedactor(this);
+        stage.setTitle("Tasks redactor");
+        stage.setScene(new Scene(view.getLayout()));
+    }
 
 
     /**
