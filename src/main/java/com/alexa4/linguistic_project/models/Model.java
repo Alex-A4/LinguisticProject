@@ -34,6 +34,10 @@ public class Model {
         readAllFiles();
     }
 
+    public HashMap<String, ArrayList<String>> getFoundMeans() {
+        return this.foundedMeans;
+    }
+
 
     /**
      * LIst of means of expressiveness

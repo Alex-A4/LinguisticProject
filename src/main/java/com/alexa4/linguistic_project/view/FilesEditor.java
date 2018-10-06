@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.fxmisc.richtext.StyleClassedTextArea;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FilesRedactor implements ViewInterface {
@@ -90,7 +92,7 @@ public class FilesRedactor implements ViewInterface {
 
                     //If selected text is not empty, then display user choice
                     if (!area.getSelectedText().trim().equals("")) {
-                        addUserChoice(item);
+                        addUserChoice(item.getText(), area.getSelectedText());
                     }
                 }
             });
@@ -108,9 +110,9 @@ public class FilesRedactor implements ViewInterface {
      * textMeans        |  Button X |
      * userSelectedText |           |
      * ------------------------------
-     * @param item
+     *
      */
-    private void addUserChoice(MenuItem item) {
+    private void addUserChoice(String means, String text) {
         HBox newRecordBox = new HBox(10);
         newRecordBox.setAlignment(Pos.CENTER_LEFT);
 
@@ -129,7 +131,7 @@ public class FilesRedactor implements ViewInterface {
         deleteRecordButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                presenter.deleteUserChoice(item.getText().toLowerCase(),
+                presenter.deleteUserChoice(means.toLowerCase(),
                         userSelectedText.getText());
                 choiceField.getChildren().remove(newRecordBox);
             }
@@ -140,20 +142,20 @@ public class FilesRedactor implements ViewInterface {
         VBox textBox = new VBox();
 
         //textMeans will display which means of expressiveness user select
-        textMeans.setText("\n" + item.getText().toUpperCase() +
+        textMeans.setText("\n" + means.toUpperCase() +
                 " is");
         textMeans.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
         textMeans.setFill(presenter.getTextColors());
 
         //userSelectedText will display which text user select
         userSelectedText.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
-        userSelectedText.setText(area.getSelectedText().trim());
+        userSelectedText.setText(text.trim());
 
         textBox.getChildren().addAll(textMeans, userSelectedText);
         newRecordBox.getChildren().addAll(textBox, deleteRecordButton);
 
         //Add current text to collection
-        presenter.setUserChoice(item.getText().toLowerCase(), area.getSelectedText());
+        presenter.setUserChoice(means.toLowerCase(), text);
 
         //Add current box to view
         choiceField.getChildren().addAll(newRecordBox);
@@ -261,6 +263,7 @@ public class FilesRedactor implements ViewInterface {
             item.setId(String.valueOf(i));
             item.setOnAction(event -> {
                 fileNameTF.setText(item.getText());
+                fillUserChoice();
                 presenter.getText(fileNames.get(Integer.valueOf(item.getId())));
             });
 
@@ -268,6 +271,16 @@ public class FilesRedactor implements ViewInterface {
         }
 
         return taskMenu;
+    }
+
+    /**
+     * Filling choiceFiled by means of expressiveness which contained into file before editing
+     */
+    private void fillUserChoice() {
+        HashMap<String, ArrayList<String>> foundMeans = presenter.getFoundMeans();
+        System.out.println(foundMeans);
+        foundMeans.forEach((means, collection) -> collection
+                .forEach(text -> addUserChoice(means, text)));
     }
 
 
