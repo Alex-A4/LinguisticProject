@@ -5,10 +5,7 @@ import com.alexa4.linguistic_project.data_stores.User;
 import javafx.scene.paint.Paint;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Model {
 
@@ -20,6 +17,7 @@ public class Model {
     //Key is a means of choice, value is a list with texts which user select
     private HashMap<String, ArrayList<String>> userChoiceList;
 
+    private ArrayList<String> filesNameList = null;
 
     /**
      * Getter of current user name
@@ -33,6 +31,7 @@ public class Model {
 
     public Model() {
         userChoiceList = new HashMap<>();
+        readAllFiles();
     }
 
 
@@ -88,13 +87,13 @@ public class Model {
      * the current text
      * @return non marked text, which will be shown to user
      */
-    public String getText(){
+    public String getText(String taskName){
         foundedMeans = new HashMap<String, ArrayList<String>>();
 
         String text = null;
 
         try {
-            Scanner scanner = new Scanner(new File("data/text.txt"));
+            Scanner scanner = new Scanner(new File("data/tasks/" + taskName + ".txt"));
             StringBuilder builder = new StringBuilder();
 
             scanner.useDelimiter("\n");
@@ -114,6 +113,28 @@ public class Model {
 
 
         return nonMarkedText;
+    }
+
+
+    /**
+     * Reading all files name from data/tasks folder and add it to filesNameList
+     * This list contains all names of tasks
+     */
+    public void readAllFiles() {
+        File folder = new File("data/tasks/");
+        File[] files = folder.listFiles();
+        filesNameList = new ArrayList<>();
+        for (File file: files)
+            if (file.isFile())
+                filesNameList.add(file.getName().replace(".txt", ""));
+    }
+
+    /**
+     * Getter list of files names
+     * @return the list of files names
+     */
+    public List<String> getListOfFiles() {
+        return filesNameList;
     }
 
 
