@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 /**
  * This class needs to link model and view
  */
@@ -40,8 +42,12 @@ public class Presenter {
     /**
      * Get text and call view's method to set text to specified text area
      */
-    public void getText(){
-        view.setText(model.getText());
+    public void getText(String taskName){
+        view.setText(model.getText(taskName));
+    }
+
+    public List<String> getFilesNameList() {
+        return model.getListOfFiles();
     }
 
     public String getUserName(){
