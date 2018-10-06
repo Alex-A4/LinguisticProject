@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 import org.fxmisc.richtext.StyleClassedTextArea;
 
 import java.io.File;
+import java.util.List;
 
 
 /**
@@ -188,18 +189,6 @@ public class LessonsView implements ViewInterface{
 
         textBox.getChildren().addAll(area, choicePane);
         layout.getChildren().addAll(mHatBox, textBox);
-
-        HBox buttonsBox = new HBox(15);
-        buttonsBox.setAlignment(Pos.CENTER_RIGHT);
-
-        Button bGetText = new Button("Show text");
-        bGetText.setOnAction(event -> {
-            getTextFromPresenter();
-        });
-
-        buttonsBox.getChildren().add(bGetText);
-
-        layout.getChildren().add(buttonsBox);
     }
 
     /**
@@ -267,11 +256,12 @@ public class LessonsView implements ViewInterface{
      */
     private Menu createTasksMenu() {
         Menu taskMenu = new Menu("Lessons");
-
-        for (int i = 0; i < 5; i++) {
-            MenuItem item = new MenuItem("Hi there " + i);
+        List<String> fileNames = presenter.getFilesNameList();
+        for (int i = 0; i < fileNames.size(); i++) {
+            MenuItem item = new MenuItem(fileNames.get(i));
+            item.setId(String.valueOf(i));
             item.setOnAction(event -> {
-                System.out.println("You clicked " + item.getText());
+                presenter.getText(fileNames.get(Integer.valueOf(item.getId())));
             });
 
             taskMenu.getItems().add(item);
@@ -297,7 +287,7 @@ public class LessonsView implements ViewInterface{
         }
         return teacherMenu;
     }
-    
+
 
     /**
      * Initializing text file where will display user's choice
@@ -312,10 +302,6 @@ public class LessonsView implements ViewInterface{
         choiceField.setPadding(new Insets(10, 10, 10, 10));
 
         return choiceField;
-    }
-
-    private void getTextFromPresenter(){
-        presenter.getText();
     }
 
 
