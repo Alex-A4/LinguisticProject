@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class FilesRedactor implements ViewInterface {
+public class FilesEditor implements ViewInterface {
     private Presenter presenter;
     private StyleClassedTextArea area;
     private VBox layout;
@@ -28,7 +28,7 @@ public class FilesRedactor implements ViewInterface {
 
     private int CHOICE_FIELD_WIDTH = 350;
 
-    public FilesRedactor(Presenter presenter) {
+    public FilesEditor(Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -263,8 +263,8 @@ public class FilesRedactor implements ViewInterface {
             item.setId(String.valueOf(i));
             item.setOnAction(event -> {
                 fileNameTF.setText(item.getText());
-                fillUserChoice();
                 presenter.getText(fileNames.get(Integer.valueOf(item.getId())));
+                fillUserChoice();
             });
 
             taskMenu.getItems().add(item);
@@ -277,8 +277,12 @@ public class FilesRedactor implements ViewInterface {
      * Filling choiceFiled by means of expressiveness which contained into file before editing
      */
     private void fillUserChoice() {
+        //Clear choiceField
+        int count = choiceField.getChildren().size();
+        for (int i = 0; i < count; i++)
+            choiceField.getChildren().remove(0);
+
         HashMap<String, ArrayList<String>> foundMeans = presenter.getFoundMeans();
-        System.out.println(foundMeans);
         foundMeans.forEach((means, collection) -> collection
                 .forEach(text -> addUserChoice(means, text)));
     }
