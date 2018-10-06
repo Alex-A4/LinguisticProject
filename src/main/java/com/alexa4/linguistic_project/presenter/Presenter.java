@@ -1,7 +1,7 @@
 package com.alexa4.linguistic_project.presenter;
 
 import com.alexa4.linguistic_project.models.Model;
-import com.alexa4.linguistic_project.view.FilesRedactor;
+import com.alexa4.linguistic_project.view.FilesEditor;
 import com.alexa4.linguistic_project.view.SignInView;
 import com.alexa4.linguistic_project.view.ViewInterface;
 import com.alexa4.linguistic_project.view.LessonsView;
@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -122,8 +124,8 @@ public class Presenter {
 
     public void createNewTasksFile() {
         view.detachPresenter();
-        view = new FilesRedactor(this);
-        stage.setTitle("Tasks redactor");
+        view = new FilesEditor(this);
+        stage.setTitle("Tasks editor");
         stage.setScene(new Scene(view.getLayout()));
     }
 
@@ -144,5 +146,9 @@ public class Presenter {
      */
     public void deleteUserChoice(String means, String text) {
         model.deleteUserChoice(means, text);
+    }
+
+    public HashMap<String, ArrayList<String>> getFoundMeans() {
+        return model.getFoundMeans();
     }
 }
