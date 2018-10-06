@@ -40,7 +40,6 @@ public class LessonsView implements ViewInterface{
      */
     public LessonsView(Presenter presenter){
         this.presenter = presenter;
-        area = new StyleClassedTextArea();
         layout = new VBox(15);
     }
 
@@ -59,7 +58,8 @@ public class LessonsView implements ViewInterface{
     /**
      * Initializing text area
      */
-    private StyleClassedTextArea initTextField(){
+    private StyleClassedTextArea initTextField() {
+        area = new StyleClassedTextArea();
         area.setWrapText(true);
         area.setEditable(false);
         area.setPadding(new Insets(10, 10, 10, 10));
@@ -276,7 +276,7 @@ public class LessonsView implements ViewInterface{
      * @return
      */
     private Menu createTeacherMenu() {
-        Menu teacherMenu = new Menu("Check works");
+        Menu teacherMenu = new Menu("Teacher menu");
 
         MenuItem addItem= new MenuItem("Add new file");
         addItem.setOnAction(event -> {
