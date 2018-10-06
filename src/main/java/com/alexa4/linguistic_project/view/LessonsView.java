@@ -278,13 +278,13 @@ public class LessonsView implements ViewInterface{
     private Menu createTeacherMenu() {
         Menu teacherMenu = new Menu("Check works");
 
-        for (int i = 0; i < 5; i++) {
-            MenuItem item = new MenuItem("Test works " + i);
-            item.setOnAction(event -> {
-                System.out.println(item.getText());
-            });
-            teacherMenu.getItems().add(item);
-        }
+        MenuItem addItem= new MenuItem("Add new file");
+        addItem.setOnAction(event -> {
+            presenter.createNewTasksFile();
+        });
+
+        teacherMenu.getItems().add(addItem);
+
         return teacherMenu;
     }
 
