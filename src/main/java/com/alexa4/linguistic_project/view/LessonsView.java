@@ -278,7 +278,7 @@ public class LessonsView implements ViewInterface{
     private Menu createTeacherMenu() {
         Menu teacherMenu = new Menu("Teacher menu");
 
-        MenuItem addItem= new MenuItem("Add new file");
+        MenuItem addItem= new MenuItem("Open editor");
         addItem.setOnAction(event -> {
             presenter.createNewTasksFile();
         });
