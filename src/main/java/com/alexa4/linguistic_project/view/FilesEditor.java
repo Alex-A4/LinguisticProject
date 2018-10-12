@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -155,6 +156,14 @@ public class FilesEditor implements ViewInterface {
         userSelectedText.setText(text.trim());
 
         textBox.getChildren().addAll(textMeans, userSelectedText);
+        textBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int start = area.getText().indexOf(userSelectedText.getText());
+                int end = userSelectedText.getText().length();
+                area.selectRange(start, start + end);
+            }
+        });
         newRecordBox.getChildren().addAll(textBox, deleteRecordButton);
 
         //Add current text to collection
