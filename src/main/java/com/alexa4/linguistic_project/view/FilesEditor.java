@@ -2,6 +2,7 @@ package com.alexa4.linguistic_project.view;
 
 import com.alexa4.linguistic_project.models.Model;
 import com.alexa4.linguistic_project.presenter.Presenter;
+import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -214,9 +215,13 @@ public class FilesEditor implements ViewInterface {
         saveBtn.setFont(new Font(20));
         saveBtn.setTextFill(Paint.valueOf("#F00000"));
         saveBtn.setOnAction(event -> {
-            if (fileNameTF.getText().equals("")) {
+            //If fileName is empty
+            if (fileNameTF.getText().equals(""))
                 callAlert("File name", null, "File name must not be empty");
-            }
+
+            if (!presenter.saveFileChanges(area.getText(), fileNameTF.getText()))
+                callAlert("Saving error", null, "File could not be saved");
+            else callSuccess("Saving success", null, "File" + fileNameTF.getText() + ".txt saved");
         });
         buttonBox.getChildren().add(saveBtn);
 
@@ -257,6 +262,9 @@ public class FilesEditor implements ViewInterface {
             area.clear();
         });
         taskMenu.getItems().add(newFile);
+
+        //Adding separator which split "Add new file" button and others
+        taskMenu.getItems().add(new SeparatorMenuItem());
 
         for (int i = 0; i < fileNames.size(); i++) {
             MenuItem item = new MenuItem(fileNames.get(i));
@@ -310,8 +318,23 @@ public class FilesEditor implements ViewInterface {
      * @param header the header of Alert
      * @param content the content text of Alert
      */
-    private void callAlert(String title, String header, String content){
+    private void callAlert(@NotNull String title, String header, @NotNull String content){
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        if (header != null)
+            alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    /**
+     * Call Dialog Alert if action completed successfully
+     * @param title the title of Alert
+     * @param header the header of Alert
+     * @param content the context of Alert
+     */
+    private void callSuccess(@NotNull String title, String header, @NotNull String content) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         if (header != null)
             alert.setHeaderText(header);
