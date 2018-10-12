@@ -242,7 +242,6 @@ public class FilesEditor implements ViewInterface {
         menuBar.getMenus().add(createTasksMenu());
 
         HBox barBox = new HBox(5);
-        barBox.setPadding(new Insets(10, 30, 0, 30));
         barBox.setAlignment(Pos.CENTER_LEFT);
         barBox.getChildren().addAll(menuBar);
 
