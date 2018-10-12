@@ -284,13 +284,21 @@ public class FilesEditor implements ViewInterface {
      */
     private HBox initMenuBar() {
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().add(createTasksMenu());
+        menuBar.getMenus().addAll(createTasksMenu(), createWindowsMenu());
 
         HBox barBox = new HBox(5);
         barBox.setAlignment(Pos.CENTER_LEFT);
         barBox.getChildren().addAll(menuBar);
 
         return barBox;
+    }
+
+    private Menu createWindowsMenu() {
+        Menu windowMenu = new Menu("Windows");
+
+        MenuItem checkTasks = new MenuItem("Check tasks");
+        windowMenu.getItems().addAll(checkTasks);
+        return windowMenu;
     }
 
     /**
