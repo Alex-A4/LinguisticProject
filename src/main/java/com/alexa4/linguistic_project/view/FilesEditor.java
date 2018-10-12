@@ -246,13 +246,18 @@ public class FilesEditor implements ViewInterface {
         saveBtn.setFont(new Font(20));
         saveBtn.setTextFill(Paint.valueOf("#F00000"));
         saveBtn.setOnAction(event -> {
+
             //If fileName is empty
-            if (fileNameTF.getText().equals(""))
+            if (fileNameTF.getText().equals("")) {
                 callAlert("File name", null, "File name must not be empty");
+                return;
+            }
 
             if (!presenter.saveFileChanges(area.getText(), fileNameTF.getText()))
-                callAlert("Saving error", null, "File could not be saved");
-            else callSuccess("Saving success", null, "File" + fileNameTF.getText() + ".txt saved");
+                callAlert("Saving error", null,
+                        "File" + fileNameTF.getText() + "could not be saved");
+            else callSuccess("Saving success", null,
+                    "File " + fileNameTF.getText() + ".txt saved");
         });
         buttonBox.getChildren().add(saveBtn);
 
