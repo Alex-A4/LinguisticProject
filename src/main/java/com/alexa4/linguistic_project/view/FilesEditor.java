@@ -206,11 +206,13 @@ public class FilesEditor implements ViewInterface {
         mLabelBox.setPadding(new Insets(15, WINDOW_RIGHT_PADDING, 5, WINDOW_LEFT_PADDING));
 
         Label textLabel = new Label("Text");
+        textLabel.setFont(new Font(18));
         HBox textBox = new HBox();
         textBox.getChildren().add(textLabel);
         textBox.setAlignment(Pos.CENTER_LEFT);
 
         Label choiceLabel = new Label("Selected means of expression");
+        choiceLabel.setFont(new Font(18));
         HBox choiceBox = new HBox();
         choiceBox.getChildren().add(choiceLabel);
         choiceBox.setAlignment(Pos.CENTER_RIGHT);
