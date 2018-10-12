@@ -295,6 +295,7 @@ public class FilesEditor implements ViewInterface {
         MenuItem newFile = new MenuItem("Add new file");
         newFile.setOnAction(event -> {
             area.clear();
+            fileNameTF.clear();
         });
         taskMenu.getItems().add(newFile);
 
