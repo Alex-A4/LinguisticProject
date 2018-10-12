@@ -151,4 +151,13 @@ public class Presenter {
     public HashMap<String, ArrayList<String>> getFoundMeans() {
         return model.getFoundMeans();
     }
+
+    /**
+     * Saving file with text and fileName
+     * @param text the text of file
+     * @param fileName the name of file
+     */
+    public boolean saveFileChanges(String text, String fileName) {
+        return model.saveFileChanges(text, fileName);
+    }
 }
