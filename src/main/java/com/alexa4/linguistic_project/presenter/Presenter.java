@@ -160,4 +160,8 @@ public class Presenter {
     public boolean saveFileChanges(String text, String fileName) {
         return model.saveFileChanges(text, fileName);
     }
+
+    public boolean saveUserAnswer() {
+        return model.saveUserAnswer();
+    }
 }
