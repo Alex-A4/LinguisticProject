@@ -4,6 +4,7 @@ import com.alexa4.linguistic_project.data_stores.User;
 import com.alexa4.linguistic_project.models.Model;
 import com.alexa4.linguistic_project.presenter.Presenter;
 
+import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -33,6 +34,10 @@ public class LessonsView implements ViewInterface{
     private VBox choiceField;
 
     private int CHOICE_FIELD_WIDTH = 350;
+    private static final int WINDOW_LEFT_PADDING = 30;
+    private static final int WINDOW_RIGHT_PADDING = 30;
+
+
 
     /**
      * Initializing main layout and text area
@@ -186,9 +191,11 @@ public class LessonsView implements ViewInterface{
                 BorderWidths.DEFAULT
         )));
 
-
         textBox.getChildren().addAll(area, choicePane);
-        layout.getChildren().addAll(mHatBox, textBox);
+
+        HBox userActions = initUserActions();
+
+        layout.getChildren().addAll(mHatBox, textBox, userActions);
     }
 
     /**
@@ -229,6 +236,38 @@ public class LessonsView implements ViewInterface{
         mHatBox.getChildren().addAll(menuBox, mUserBox);
 
         return mHatBox;
+    }
+
+
+    /**
+     * Box contains TF with file name and save button
+     * @return the box
+     */
+    private HBox initUserActions() {
+        HBox fileActions = new HBox(20);
+        fileActions.setPadding(new Insets(0, WINDOW_RIGHT_PADDING, 30, WINDOW_LEFT_PADDING));
+
+        HBox buttonBox = new HBox(10);
+        buttonBox.setAlignment(Pos.CENTER_RIGHT);
+        Button saveBtn = new Button("Save result");
+        saveBtn.setPrefSize(120, 40);
+        saveBtn.setFont(new Font(15));
+        saveBtn.setTextFill(Paint.valueOf("#F00000"));
+        saveBtn.setOnAction(event -> {
+
+            if (!presenter.saveUserAnswer())
+                callAlert("Saving error", null,
+                        "The answer could not be saved");
+            else callSuccess("Saving success", null,
+                    "The answer saved successfully");
+
+        });
+        buttonBox.getChildren().add(saveBtn);
+
+        fileActions.setHgrow(buttonBox, Priority.ALWAYS);
+        fileActions.getChildren().addAll(buttonBox);
+
+        return fileActions;
     }
 
     /**
@@ -311,8 +350,23 @@ public class LessonsView implements ViewInterface{
      * @param header the header of Alert
      * @param content the content text of Alert
      */
-    private void callAlert(String title, String header, String content){
+    private void callAlert(@NotNull String title, String header, @NotNull String content){
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        if (header != null)
+            alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    /**
+     * Call Dialog Alert if action completed successfully
+     * @param title the title of Alert
+     * @param header the header of Alert
+     * @param content the context of Alert
+     */
+    private void callSuccess(@NotNull String title, String header, @NotNull String content) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         if (header != null)
             alert.setHeaderText(header);
