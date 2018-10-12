@@ -5,13 +5,12 @@ import com.alexa4.linguistic_project.data_stores.User;
 import javafx.scene.paint.Paint;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.*;
 
 public class Model {
     private static final String TASKS_FOLDER = "data/tasks/";
+    private static final String ANSWERS_FOLDER = "data/answers";
 
     //Current user name
     private User currentUser;
@@ -104,6 +103,17 @@ public class Model {
         //If markedText have no mark on the choice, then add it
         markedText = markedText.replace(choice,
                 "<" + means + ">" + choice + "</" + means + ">");
+    }
+
+
+    /**
+     * Saving user's answers
+     * TODO add logic
+     * @return the result of saving
+     */
+    public boolean saveUserAnswer() {
+
+        return true;
     }
 
 
