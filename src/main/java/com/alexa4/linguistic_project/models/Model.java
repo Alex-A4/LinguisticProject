@@ -5,9 +5,13 @@ import com.alexa4.linguistic_project.data_stores.User;
 import javafx.scene.paint.Paint;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 
 public class Model {
+    private static final String TASKS_FOLDER = "data/tasks/";
 
     //Current user name
     private User currentUser;
@@ -19,6 +23,24 @@ public class Model {
 
     private ArrayList<String> filesNameList = null;
 
+    //Text with the markers of means
+    private String markedText = null;
+
+    //Text without markers, needs to be shown to user
+    private String nonMarkedText = null;
+
+    //Collection with the means found in the current text:
+    //Key - is a means name, value - list of sentences with this means
+    private HashMap<String, ArrayList<String>> foundedMeans;
+
+    /**
+     * Initializing model by reading all files names
+     */
+    public Model() {
+        userChoiceList = new HashMap<>();
+        readAllFiles();
+    }
+
     /**
      * Getter of current user name
      * @return the current user name
@@ -29,13 +51,59 @@ public class Model {
 
     public int getCurrentUserMode() {return currentUser.getUserMode(); }
 
-    public Model() {
-        userChoiceList = new HashMap<>();
-        readAllFiles();
-    }
-
     public HashMap<String, ArrayList<String>> getFoundMeans() {
         return this.foundedMeans;
+    }
+
+
+    /**
+     * Saving the file changes
+     * @param text the text which need to save
+     * @param fileName the name of file
+     * @return writing status
+     */
+    public boolean saveFileChanges(String text, String fileName) {
+        nonMarkedText = text;
+        markedText = text;
+
+        userChoiceList.forEach((means, list) -> list
+                .forEach(choice -> tryToAddMeansToText(means, choice)));
+
+        try {
+            writeTextToFile(fileName, markedText);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Writing text to file
+     * @param fileName the name of file which need save
+     * @param text the text which need to write into file
+     */
+    private void writeTextToFile(String fileName, String text) throws Exception {
+        FileOutputStream stream = new FileOutputStream(new File(TASKS_FOLDER
+                + fileName + ".txt"));
+
+        stream.write(text.getBytes());
+        stream.close();
+    }
+
+    /**
+     * Converting choice without marks to marked text
+     * @param means the means choice
+     * @param choice the choice text
+     */
+    private void tryToAddMeansToText(String means, String choice) {
+        //If markedText already contains means with the mark, then skip
+        //Text with mark: <means>choice</means>
+        if (markedText.contains("<" + means + ">" + choice + "</" + means + ">"))
+            return;
+
+        //If markedText have no mark on the choice, then add it
+        markedText = markedText.replace(choice,
+                "<" + means + ">" + choice + "</" + means + ">");
     }
 
 
@@ -76,16 +144,6 @@ public class Model {
 
 
 
-    //Text with the markers of means
-    private String markedText = null;
-
-    //Text without markers, needs to be shown to user
-    private String nonMarkedText = null;
-
-    //Collection with the means found in the current text:
-    //Key - is a means name, value - list of sentences with this means
-    private HashMap<String, ArrayList<String>> foundedMeans;
-
     /**
      * Reading text from the file and initializing foundedMeans by the means which contains into
      * the current text
@@ -125,7 +183,7 @@ public class Model {
      * This list contains all names of tasks
      */
     public void readAllFiles() {
-        File folder = new File("data/tasks/");
+        File folder = new File(TASKS_FOLDER);
         File[] files = folder.listFiles();
         filesNameList = new ArrayList<>();
         for (File file: files)
