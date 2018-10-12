@@ -27,7 +27,9 @@ public class FilesEditor implements ViewInterface {
     private VBox choiceField;
     private TextField fileNameTF;
 
-    private int CHOICE_FIELD_WIDTH = 350;
+    private static final int CHOICE_FIELD_WIDTH = 350;
+    private static final int WINDOW_LEFT_PADDING = 30;
+    private static final int WINDOW_RIGHT_PADDING = 30;
 
     public FilesEditor(Presenter presenter) {
         this.presenter = presenter;
@@ -169,7 +171,7 @@ public class FilesEditor implements ViewInterface {
      */
     private void initWindow() {
         HBox textBox = new HBox(15);
-        textBox.setPadding(new Insets(0, 30, 30, 30));
+        textBox.setPadding(new Insets(0, WINDOW_RIGHT_PADDING, 30, WINDOW_LEFT_PADDING));
 
         area = initTextField();
 
@@ -185,12 +187,39 @@ public class FilesEditor implements ViewInterface {
                 BorderWidths.DEFAULT
         )));
 
+        HBox textBoxLabels = initTextBoxLabels();
 
         textBox.getChildren().addAll(area, choicePane);
         
         HBox fileActions = initFileActions();
         
-        layout.getChildren().addAll(menuBar, textBox, fileActions);
+        layout.getChildren().addAll(menuBar, textBoxLabels, textBox, fileActions);
+    }
+
+
+    /**
+     * Initializing box which contains labels for text box
+     * @return the labelsBox
+     */
+    private HBox initTextBoxLabels() {
+        HBox mLabelBox = new HBox(5);
+        mLabelBox.setPadding(new Insets(15, WINDOW_RIGHT_PADDING, 5, WINDOW_LEFT_PADDING));
+
+        Label textLabel = new Label("Text");
+        HBox textBox = new HBox();
+        textBox.getChildren().add(textLabel);
+        textBox.setAlignment(Pos.CENTER_LEFT);
+
+        Label choiceLabel = new Label("Selected means of expression");
+        HBox choiceBox = new HBox();
+        choiceBox.getChildren().add(choiceLabel);
+        choiceBox.setAlignment(Pos.CENTER_RIGHT);
+
+        mLabelBox.setHgrow(textBox, Priority.ALWAYS);
+        mLabelBox.setHgrow(choiceBox, Priority.ALWAYS);
+        mLabelBox.getChildren().addAll(textBox, choiceBox);
+
+        return mLabelBox;
     }
 
     /**
@@ -199,7 +228,7 @@ public class FilesEditor implements ViewInterface {
      */
     private HBox initFileActions() {
         HBox fileActions = new HBox(20);
-        fileActions.setPadding(new Insets(0, 30, 30, 30));
+        fileActions.setPadding(new Insets(0, WINDOW_RIGHT_PADDING, 30, WINDOW_LEFT_PADDING));
 
         HBox fileNameBox = new HBox(10);
         Label fileNameLabel = new Label("File name: ");
