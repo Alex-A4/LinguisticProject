@@ -292,6 +292,7 @@ public class FilesEditor implements ViewInterface {
         Menu taskMenu = new Menu("Lessons");
         List<String> fileNames = presenter.getFilesNameList();
 
+        //Menu item response for creating new file
         MenuItem newFile = new MenuItem("Add new file");
         newFile.setOnAction(event -> {
             area.clear();
@@ -302,6 +303,7 @@ public class FilesEditor implements ViewInterface {
         //Adding separator which split "Add new file" button and others
         taskMenu.getItems().add(new SeparatorMenuItem());
 
+        //Menu items for opening files
         for (int i = 0; i < fileNames.size(); i++) {
             MenuItem item = new MenuItem(fileNames.get(i));
             item.setId(String.valueOf(i));
