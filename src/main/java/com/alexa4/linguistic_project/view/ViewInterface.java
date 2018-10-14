@@ -3,7 +3,7 @@ package com.alexa4.linguistic_project.view;
 import javafx.scene.Parent;
 
 /**
- * Interface needs to flexible connecting between presenter and view
+ * Interface needs to flexible connecting between presenters and view
  */
 public interface ViewInterface {
     /**
@@ -23,7 +23,7 @@ public interface ViewInterface {
     default void logInError(){}
 
     /**
-     * Default method to detach presenter from view to lost link
+     * Default method to detach presenters from view to lost link
      */
     void detachPresenter();
 
