@@ -2,8 +2,9 @@ package com.alexa4.linguistic_project.view;
 
 import com.alexa4.linguistic_project.data_stores.User;
 import com.alexa4.linguistic_project.models.Model;
-import com.alexa4.linguistic_project.presenter.Presenter;
 
+import com.alexa4.linguistic_project.presenter.student_mode.StudentPresenter;
+import com.alexa4.linguistic_project.presenter.teacher_mode.TeacherPresenter;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,7 +29,7 @@ import java.util.List;
  * Class is responsible for displaying window
  */
 public class LessonsView implements ViewInterface{
-    private Presenter presenter = null;
+    private StudentPresenter mPresenter = null;
     private StyleClassedTextArea area;
     private VBox layout;
     private VBox choiceField;
@@ -43,8 +44,8 @@ public class LessonsView implements ViewInterface{
      * Initializing main layout and text area
      * @param presenter
      */
-    public LessonsView(Presenter presenter){
-        this.presenter = presenter;
+    public LessonsView(StudentPresenter presenter){
+        this.mPresenter = presenter;
         layout = new VBox(15);
     }
 
@@ -131,7 +132,7 @@ public class LessonsView implements ViewInterface{
                             deleteRecordButton.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
-                                    presenter.deleteUserChoice(item.getText().toLowerCase(),
+                                    mPresenter.deleteUserChoice(item.getText().toLowerCase(),
                                             userSelectedText.getText());
                                     choiceField.getChildren().remove(newRecordBox);
                                 }
@@ -145,7 +146,7 @@ public class LessonsView implements ViewInterface{
                             textMeans.setText("\n" + item.getText().toUpperCase() +
                                     " is");
                             textMeans.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
-                            textMeans.setFill(presenter.getTextColors());
+                            textMeans.setFill(mPresenter.getTextColors());
 
                             //userSelectedText will display which text user select
                             userSelectedText.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
@@ -155,7 +156,7 @@ public class LessonsView implements ViewInterface{
                             newRecordBox.getChildren().addAll(textBox, deleteRecordButton);
 
                             //Add current text to collection
-                            presenter.setUserChoice(item.getText().toLowerCase(), area.getSelectedText());
+                            mPresenter.addUserChoice(item.getText().toLowerCase(), area.getSelectedText());
 
                             //Add current box to view
                             choiceField.getChildren().addAll(newRecordBox);
@@ -222,8 +223,8 @@ public class LessonsView implements ViewInterface{
 
         Label mUserNameLabel = new Label();
 
-        String userMode = presenter.getUserMode() == User.STUDENT_MODE ? "Student:  " : "Teacher:  ";
-        mUserNameLabel.setText(userMode + presenter.getUserName());
+        String userMode = mPresenter.getUserMode() == User.STUDENT_MODE ? "Student:  " : "Teacher:  ";
+        mUserNameLabel.setText(userMode + mPresenter.getUserName());
 
         HBox menuBox = initMenuBar();
 
@@ -255,7 +256,7 @@ public class LessonsView implements ViewInterface{
         saveBtn.setTextFill(Paint.valueOf("#F00000"));
         saveBtn.setOnAction(event -> {
 
-            if (!presenter.saveUserAnswer())
+            if (!mPresenter.saveUserAnswer())
                 callAlert("Saving error", null,
                         "The answer could not be saved");
             else callSuccess("Saving success", null,
@@ -277,10 +278,6 @@ public class LessonsView implements ViewInterface{
     private HBox initMenuBar() {
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().add(createTasksMenu());
-        //Create teacher bar if Mode equals to TEACHER_MODE
-        if (presenter.getUserMode() == User.TEACHER_MODE)
-            menuBar.getMenus().add(createTeacherMenu());
-
 
         HBox barBox = new HBox(5);
         barBox.setAlignment(Pos.CENTER_LEFT);
@@ -295,36 +292,18 @@ public class LessonsView implements ViewInterface{
      */
     private Menu createTasksMenu() {
         Menu taskMenu = new Menu("Lessons");
-        List<String> fileNames = presenter.getFilesNameList();
+        List<String> fileNames = mPresenter.getFilesNameList();
         for (int i = 0; i < fileNames.size(); i++) {
             MenuItem item = new MenuItem(fileNames.get(i));
             item.setId(String.valueOf(i));
             item.setOnAction(event -> {
-                presenter.getText(fileNames.get(Integer.valueOf(item.getId())));
+                mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
             });
 
             taskMenu.getItems().add(item);
         }
 
         return taskMenu;
-    }
-
-
-    /**
-     * Creating menu to check works, ONLY for teacher mode
-     * @return
-     */
-    private Menu createTeacherMenu() {
-        Menu teacherMenu = new Menu("Teacher menu");
-
-        MenuItem addItem= new MenuItem("Open editor");
-        addItem.setOnAction(event -> {
-            presenter.createNewTasksFile();
-        });
-
-        teacherMenu.getItems().add(addItem);
-
-        return teacherMenu;
     }
 
 
@@ -387,6 +366,6 @@ public class LessonsView implements ViewInterface{
 
     @Override
     public void detachPresenter() {
-        presenter = null;
+        mPresenter = null;
     }
 }

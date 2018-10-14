@@ -1,6 +1,11 @@
 package com.alexa4.linguistic_project.view;
 
+import com.alexa4.linguistic_project.data_stores.User;
+import com.alexa4.linguistic_project.models.UserModel;
+import com.alexa4.linguistic_project.presenter.AuthentificationPresenter;
 import com.alexa4.linguistic_project.presenter.Presenter;
+import com.alexa4.linguistic_project.presenter.student_mode.StudentPresenter;
+import com.alexa4.linguistic_project.presenter.teacher_mode.TeacherPresenter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -14,7 +19,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 public class SignInView implements ViewInterface {
-    private Presenter presenter;
+    private AuthentificationPresenter mPresenter;
     private TextField mTaUserSecondName;
     private PasswordField mPfPassword;
     private PasswordField mPfConfirmPassword;
@@ -23,8 +28,8 @@ public class SignInView implements ViewInterface {
      * Set presenter to view
      * @param presenter
      */
-    public SignInView(Presenter presenter) {
-        this.presenter = presenter;
+    public SignInView(AuthentificationPresenter presenter) {
+        this.mPresenter = presenter;
     }
 
     /**
@@ -32,7 +37,7 @@ public class SignInView implements ViewInterface {
      */
     @Override
     public void detachPresenter() {
-        presenter = null;
+        mPresenter = null;
     }
 
 
@@ -83,7 +88,7 @@ public class SignInView implements ViewInterface {
                     return;
                 }
 
-                presenter.tryToSignIn(mTaUserSecondName.getText(), mPfPassword.getText());
+                mPresenter.tryToSignIn(mTaUserSecondName.getText(), mPfPassword.getText());
             }
         });
 
@@ -208,7 +213,13 @@ public class SignInView implements ViewInterface {
      */
     @Override
     public void signIn() {
-        presenter.startLessonsView();
+        if (UserModel.getUserModel().getCurrentUserMode() == User.STUDENT_MODE) {
+            StudentPresenter studPres = new StudentPresenter();
+            studPres.start();
+        } else {
+            TeacherPresenter teachPres = new TeacherPresenter();
+            teachPres.start();
+        }
     }
 
     /**

@@ -1,6 +1,11 @@
 package com.alexa4.linguistic_project.view;
 
+import com.alexa4.linguistic_project.data_stores.User;
+import com.alexa4.linguistic_project.models.UserModel;
+import com.alexa4.linguistic_project.presenter.AuthentificationPresenter;
 import com.alexa4.linguistic_project.presenter.Presenter;
+import com.alexa4.linguistic_project.presenter.student_mode.StudentPresenter;
+import com.alexa4.linguistic_project.presenter.teacher_mode.TeacherPresenter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,12 +22,12 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 public class LogInView implements ViewInterface{
-    private Presenter presenter;
+    private AuthentificationPresenter mPresenter;
     private TextField mTaUserSecondName;
     private PasswordField mPfPassword;
 
-    public LogInView(Presenter presenter){
-        this.presenter = presenter;
+    public LogInView(AuthentificationPresenter presenter){
+        this.mPresenter = presenter;
     }
 
     /**
@@ -60,7 +65,7 @@ public class LogInView implements ViewInterface{
         mHaveAccount.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                presenter.startSignInView();
+                mPresenter.startSignInView();
             }
         });
 
@@ -88,7 +93,7 @@ public class LogInView implements ViewInterface{
                     return;
                 }
 
-                presenter.tryToLogIn(userName, userPassword);
+                mPresenter.tryToLogIn(userName, userPassword);
             }
         });
 
@@ -184,7 +189,13 @@ public class LogInView implements ViewInterface{
      */
     @Override
     public void logIn() {
-        presenter.startLessonsView();
+        if (UserModel.getUserModel().getCurrentUserMode() == User.STUDENT_MODE) {
+            StudentPresenter studPres = new StudentPresenter();
+            studPres.start();
+        } else {
+            TeacherPresenter teachPres = new TeacherPresenter();
+            teachPres.start();
+        }
     }
 
     /**
@@ -201,6 +212,6 @@ public class LogInView implements ViewInterface{
      */
     @Override
     public void detachPresenter() {
-        presenter = null;
+        mPresenter = null;
     }
 }

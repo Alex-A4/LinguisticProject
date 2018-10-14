@@ -1,6 +1,6 @@
 package com.alexa4.linguistic_project.adapters;
 
-import com.alexa4.linguistic_project.models.Model;
+import com.alexa4.linguistic_project.data_stores.MeansOfExpressiveness;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public class TextAdapter {
     public static String convertMarkedText(String markedText) {
         String commonText = new String(markedText);
 
-        for (Model.MeansOfExpressiveness mean: Model.MeansOfExpressiveness.values()){
+        for (MeansOfExpressiveness mean: MeansOfExpressiveness.values()){
             commonText = commonText.replaceAll("<" + mean.getText() + ">", "");
             commonText = commonText.replaceAll("</"+ mean.getText() + ">", "");
         }
@@ -38,7 +38,7 @@ public class TextAdapter {
     public static void buildMeansMap(String text, HashMap<String, ArrayList<String>> map) {
         String markedText = new String(text);
 
-        for (Model.MeansOfExpressiveness means: Model.MeansOfExpressiveness.values()) {
+        for (MeansOfExpressiveness means: MeansOfExpressiveness.values()) {
 
             //If text contains some means of expressiveness, then build a collection which contains
             // all sentences

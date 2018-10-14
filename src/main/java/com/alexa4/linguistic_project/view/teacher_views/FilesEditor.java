@@ -1,7 +1,7 @@
 package com.alexa4.linguistic_project.view;
 
 import com.alexa4.linguistic_project.models.Model;
-import com.alexa4.linguistic_project.presenter.Presenter;
+import com.alexa4.linguistic_project.presenter.teacher_mode.TeacherPresenter;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FilesEditor implements ViewInterface {
-    private Presenter presenter;
+    private TeacherPresenter mPresenter;
     private StyleClassedTextArea area;
     private VBox layout;
     private VBox choiceField;
@@ -32,13 +32,13 @@ public class FilesEditor implements ViewInterface {
     private static final int WINDOW_LEFT_PADDING = 30;
     private static final int WINDOW_RIGHT_PADDING = 30;
 
-    public FilesEditor(Presenter presenter) {
-        this.presenter = presenter;
+    public FilesEditor(TeacherPresenter presenter) {
+        this.mPresenter = presenter;
     }
 
     @Override
     public void detachPresenter() {
-        presenter = null;
+        mPresenter = null;
     }
 
     @Override
@@ -135,7 +135,7 @@ public class FilesEditor implements ViewInterface {
         deleteRecordButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                presenter.deleteUserChoice(means.toLowerCase(),
+                mPresenter.deleteUserChoice(means.toLowerCase(),
                         userSelectedText.getText());
                 choiceField.getChildren().remove(newRecordBox);
             }
@@ -149,7 +149,7 @@ public class FilesEditor implements ViewInterface {
         textMeans.setText("\n" + means.toUpperCase() +
                 " is");
         textMeans.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
-        textMeans.setFill(presenter.getTextColors());
+        textMeans.setFill(mPresenter.getTextColors());
 
         //userSelectedText will display which text user select
         userSelectedText.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
@@ -167,7 +167,7 @@ public class FilesEditor implements ViewInterface {
         newRecordBox.getChildren().addAll(textBox, deleteRecordButton);
 
         //Add current text to collection
-        presenter.setUserChoice(means.toLowerCase(), text);
+        mPresenter.addUserChoice(means.toLowerCase(), text);
 
         //Add current box to view
         choiceField.getChildren().addAll(newRecordBox);
@@ -262,7 +262,7 @@ public class FilesEditor implements ViewInterface {
                 return;
             }
 
-            if (!presenter.saveFileChanges(area.getText(), fileNameTF.getText()))
+            if (!mPresenter.saveFileChanges(area.getText(), fileNameTF.getText()))
                 callAlert("Saving error", null,
                         "File" + fileNameTF.getText() + "could not be saved");
             else callSuccess("Saving success", null,
@@ -307,7 +307,7 @@ public class FilesEditor implements ViewInterface {
      */
     private Menu createTasksMenu() {
         Menu taskMenu = new Menu("Lessons");
-        List<String> fileNames = presenter.getFilesNameList();
+        List<String> fileNames = mPresenter.getFilesNameList();
 
         //Menu item response for creating new file
         MenuItem newFile = new MenuItem("Add new file");
@@ -326,7 +326,7 @@ public class FilesEditor implements ViewInterface {
             item.setId(String.valueOf(i));
             item.setOnAction(event -> {
                 fileNameTF.setText(item.getText());
-                presenter.getText(fileNames.get(Integer.valueOf(item.getId())));
+                mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
                 fillUserChoice();
             });
 
@@ -345,7 +345,7 @@ public class FilesEditor implements ViewInterface {
         for (int i = 0; i < count; i++)
             choiceField.getChildren().remove(0);
 
-        HashMap<String, ArrayList<String>> foundMeans = presenter.getFoundMeans();
+        HashMap<String, ArrayList<String>> foundMeans = mPresenter.getFoundMeans();
         foundMeans.forEach((means, collection) -> collection
                 .forEach(text -> addUserChoice(means, text)));
     }
