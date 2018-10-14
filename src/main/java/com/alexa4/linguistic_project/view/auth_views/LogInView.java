@@ -1,11 +1,11 @@
-package com.alexa4.linguistic_project.view;
+package com.alexa4.linguistic_project.view.auth_views;
 
 import com.alexa4.linguistic_project.data_stores.User;
 import com.alexa4.linguistic_project.models.UserModel;
-import com.alexa4.linguistic_project.presenter.AuthentificationPresenter;
-import com.alexa4.linguistic_project.presenter.Presenter;
-import com.alexa4.linguistic_project.presenter.student_mode.StudentPresenter;
-import com.alexa4.linguistic_project.presenter.teacher_mode.TeacherPresenter;
+import com.alexa4.linguistic_project.presenters.AuthentificationPresenter;
+import com.alexa4.linguistic_project.presenters.student.StudentPresenter;
+import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
+import com.alexa4.linguistic_project.view.ViewInterface;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
-public class LogInView implements ViewInterface{
+public class LogInView implements ViewInterface {
     private AuthentificationPresenter mPresenter;
     private TextField mTaUserSecondName;
     private PasswordField mPfPassword;
@@ -208,7 +208,7 @@ public class LogInView implements ViewInterface{
 
 
     /**
-     * Detach presenter from the view
+     * Detach presenters from the view
      */
     @Override
     public void detachPresenter() {
