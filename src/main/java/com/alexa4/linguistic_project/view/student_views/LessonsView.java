@@ -1,10 +1,10 @@
-package com.alexa4.linguistic_project.view;
+package com.alexa4.linguistic_project.view.student_views;
 
+import com.alexa4.linguistic_project.data_stores.MeansOfExpressiveness;
 import com.alexa4.linguistic_project.data_stores.User;
-import com.alexa4.linguistic_project.models.Model;
 
-import com.alexa4.linguistic_project.presenter.student_mode.StudentPresenter;
-import com.alexa4.linguistic_project.presenter.teacher_mode.TeacherPresenter;
+import com.alexa4.linguistic_project.presenters.student.StudentPresenter;
+import com.alexa4.linguistic_project.view.ViewInterface;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Class is responsible for displaying window
  */
-public class LessonsView implements ViewInterface{
+public class LessonsView implements ViewInterface {
     private StudentPresenter mPresenter = null;
     private StyleClassedTextArea area;
     private VBox layout;
@@ -96,7 +96,7 @@ public class LessonsView implements ViewInterface{
     private ContextMenu initContextMenu(){
         ContextMenu menu = new ContextMenu();
 
-            for (Model.MeansOfExpressiveness means : Model.MeansOfExpressiveness.values()) {
+            for (MeansOfExpressiveness means : MeansOfExpressiveness.values()) {
                 //Initializing menuItem with title of Means. First character is in up case
                 MenuItem item = new MenuItem(means.getText().substring(0, 1)
                         .toUpperCase().concat(means.getText().substring(1)));
