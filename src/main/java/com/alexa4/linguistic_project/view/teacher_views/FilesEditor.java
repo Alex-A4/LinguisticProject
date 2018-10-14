@@ -1,7 +1,8 @@
-package com.alexa4.linguistic_project.view;
+package com.alexa4.linguistic_project.view.teacher_views;
 
-import com.alexa4.linguistic_project.models.Model;
-import com.alexa4.linguistic_project.presenter.teacher_mode.TeacherPresenter;
+import com.alexa4.linguistic_project.data_stores.MeansOfExpressiveness;
+import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
+import com.alexa4.linguistic_project.view.ViewInterface;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -85,7 +86,7 @@ public class FilesEditor implements ViewInterface {
     private ContextMenu initContextMenu(){
         ContextMenu menu = new ContextMenu();
 
-        for (Model.MeansOfExpressiveness means : Model.MeansOfExpressiveness.values()) {
+        for (MeansOfExpressiveness means : MeansOfExpressiveness.values()) {
             //Initializing menuItem with title of Means. First character is in up case
             MenuItem item = new MenuItem(means.getText().substring(0, 1)
                     .toUpperCase().concat(means.getText().substring(1)));
