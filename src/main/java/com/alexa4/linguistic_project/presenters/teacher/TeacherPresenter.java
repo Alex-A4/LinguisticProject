@@ -3,6 +3,7 @@ package com.alexa4.linguistic_project.presenters.teacher;
 import com.alexa4.linguistic_project.models.TextModel;
 import com.alexa4.linguistic_project.presenters.TextInterface;
 import com.alexa4.linguistic_project.presenters.UserPresenter;
+import com.alexa4.linguistic_project.view.ViewTextInterface;
 import com.alexa4.linguistic_project.view.teacher_views.FilesEditor;
 import com.alexa4.linguistic_project.view.ViewInterface;
 import javafx.scene.Scene;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TeacherPresenter extends UserPresenter implements TextInterface {
-    private ViewInterface mView;
+    private ViewTextInterface mView;
     private TextModel mTextModel;
 
     public TeacherPresenter() {

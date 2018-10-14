@@ -3,6 +3,7 @@ package com.alexa4.linguistic_project.view.teacher_views;
 import com.alexa4.linguistic_project.data_stores.MeansOfExpressiveness;
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import com.alexa4.linguistic_project.view.ViewInterface;
+import com.alexa4.linguistic_project.view.ViewTextInterface;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class FilesEditor implements ViewInterface {
+public class FilesEditor implements ViewTextInterface {
     private TeacherPresenter mPresenter;
     private StyleClassedTextArea area;
     private VBox layout;

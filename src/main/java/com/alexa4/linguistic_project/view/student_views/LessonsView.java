@@ -5,6 +5,7 @@ import com.alexa4.linguistic_project.data_stores.User;
 
 import com.alexa4.linguistic_project.presenters.student.StudentPresenter;
 import com.alexa4.linguistic_project.view.ViewInterface;
+import com.alexa4.linguistic_project.view.ViewTextInterface;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * Class is responsible for displaying window
  */
-public class LessonsView implements ViewInterface {
+public class LessonsView implements ViewTextInterface {
     private StudentPresenter mPresenter = null;
     private StyleClassedTextArea area;
     private VBox layout;
