@@ -1,10 +1,8 @@
 package com.alexa4.linguistic_project;
 
-import com.alexa4.linguistic_project.models.Model;
-import com.alexa4.linguistic_project.presenter.Presenter;
-import com.alexa4.linguistic_project.view.LogInView;
+import com.alexa4.linguistic_project.presenters.AuthentificationPresenter;
+import com.alexa4.linguistic_project.presenters.UserPresenter;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -14,14 +12,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Presenter presenter = new Presenter(new Model(), primaryStage);
-        LogInView view = new LogInView(presenter);
-        presenter.setView(view);
+        UserPresenter.setStage(primaryStage);
 
-        primaryStage.setTitle("Log in");
+        AuthentificationPresenter presenter = new AuthentificationPresenter();
+        presenter.start();
 
-        Scene scene = new Scene(view.getLayout());
-        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
