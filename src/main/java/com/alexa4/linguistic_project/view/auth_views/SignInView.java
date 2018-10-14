@@ -18,7 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
-public class SignInView implements ViewInterface {
+public class SignInView implements AuthInterface {
     private AuthentificationPresenter mPresenter;
     private TextField mTaUserSecondName;
     private PasswordField mPfPassword;

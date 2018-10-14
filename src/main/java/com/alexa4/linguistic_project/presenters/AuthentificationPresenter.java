@@ -1,13 +1,14 @@
 package com.alexa4.linguistic_project.presenters;
 
 import com.alexa4.linguistic_project.models.AuthentificationModel;
+import com.alexa4.linguistic_project.view.auth_views.AuthInterface;
 import com.alexa4.linguistic_project.view.auth_views.LogInView;
 import com.alexa4.linguistic_project.view.auth_views.SignInView;
 import com.alexa4.linguistic_project.view.ViewInterface;
 import javafx.scene.Scene;
 
 public class AuthentificationPresenter extends UserPresenter {
-    private ViewInterface mView;
+    private AuthInterface mView;
     private AuthentificationModel mAuthModel;
 
     public AuthentificationPresenter() {
