@@ -5,7 +5,6 @@ import com.alexa4.linguistic_project.models.UserModel;
 import com.alexa4.linguistic_project.presenters.AuthentificationPresenter;
 import com.alexa4.linguistic_project.presenters.student.StudentPresenter;
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
-import com.alexa4.linguistic_project.view.ViewInterface;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,7 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
-public class LogInView implements AuthInterface {
+public class LogInView implements ViewAuthInterface {
     private AuthentificationPresenter mPresenter;
     private TextField mTaUserSecondName;
     private PasswordField mPfPassword;
