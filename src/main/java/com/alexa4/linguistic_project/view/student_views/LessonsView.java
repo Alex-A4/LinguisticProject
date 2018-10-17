@@ -303,12 +303,25 @@ public class LessonsView implements ViewTextInterface {
                 String fileName = fileNames.get(Integer.valueOf(item.getId()));
                 textLabel.setText(TASK_CONST + fileName);
                 mPresenter.getText(fileName);
+                freeUserChoices();
             });
 
             taskMenu.getItems().add(item);
         }
 
         return taskMenu;
+    }
+
+    /**
+     * Clearing choiceField
+     */
+    private void freeUserChoices() {
+        mPresenter.clearUserChoice();
+
+        //Clear choiceField
+        int count = choiceField.getChildren().size();
+        for (int i = 0; i < count; i++)
+            choiceField.getChildren().remove(0);
     }
 
 
