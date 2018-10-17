@@ -9,7 +9,9 @@ import java.util.*;
 
 public class TextModel {
     private static final String TASKS_FOLDER = "data/tasks/";
-    private static final String ANSWERS_FOLDER = "data/answers";
+    private static final String ANSWERS_FOLDER = "data/answers/";
+
+    private String mCurrentTaskName = null;
 
     //Map contains text, which user select
     //Key is a means of choice, value is a list with texts which user select
@@ -66,6 +68,7 @@ public class TextModel {
      */
     public String getText(String taskName){
         mFoundedMeans = new HashMap<String, ArrayList<String>>();
+        mCurrentTaskName = taskName;
 
         String text = null;
 
@@ -113,7 +116,7 @@ public class TextModel {
                 .forEach(choice -> tryToAddMeansToText(means, choice)));
 
         try {
-            writeTextToFile(fileName, mMarkedText);
+            writeTextToFile(TASKS_FOLDER + fileName, mMarkedText);
         } catch (Exception e) {
             return false;
         }
@@ -121,13 +124,12 @@ public class TextModel {
     }
 
     /**
-     * Writing text to file
-     * @param fileName the name of file which need save
+     * Writing bytes to file
+     * @param filePath the full path of file which need to save
      * @param text the text which need to write into file
      */
-    private void writeTextToFile(String fileName, String text) throws Exception {
-        FileOutputStream stream = new FileOutputStream(new File(TASKS_FOLDER
-                + fileName + ".txt"));
+    private void writeTextToFile(String filePath, String text) throws Exception {
+        FileOutputStream stream = new FileOutputStream(new File(filePath + ".txt"));
 
         stream.write(text.getBytes());
         stream.close();
@@ -153,11 +155,25 @@ public class TextModel {
 
 
     /**
-     * Saving user's answers
-     * TODO add logic
+     * Saving user's answers to file which looks like taskName_userName
+     * mMarkedText is rewriting, so could not be used later with previous value
      * @return the result of saving
      */
     public boolean saveUserAnswer() {
+        String fileName = mCurrentTaskName.toLowerCase()
+                + "_"
+                + UserModel.getUserModel().getCurrentUserName();
+
+        mMarkedText = new String(mNonMarkedText);
+
+        mUserChoiceList.forEach((means, list) -> list
+                .forEach(choice -> tryToAddMeansToText(means, choice)));
+
+        try {
+            writeTextToFile(ANSWERS_FOLDER + fileName, mMarkedText);
+        } catch (Exception e) {
+            return false;
+        }
 
         return true;
     }
