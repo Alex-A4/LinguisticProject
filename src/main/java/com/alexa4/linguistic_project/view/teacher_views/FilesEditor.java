@@ -157,6 +157,7 @@ public class FilesEditor implements ViewTextInterface {
         userSelectedText.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
         userSelectedText.setText(text.trim());
 
+        //If user clicked on textBox, then the text will be selected in area
         textBox.getChildren().addAll(textMeans, userSelectedText);
         textBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -314,6 +315,7 @@ public class FilesEditor implements ViewTextInterface {
         //Menu item response for creating new file
         MenuItem newFile = new MenuItem("Add new file");
         newFile.setOnAction(event -> {
+            freeUserChoice();
             area.clear();
             fileNameTF.clear();
         });
@@ -340,16 +342,27 @@ public class FilesEditor implements ViewTextInterface {
 
     /**
      * Filling choiceFiled by means of expressiveness which contained into file before editing
+     * Firstly userChoice is clearing and then filling by existence means
      */
     private void fillUserChoice() {
-        //Clear choiceField
-        int count = choiceField.getChildren().size();
-        for (int i = 0; i < count; i++)
-            choiceField.getChildren().remove(0);
+        freeUserChoice();
 
         HashMap<String, ArrayList<String>> foundMeans = mPresenter.getFoundMeans();
         foundMeans.forEach((means, collection) -> collection
                 .forEach(text -> addUserChoice(means, text)));
+    }
+
+
+    /**
+     * Clearing choiceField
+     */
+    private void freeUserChoice() {
+        mPresenter.clearUserChoice();
+
+        //Clear choiceField
+        int count = choiceField.getChildren().size();
+        for (int i = 0; i < count; i++)
+            choiceField.getChildren().remove(0);
     }
 
 
