@@ -234,7 +234,7 @@ public class LessonsView implements ViewTextInterface {
         mUserBox.getChildren().addAll(mImageView, mUserNameLabel);
 
         HBox mHatBox = new HBox(10);
-        mHatBox.setPadding(new Insets(10, 30, 0, 30));
+        mHatBox.setPadding(new Insets(0, 30, 0, 0));
         mHatBox.setHgrow(menuBox, Priority.ALWAYS);
         mHatBox.setHgrow(mUserBox, Priority.ALWAYS);
         mHatBox.getChildren().addAll(menuBox, mUserBox);
