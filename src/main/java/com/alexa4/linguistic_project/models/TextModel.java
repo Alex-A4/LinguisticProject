@@ -40,7 +40,7 @@ public class TextModel {
 
 
     public TextModel() {
-        mUserChoiceList = new HashMap<>();
+        clearUserChoice();
         readAllTasksFiles();
     }
 
@@ -180,7 +180,12 @@ public class TextModel {
     }
 
 
-
+    /**
+     * Clearing user choice for new task
+     */
+    public void clearUserChoice() {
+        mUserChoiceList = new HashMap<>();
+    }
 
 
     /**
