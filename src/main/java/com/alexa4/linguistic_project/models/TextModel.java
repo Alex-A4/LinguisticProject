@@ -75,8 +75,10 @@ public class TextModel {
 
             scanner.useDelimiter("\n");
 
-            while(scanner.hasNext())
-                builder.append(scanner.next() + "\n");
+            while(scanner.hasNext()) {
+                builder.append(scanner.next());
+                builder.append("\n");
+            }
 
             text = builder.toString();
 
