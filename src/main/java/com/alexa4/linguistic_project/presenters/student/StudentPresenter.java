@@ -88,6 +88,10 @@ public class StudentPresenter extends UserPresenter implements TextInterface {
     }
 
 
+    /**
+     * Saving user answer
+     * @return
+     */
     public boolean saveUserAnswer() {
         return mTextModel.saveUserAnswer();
     }
