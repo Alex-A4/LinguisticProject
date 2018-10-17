@@ -33,10 +33,12 @@ public class LessonsView implements ViewTextInterface {
     private StyleClassedTextArea area;
     private VBox layout;
     private VBox choiceField;
+    private Label textLabel;
 
     private static final int CHOICE_FIELD_WIDTH = 350;
     private static final int WINDOW_LEFT_PADDING = 30;
     private static final int WINDOW_RIGHT_PADDING = 30;
+    private static final String TASK_CONST = "Task: ";
 
 
     /**
@@ -191,11 +193,13 @@ public class LessonsView implements ViewTextInterface {
                 BorderWidths.DEFAULT
         )));
 
+        HBox textBoxLabels = initTextBoxLabels();
+
         textBox.getChildren().addAll(area, choicePane);
 
         HBox userActions = initUserActions();
 
-        layout.getChildren().addAll(mHatBox, textBox, userActions);
+        layout.getChildren().addAll(mHatBox, textBoxLabels, textBox, userActions);
     }
 
     /**
@@ -296,7 +300,9 @@ public class LessonsView implements ViewTextInterface {
             MenuItem item = new MenuItem(fileNames.get(i));
             item.setId(String.valueOf(i));
             item.setOnAction(event -> {
-                mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
+                String fileName = fileNames.get(Integer.valueOf(item.getId()));
+                textLabel.setText(TASK_CONST + fileName);
+                mPresenter.getText(fileName);
             });
 
             taskMenu.getItems().add(item);
@@ -304,6 +310,35 @@ public class LessonsView implements ViewTextInterface {
 
         return taskMenu;
     }
+
+
+    /**
+     * Initializing box which contains labels for text box
+     * @return the labelsBox
+     */
+    private HBox initTextBoxLabels() {
+        HBox mLabelBox = new HBox(5);
+        mLabelBox.setPadding(new Insets(15, WINDOW_RIGHT_PADDING, 5, WINDOW_LEFT_PADDING));
+
+        textLabel = new Label(TASK_CONST);
+        textLabel.setFont(new Font(16));
+        HBox textBox = new HBox();
+        textBox.getChildren().add(textLabel);
+        textBox.setAlignment(Pos.CENTER_LEFT);
+
+        Label choiceLabel = new Label("Selected means of expression");
+        choiceLabel.setFont(new Font(16));
+        HBox choiceBox = new HBox();
+        choiceBox.getChildren().add(choiceLabel);
+        choiceBox.setAlignment(Pos.CENTER_RIGHT);
+
+        mLabelBox.setHgrow(textBox, Priority.ALWAYS);
+        mLabelBox.setHgrow(choiceBox, Priority.ALWAYS);
+        mLabelBox.getChildren().addAll(textBox, choiceBox);
+
+        return mLabelBox;
+    }
+
 
 
     /**
