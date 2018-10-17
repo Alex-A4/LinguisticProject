@@ -4,7 +4,6 @@ import com.alexa4.linguistic_project.data_stores.MeansOfExpressiveness;
 import com.alexa4.linguistic_project.data_stores.User;
 
 import com.alexa4.linguistic_project.presenters.student.StudentPresenter;
-import com.alexa4.linguistic_project.view.ViewInterface;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
@@ -35,10 +34,9 @@ public class LessonsView implements ViewTextInterface {
     private VBox layout;
     private VBox choiceField;
 
-    private int CHOICE_FIELD_WIDTH = 350;
+    private static final int CHOICE_FIELD_WIDTH = 350;
     private static final int WINDOW_LEFT_PADDING = 30;
     private static final int WINDOW_RIGHT_PADDING = 30;
-
 
 
     /**
