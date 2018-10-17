@@ -116,7 +116,7 @@ public class TextModel {
                 .forEach(choice -> tryToAddMeansToText(means, choice)));
 
         try {
-            writeTextToFile(TASKS_FOLDER + fileName, mMarkedText);
+            writeTextToFile(TASKS_FOLDER, fileName, mMarkedText);
         } catch (Exception e) {
             return false;
         }
@@ -128,8 +128,9 @@ public class TextModel {
      * @param filePath the full path of file which need to save
      * @param text the text which need to write into file
      */
-    private void writeTextToFile(String filePath, String text) throws Exception {
-        FileOutputStream stream = new FileOutputStream(new File(filePath + ".txt"));
+    private void writeTextToFile(String filePath, String fileName, String text) throws Exception {
+        new File(filePath).mkdirs();
+        FileOutputStream stream = new FileOutputStream(new File(filePath + fileName + ".txt"));
 
         stream.write(text.getBytes());
         stream.close();
@@ -170,7 +171,7 @@ public class TextModel {
                 .forEach(choice -> tryToAddMeansToText(means, choice)));
 
         try {
-            writeTextToFile(ANSWERS_FOLDER + fileName, mMarkedText);
+            writeTextToFile(ANSWERS_FOLDER, fileName, mMarkedText);
         } catch (Exception e) {
             return false;
         }
