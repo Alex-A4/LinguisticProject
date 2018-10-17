@@ -41,4 +41,9 @@ public interface TextInterface {
      * @param text the text which user select
      */
     void addUserChoice(String means, String text);
+
+    /**
+     * Clearing userChoice
+     */
+    void clearUserChoice();
 }

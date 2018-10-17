@@ -70,6 +70,13 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
         mTextModel.addUserChoice(means, text);
     }
 
+    /**
+     * Clearing userChoice
+     */
+    @Override
+    public void clearUserChoice() {
+        mTextModel.clearUserChoice();
+    }
 
 
     /**

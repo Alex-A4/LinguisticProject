@@ -68,6 +68,14 @@ public class StudentPresenter extends UserPresenter implements TextInterface {
         mTextModel.addUserChoice(means, text);
     }
 
+    /**
+     * Clearing userChoice
+     */
+    @Override
+    public void clearUserChoice() {
+        mTextModel.clearUserChoice();
+    }
+
 
     /**
      * Starting FilesEditor view
