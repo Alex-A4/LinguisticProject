@@ -313,7 +313,8 @@ public class LessonsView implements ViewTextInterface {
 
 
     /**
-     * Initializing box which contains labels for text box
+     * Initializing box which contains labels for TextBox and ChoiceBox
+     * textLabel is changing when user select some task
      * @return the labelsBox
      */
     private HBox initTextBoxLabels() {
