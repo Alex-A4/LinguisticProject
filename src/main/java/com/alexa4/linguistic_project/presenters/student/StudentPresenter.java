@@ -5,7 +5,6 @@ import com.alexa4.linguistic_project.presenters.TextInterface;
 import com.alexa4.linguistic_project.presenters.UserPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
 import com.alexa4.linguistic_project.view.student_views.LessonsView;
-import com.alexa4.linguistic_project.view.ViewInterface;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
 
