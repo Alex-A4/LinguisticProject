@@ -2,18 +2,19 @@ package com.alexa4.linguistic_project.view.teacher_views;
 
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Class is responsible for displaying window
+ * Window contains UI for teacher to check students tasks
+ */
 public class AnswersCheckerView extends ViewTextInterface {
     private TeacherPresenter mPresenter;
 
@@ -49,7 +50,7 @@ public class AnswersCheckerView extends ViewTextInterface {
      */
     @Override
     protected HBox initUserActions() {
-        return null;
+        return new HBox(10);
     }
 
     @Override
@@ -92,7 +93,12 @@ public class AnswersCheckerView extends ViewTextInterface {
     private Menu createWindowsMenu() {
         Menu windowMenu = new Menu("Windows");
 
+        MenuItem filesEditor = new MenuItem("Files editor");
+        filesEditor.setOnAction(e -> {mPresenter.runFilesEditor();});
+
         MenuItem checkTasks = new MenuItem("Check tasks");
+        checkTasks.setOnAction(e -> {mPresenter.runAnswersChecker();});
+
         windowMenu.getItems().addAll(checkTasks);
         return windowMenu;
     }
@@ -104,18 +110,6 @@ public class AnswersCheckerView extends ViewTextInterface {
     private Menu createTasksMenu() {
         Menu taskMenu = new Menu("Lessons");
         List<String> fileNames = mPresenter.getFilesNameList();
-
-        //Menu item response for creating new file
-        MenuItem newFile = new MenuItem("Add new file");
-        newFile.setOnAction(event -> {
-            freeUserChoices();
-            area.clear();
-//            fileNameTF.clear();
-        });
-        taskMenu.getItems().add(newFile);
-
-        //Adding separator which split "Add new file" button and others
-        taskMenu.getItems().add(new SeparatorMenuItem());
 
         //Menu items for opening files
         for (int i = 0; i < fileNames.size(); i++) {
