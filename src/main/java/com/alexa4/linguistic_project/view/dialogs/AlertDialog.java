@@ -52,7 +52,7 @@ public class AlertDialog {
      */
     public static int callConfirmationAlert(@NotNull String title, @NotNull String header,
                                              @NotNull String content) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
