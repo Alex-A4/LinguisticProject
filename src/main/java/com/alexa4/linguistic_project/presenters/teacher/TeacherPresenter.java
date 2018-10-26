@@ -16,9 +16,19 @@ import java.util.List;
 public class TeacherPresenter extends UserPresenter implements TextInterface {
     private ViewTextInterface mView;
     private TextModel mTextModel;
+    //Static field which contains link on current object
+    private static TeacherPresenter mPresenter;
 
     public TeacherPresenter() {
         mTextModel = new TextModel();
+        mPresenter = this;
+    }
+
+    /**
+     * @return the object of this class with init fields
+     */
+    public static TeacherPresenter getPresenter() {
+        return mPresenter;
     }
 
 
