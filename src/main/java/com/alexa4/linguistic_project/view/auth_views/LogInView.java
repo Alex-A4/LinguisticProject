@@ -5,6 +5,7 @@ import com.alexa4.linguistic_project.models.UserModel;
 import com.alexa4.linguistic_project.presenters.AuthentificationPresenter;
 import com.alexa4.linguistic_project.presenters.student.StudentPresenter;
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
+import com.alexa4.linguistic_project.view.dialogs.AlertDialog;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -110,12 +111,7 @@ public class LogInView implements ViewAuthInterface {
      * @param content the content text of Alert
      */
     private void callAlert(String title, String header, String content){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        if (header != null)
-            alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
+        AlertDialog.callErrorAlert(title, header, content);
     }
 
 
@@ -150,7 +146,7 @@ public class LogInView implements ViewAuthInterface {
         mLUserName.setFont(new Font(13));
 
         //Text field to enter login
-        mTaUserSecondName = new TextField("");
+        mTaUserSecondName = new TextField("admin");
         mTaUserSecondName.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -171,6 +167,7 @@ public class LogInView implements ViewAuthInterface {
 
         //Text field to enter password
         mPfPassword = new PasswordField();
+        mPfPassword.setText("admin");
         mPfPassword.setMaxWidth(200);
         mPfPassword.setTooltip(new Tooltip("Enter your password"));
 

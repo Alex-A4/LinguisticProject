@@ -2,6 +2,7 @@ package com.alexa4.linguistic_project.view;
 
 import com.alexa4.linguistic_project.data_stores.MeansOfExpressiveness;
 import com.alexa4.linguistic_project.data_stores.User;
+import com.alexa4.linguistic_project.view.dialogs.AlertDialog;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -374,12 +375,7 @@ public abstract class ViewTextInterface implements ViewInterface {
      * @param content the content text of Alert
      */
     protected void callAlert(@NotNull String title, String header, @NotNull String content){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        if (header != null)
-            alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
+        AlertDialog.callErrorAlert(title, header, content);
     }
 
     /**
@@ -389,12 +385,7 @@ public abstract class ViewTextInterface implements ViewInterface {
      * @param content the context of Alert
      */
     protected void callSuccess(@NotNull String title, String header, @NotNull String content) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        if (header != null)
-            alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
+        AlertDialog.callSuccessAlert(title, header, content);
     }
 
 
