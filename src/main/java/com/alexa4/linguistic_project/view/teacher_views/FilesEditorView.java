@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
+/**
+ * Class is responsible for displaying window
+ * Window contains UI for teacher to Add new|Modified existing tasks
+ */
 public class FilesEditorView extends ViewTextInterface {
     private TeacherPresenter mPresenter;
     private TextField fileNameTF;

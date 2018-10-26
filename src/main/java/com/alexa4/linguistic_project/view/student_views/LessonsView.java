@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Class is responsible for displaying window
+ * Window contains UI for student to make linguistic task and save it
  */
 public class LessonsView extends ViewTextInterface {
     private StudentPresenter mPresenter = null;
