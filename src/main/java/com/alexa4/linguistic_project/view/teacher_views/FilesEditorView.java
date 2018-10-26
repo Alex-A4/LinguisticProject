@@ -133,8 +133,13 @@ public class FilesEditorView extends ViewTextInterface {
     private Menu createWindowsMenu() {
         Menu windowMenu = new Menu("Windows");
 
+        MenuItem filesEditor = new MenuItem("Files editor");
+        filesEditor.setOnAction(e -> {mPresenter.runFilesEditor();});
+
         MenuItem checkTasks = new MenuItem("Check tasks");
-        windowMenu.getItems().addAll(checkTasks);
+        checkTasks.setOnAction(e -> {mPresenter.runAnswersChecker();});
+
+        windowMenu.getItems().addAll(filesEditor, checkTasks);
         return windowMenu;
     }
 
