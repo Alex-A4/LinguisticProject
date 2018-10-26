@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -63,31 +64,42 @@ public class TaskDialog {
         tasksListBox.setBorder(new Border(new BorderStroke(Paint.valueOf("#000000"),
                 BorderStrokeStyle.NONE,CornerRadii.EMPTY, BorderWidths.EMPTY)));
 
-        List<HBox> listOfTexts = new ArrayList<>();
+        HashMap<Text, SelectedFlag> textMap = new HashMap<>();
 
         for (int i = 0; i < tasksNamesList.size(); i++) {
-            HBox textBox = new HBox(0);
-            textBox.setPrefWidth(Double.MAX_VALUE);
             Text text = new Text(tasksNamesList.get(i));
-            textBox.getChildren().add(text);
 
-            tasksListBox.getChildren().add(textBox);
-            listOfTexts.add(textBox);
+            textMap.put(text, new SelectedFlag());
+
+            tasksListBox.getChildren().add(text);
             text.setFont(new Font(20));
 
             /**
-             * TODO: add logic to add/delete focus to/from boxes
+             * If current task already selected, then unselect it
+             * If the current task was not selected, then unselect all other tasks and select current
              */
-            textBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            text.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    textBox.setStyle("-fx-background-color: #1faee9;");
-                    nameOfTask.setText(text.getText());
+                    if (textMap.get(text).isSelected) {
+                        textMap.get(text).setSelected(false);
+                        text.setFill(Paint.valueOf("#000000"));
+                        nameOfTask.setText("");
+                    } else {
+                        textMap.forEach((t, c) -> {
+                            c.setSelected(false);
+                            t.setFill(Paint.valueOf("#000000"));
+                        });
+                        text.setFill(Paint.valueOf("#1faee9"));
+                        textMap.get(text).setSelected(true);
+                        nameOfTask.setText(text.getText());
+                    }
                 }
             });
         }
 
 
+        //Init scrollPane with tasks list
         ScrollPane pane = new ScrollPane(tasksListBox) {
             @Override
             public void requestFocus() {
@@ -123,5 +135,24 @@ public class TaskDialog {
         Scene scene = new Scene(layout, 350, 270);
         stage.setScene(scene);
         stage.showAndWait();
+    }
+
+    /**
+     * Class contains information about was the specified object selected or not
+     */
+    private static class SelectedFlag {
+        private boolean isSelected;
+
+        public SelectedFlag() {
+            isSelected = false;
+        }
+
+        public boolean isSelected() {
+            return isSelected;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
     }
 }
