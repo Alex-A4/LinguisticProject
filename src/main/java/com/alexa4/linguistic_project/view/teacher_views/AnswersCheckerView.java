@@ -2,9 +2,10 @@ package com.alexa4.linguistic_project.view.teacher_views;
 
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Box contains TF with file name and save button
-     * @return the box
+     * @return the box with actions
      */
     @Override
     protected HBox initUserActions() {
@@ -90,6 +91,10 @@ public class AnswersCheckerView extends ViewTextInterface {
         return mPresenter.getUserMode();
     }
 
+    /**
+     * Creating menu which contains list of window we can open
+     * @return the menu of windows
+     */
     private Menu createWindowsMenu() {
         Menu windowMenu = new Menu("Windows");
 
@@ -105,7 +110,7 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Creating menu with tasks
-     * @return
+     * @return the menu which contains list of tasks
      */
     private Menu createTasksMenu() {
         Menu taskMenu = new Menu("Lessons");
@@ -116,7 +121,6 @@ public class AnswersCheckerView extends ViewTextInterface {
             MenuItem item = new MenuItem(fileNames.get(i));
             item.setId(String.valueOf(i));
             item.setOnAction(event -> {
-//                fileNameTF.setText(item.getText());
                 mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
                 fillUserChoice();
             });
@@ -125,6 +129,46 @@ public class AnswersCheckerView extends ViewTextInterface {
         }
 
         return taskMenu;
+    }
+
+    /**
+     * Overriding parent method to make own UI
+     */
+    @Override
+    protected void initWindow() {
+        HBox mHatBox = initHatBox();
+
+        HBox textBox = new HBox(15);
+        textBox.setPadding(new Insets(0, WINDOW_RIGHT_PADDING, 30, WINDOW_LEFT_PADDING));
+
+        area = initTextField();
+
+        choiceField = initChoiceVBox();
+        ScrollPane choicePane = new ScrollPane();
+        choicePane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        choicePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        choicePane.setContent(choiceField);
+        choicePane.setBorder(new Border(new BorderStroke(
+                Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY,
+                BorderWidths.DEFAULT
+        )));
+
+        HBox textBoxLabels = initTextBoxLabels();
+
+        textBox.getChildren().addAll(area, choicePane);
+
+        //Box contains textBoxLabels and textBox
+        VBox textWorkerBox = new VBox();
+        textWorkerBox.getChildren().addAll(textBoxLabels, textBox);
+
+        //Box contains hierarchy of answers, text of task and choice field
+        HBox workPlace = new HBox(10);
+        workPlace.getChildren().addAll(textWorkerBox);
+
+        //Box contains UI with navigation
+        HBox userActions = initUserActions();
+
+        layout.getChildren().addAll(mHatBox, workPlace, userActions);
     }
 
     /**
