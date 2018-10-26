@@ -22,9 +22,13 @@ import org.fxmisc.richtext.StyleClassedTextArea;
 import java.io.File;
 
 public abstract class ViewTextInterface implements ViewInterface {
+    //Text area which contains text of task
     protected StyleClassedTextArea area;
+    //Layout of window which will set to Stage
     protected VBox layout;
+    //Box which contains means of expressions which user select
     protected VBox choiceField;
+    //The label which show current open task
     protected Label textLabel;
 
     protected static final int CHOICE_FIELD_WIDTH = 350;
@@ -37,12 +41,15 @@ public abstract class ViewTextInterface implements ViewInterface {
     }
 
 
+    /**
+     * Detach presenter from view
+     */
     @Override
     public abstract void detachPresenter();
 
     /**
      * Getting the layout to put it into Stage
-     * @return
+     * @return the layout of window
      */
     @Override
     public VBox getLayout(){
@@ -55,7 +62,7 @@ public abstract class ViewTextInterface implements ViewInterface {
     /**
      * Initializing text area
      */
-    private StyleClassedTextArea initTextField() {
+     protected StyleClassedTextArea initTextField() {
         area = new StyleClassedTextArea();
         area.setWrapText(true);
         int userMode = getUserMode();
@@ -85,7 +92,7 @@ public abstract class ViewTextInterface implements ViewInterface {
      * Initializing pop-up menu with means of expressiveness
      * @return pop-up menu
      */
-    private ContextMenu initContextMenu(){
+     protected ContextMenu initContextMenu(){
         ContextMenu menu = new ContextMenu();
 
         for (MeansOfExpressiveness means : MeansOfExpressiveness.values()) {
@@ -177,17 +184,31 @@ public abstract class ViewTextInterface implements ViewInterface {
         choiceField.getChildren().addAll(newRecordBox);
     }
 
+    /**
+     * Set the choice of user to model
+     * @param means the selected means
+     * @param selectedText the text which means wrap
+     */
     protected abstract void addUserChoice(String means, String selectedText);
 
+    /**
+     * Getting specified color which will set to text in choiceField
+     * @return
+     */
     protected abstract Paint getTextColors();
 
+    /**
+     * Deleting the choice of user from model
+     * @param means the deleting means
+     * @param selectedText the text which means wrap
+     */
     protected abstract void deleteUserChoice(String means, String selectedText);
 
     /**
      * Initializing window by the content, now:
      * TextArea, button to show text
      */
-    private void initWindow(){
+    protected void initWindow(){
         HBox mHatBox = initHatBox();
 
         HBox textBox = new HBox(15);
@@ -218,7 +239,7 @@ public abstract class ViewTextInterface implements ViewInterface {
      * Initializing the hat of window. It contains data about current user and MenuBar
      * @return the hat of window
      */
-    private HBox initHatBox() {
+     protected HBox initHatBox() {
         HBox mUserBox = new HBox(20);
         mUserBox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -254,10 +275,22 @@ public abstract class ViewTextInterface implements ViewInterface {
         return mHatBox;
     }
 
+    /**
+     * Abstract method to initialize menuBar. SubClass fill HBox
+     * @return the menuBar which will set on top
+     */
     protected abstract HBox initMenuBar();
 
+    /**
+     * Getting specified name of user
+     * @return the userName
+     */
     protected abstract String getUserName();
 
+    /**
+     * Getting specified mode of user
+     * @return the userMode
+     */
     protected abstract int getUserMode();
 
     /**
@@ -266,6 +299,10 @@ public abstract class ViewTextInterface implements ViewInterface {
      */
     protected abstract HBox initUserActions();
 
+    /**
+     * Getting specified text which will set to area
+     * @param fileName the name of file which text need to get
+     */
     protected abstract void getText(String fileName);
 
 
@@ -289,7 +326,7 @@ public abstract class ViewTextInterface implements ViewInterface {
      * textLabel is changing when user select some task
      * @return the labelsBox
      */
-    private HBox initTextBoxLabels() {
+     protected HBox initTextBoxLabels() {
         HBox mLabelBox = new HBox(5);
         mLabelBox.setPadding(new Insets(15, WINDOW_RIGHT_PADDING, 5, WINDOW_LEFT_PADDING));
 
@@ -318,7 +355,7 @@ public abstract class ViewTextInterface implements ViewInterface {
      * Initializing text file where will display user's choice
      * @return
      */
-    private VBox initChoiceVBox() {
+     protected VBox initChoiceVBox() {
         choiceField = new VBox();
 
         choiceField.setPrefWidth(CHOICE_FIELD_WIDTH);
