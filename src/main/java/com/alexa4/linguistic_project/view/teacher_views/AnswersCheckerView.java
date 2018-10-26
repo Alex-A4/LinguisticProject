@@ -153,22 +153,19 @@ public class AnswersCheckerView extends ViewTextInterface {
                 BorderWidths.DEFAULT
         )));
 
+        //Init box which contains head labels for textBox
         HBox textBoxLabels = initTextBoxLabels();
 
-        textBox.getChildren().addAll(area, choicePane);
+        //Init box which contains hierarchy of answers on current task
+        HBox answersHierarchy = initAnswersHierarchy();
 
-        //Box contains textBoxLabels and textBox
-        VBox textWorkerBox = new VBox();
-        textWorkerBox.getChildren().addAll(textBoxLabels, textBox);
+        textBox.getChildren().addAll(answersHierarchy, area, choicePane);
 
-        //Box contains hierarchy of answers, text of task and choice field
-        HBox workPlace = new HBox(10);
-        workPlace.getChildren().addAll(textWorkerBox);
 
         //Box contains UI with navigation
         HBox userActions = initUserActions();
 
-        layout.getChildren().addAll(mHatBox, workPlace, userActions);
+        layout.getChildren().addAll(mHatBox, textBoxLabels, textBox, userActions);
     }
 
     /**
@@ -181,5 +178,17 @@ public class AnswersCheckerView extends ViewTextInterface {
         HashMap<String, ArrayList<String>> foundMeans = mPresenter.getFoundMeans();
         foundMeans.forEach((means, collection) -> collection
                 .forEach(text -> addUserChoiceToBox(means, text)));
+    }
+
+    /**
+     * Initializing hierarchy of users answers
+     * TODO: Add logic
+     * @return
+     */
+    private HBox initAnswersHierarchy() {
+        HBox mHierarchy = new HBox();
+
+
+        return mHierarchy;
     }
 }
