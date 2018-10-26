@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class FilesEditor extends ViewTextInterface {
+public class FilesEditorView extends ViewTextInterface {
     private TeacherPresenter mPresenter;
     private TextField fileNameTF;
 
-    public FilesEditor(TeacherPresenter presenter) {
+    public FilesEditorView(TeacherPresenter presenter) {
         super();
         this.mPresenter = presenter;
     }
