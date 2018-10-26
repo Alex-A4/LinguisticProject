@@ -1,6 +1,7 @@
 package com.alexa4.linguistic_project.view.dialogs;
 
 import com.alexa4.linguistic_project.models.TextModel;
+import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
@@ -81,7 +83,7 @@ public class TaskDialog {
             text.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (textMap.get(text).isSelected) {
+                    if (textMap.get(text).isSelected()) {
                         textMap.get(text).setSelected(false);
                         text.setFill(Paint.valueOf("#000000"));
                         nameOfTask.setText("");
@@ -155,4 +157,106 @@ public class TaskDialog {
             isSelected = selected;
         }
     }
+
+
+    /**
+     * Callback interface which needs to send result of saving file
+     */
+    public interface TaskSaverCallback {
+        void sendResultOfSaving(boolean result);
+    }
+
+    /**
+     * Saving changes of text to specified file which name user will enter
+     * @param textOfTask the text which need to save
+     * @param callback the callback where need send result of saving
+     */
+    public static void saveTask(String textOfTask, String previousFileName, TaskSaverCallback callback) {
+        //Getting list of tasks names
+        List<String> tasksNamesList = new TextModel().getTasksListOfFiles();
+
+        //List of Text which contains name of specified task
+        List<Text> listTasksText = new ArrayList<>();
+
+
+        //Init stage
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setResizable(false);
+        stage.setTitle("Save task");
+
+        //Init parent layout
+        VBox layout = new VBox(20);
+        layout.setPadding(new Insets(20));
+
+        //Init area where will set name of current task
+        TextField nameOfTask = new TextField(previousFileName);
+        nameOfTask.setTooltip(new Tooltip("Enter the name of file"));
+        nameOfTask.setFocusTraversable(false);
+        nameOfTask.setAlignment(Pos.CENTER);
+        nameOfTask.setPrefHeight(30);
+        nameOfTask.setFont(new Font(20));
+        nameOfTask.setEditable(false);
+
+        //Box with tasks
+        VBox tasksListBox = new VBox(10);
+        tasksListBox.setBorder(new Border(new BorderStroke(Paint.valueOf("#000000"),
+                BorderStrokeStyle.NONE,CornerRadii.EMPTY, BorderWidths.EMPTY)));
+
+
+        for (int i = 0; i < tasksNamesList.size(); i++) {
+            Text text = new Text(tasksNamesList.get(i));
+
+            listTasksText.add(text);
+
+            tasksListBox.getChildren().add(text);
+            text.setFont(new Font(20));
+        }
+
+
+        //Init scrollPane with tasks list
+        ScrollPane pane = new ScrollPane(tasksListBox) {
+            @Override
+            public void requestFocus() {
+            }
+        };
+        pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        pane.setFocusTraversable(false);
+        pane.setStyle("-fx-background-color:transparent;");
+
+        //Init button to send task name
+        Button openBtn = new Button("Save");
+        openBtn.setFont(new Font(18));
+        //Trying to save file
+        openBtn.setOnAction(e -> {
+            String fileName = nameOfTask.getText();
+            for (int i = 0; i < tasksNamesList.size(); i++)
+                //If fileName equals to some existence tasks names
+                //then ask user does he want to rewrite file
+                if (fileName.equals(tasksNamesList.get(i))) {
+                    if (AlertDialog.callConfirmationAlert("Rewrite file?",
+                            "Are you sure want to rewrite file: ", fileName) == AlertDialog.CONFIRM_CANCEL)
+                        return;
+                }
+            if (TeacherPresenter.getPresenter() != null)
+                callback.sendResultOfSaving(TeacherPresenter.getPresenter().saveFileChanges(textOfTask, fileName));
+            else AlertDialog.callErrorAlert("Saving error", null, "File could not be saved");
+
+            stage.close();
+        });
+        HBox buttonBox = new HBox();
+        buttonBox.getChildren().add(openBtn);
+        buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
+
+
+        layout.setVgrow(buttonBox, Priority.ALWAYS);
+
+        layout.getChildren().addAll(nameOfTask, pane, buttonBox);
+
+        Scene scene = new Scene(layout, 350, 270);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
 }
