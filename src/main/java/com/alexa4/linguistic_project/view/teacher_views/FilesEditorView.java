@@ -2,6 +2,7 @@ package com.alexa4.linguistic_project.view.teacher_views;
 
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
+import com.alexa4.linguistic_project.view.dialogs.TaskDialog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -11,7 +12,6 @@ import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -50,6 +50,7 @@ public class FilesEditorView extends ViewTextInterface {
 
     /**
      * Box contains TF with file name and save button
+     * TODO: change logic of menu creating. File saving must be implements due to dialog window
      * @return the box
      */
     @Override
@@ -145,11 +146,11 @@ public class FilesEditorView extends ViewTextInterface {
 
     /**
      * Creating menu with tasks
+     * TODO: change logic of menu creating. File choosing must be implements due to dialog window
      * @return
      */
     private Menu createTasksMenu() {
         Menu taskMenu = new Menu("Lessons");
-        List<String> fileNames = mPresenter.getFilesNameList();
 
         //Menu item response for creating new file
         MenuItem newFile = new MenuItem("Add new file");
@@ -163,18 +164,34 @@ public class FilesEditorView extends ViewTextInterface {
         //Adding separator which split "Add new file" button and others
         taskMenu.getItems().add(new SeparatorMenuItem());
 
-        //Menu items for opening files
-        for (int i = 0; i < fileNames.size(); i++) {
-            MenuItem item = new MenuItem(fileNames.get(i));
-            item.setId(String.valueOf(i));
-            item.setOnAction(event -> {
-                fileNameTF.setText(item.getText());
-                mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
-                fillUserChoice();
+        MenuItem getTask = new MenuItem("Choose task");
+        getTask.setOnAction(event -> {
+            TaskDialog.getTaskName(new TaskDialog.TaskPickerCallback() {
+                @Override
+                public void sendTaskName(String taskName) {
+                    fileNameTF.setText(taskName);
+                    textLabel.setText(TASK_CONST + taskName);
+                    mPresenter.getText(taskName);
+                    fillUserChoice();
+                }
             });
+        });
 
-            taskMenu.getItems().add(item);
-        }
+        taskMenu.getItems().add(getTask);
+
+//        List<String> fileNames = mPresenter.getFilesNameList();
+//        Menu items for opening files
+//        for (int i = 0; i < fileNames.size(); i++) {
+//            MenuItem item = new MenuItem(fileNames.get(i));
+//            item.setId(String.valueOf(i));
+//            item.setOnAction(event -> {
+//                fileNameTF.setText(item.getText());
+//                mPresenter.getText(fileNames.get(Integer.valueOf(item.getId()))); //change to item.getText()
+//                fillUserChoice();
+//            });
+//
+//            taskMenu.getItems().add(item);
+//        }
 
         return taskMenu;
     }
