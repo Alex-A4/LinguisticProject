@@ -4,7 +4,7 @@ import com.alexa4.linguistic_project.models.TextModel;
 import com.alexa4.linguistic_project.presenters.TextInterface;
 import com.alexa4.linguistic_project.presenters.UserPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
-import com.alexa4.linguistic_project.view.teacher_views.FilesEditor;
+import com.alexa4.linguistic_project.view.teacher_views.FilesEditorView;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
 
@@ -79,11 +79,11 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
 
 
     /**
-     * Starting FilesEditor view
+     * Starting FilesEditorView view
      */
     @Override
     public void start() {
-        mView = new FilesEditor(this);
+        mView = new FilesEditorView(this);
         mStage.setTitle("Tasks editor");
         mStage.setScene(new Scene(mView.getLayout()));
     }
