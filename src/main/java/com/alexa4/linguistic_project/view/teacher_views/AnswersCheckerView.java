@@ -104,7 +104,7 @@ public class AnswersCheckerView extends ViewTextInterface {
         MenuItem checkTasks = new MenuItem("Check tasks");
         checkTasks.setOnAction(e -> {mPresenter.runAnswersChecker();});
 
-        windowMenu.getItems().addAll(checkTasks);
+        windowMenu.getItems().addAll(filesEditor, checkTasks);
         return windowMenu;
     }
 
