@@ -50,7 +50,6 @@ public class FilesEditorView extends ViewTextInterface {
 
     /**
      * Box contains TF with file name and save button
-     * TODO: change logic of menu creating. File saving must be implements due to dialog window
      * @return the box
      */
     @Override
@@ -79,11 +78,21 @@ public class FilesEditorView extends ViewTextInterface {
                 return;
             }
 
-            if (!mPresenter.saveFileChanges(area.getText(), fileNameTF.getText()))
-                callAlert("Saving error", null,
-                        "File" + fileNameTF.getText() + "could not be saved");
-            else callSuccess("Saving success", null,
-                    "File " + fileNameTF.getText() + ".txt saved");
+            TaskDialog.saveTask(area.getText(), fileNameTF.getText(), new TaskDialog.TaskSaverCallback() {
+                @Override
+                public void sendResultOfSaving(boolean result) {
+                    if (!result)
+                        callAlert("Saving error", null,
+                                "File" + fileNameTF.getText() + "could not be saved");
+                    else callSuccess("Saving success", null,
+                            "File " + fileNameTF.getText() + ".txt saved");
+                }
+            });
+//            if (!mPresenter.saveFileChanges(area.getText(), fileNameTF.getText()))
+//                callAlert("Saving error", null,
+//                        "File" + fileNameTF.getText() + "could not be saved");
+//            else callSuccess("Saving success", null,
+//                    "File " + fileNameTF.getText() + ".txt saved");
         });
         buttonBox.getChildren().add(saveBtn);
 
@@ -146,14 +155,13 @@ public class FilesEditorView extends ViewTextInterface {
 
     /**
      * Creating menu with tasks
-     * TODO: change logic of menu creating. File choosing must be implements due to dialog window
-     * @return
+     * @return the Menu of tasks
      */
     private Menu createTasksMenu() {
-        Menu taskMenu = new Menu("Lessons");
+        Menu taskMenu = new Menu("Tasks");
 
         //Menu item response for creating new file
-        MenuItem newFile = new MenuItem("Add new file");
+        MenuItem newFile = new MenuItem("Add new task");
         newFile.setOnAction(event -> {
             freeUserChoices();
             area.clear();
@@ -178,20 +186,6 @@ public class FilesEditorView extends ViewTextInterface {
         });
 
         taskMenu.getItems().add(getTask);
-
-//        List<String> fileNames = mPresenter.getFilesNameList();
-//        Menu items for opening files
-//        for (int i = 0; i < fileNames.size(); i++) {
-//            MenuItem item = new MenuItem(fileNames.get(i));
-//            item.setId(String.valueOf(i));
-//            item.setOnAction(event -> {
-//                fileNameTF.setText(item.getText());
-//                mPresenter.getText(fileNames.get(Integer.valueOf(item.getId()))); //change to item.getText()
-//                fillUserChoice();
-//            });
-//
-//            taskMenu.getItems().add(item);
-//        }
 
         return taskMenu;
     }
