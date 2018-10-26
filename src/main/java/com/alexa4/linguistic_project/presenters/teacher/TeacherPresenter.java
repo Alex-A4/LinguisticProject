@@ -92,7 +92,7 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
     public void runFilesEditor() {
         if (mView.getClass() == FilesEditorView.class)
             return;
-        
+
         mView = new FilesEditorView(this);
         mStage.setTitle("Tasks editor");
         mStage.setScene(new Scene(mView.getLayout()));
