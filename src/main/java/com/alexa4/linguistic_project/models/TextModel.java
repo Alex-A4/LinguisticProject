@@ -161,7 +161,7 @@ public class TextModel {
      * @return the result of saving
      */
     public boolean saveUserAnswer() {
-        String fileName = mCurrentTaskName.toLowerCase()
+        String fileName = mCurrentTaskName
                 + "_"
                 + UserModel.getUserModel().getCurrentUserName();
 
