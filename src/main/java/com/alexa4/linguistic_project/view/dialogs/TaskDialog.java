@@ -102,11 +102,7 @@ public class TaskDialog {
 
 
         //Init scrollPane with tasks list
-        ScrollPane pane = new ScrollPane(tasksListBox) {
-            @Override
-            public void requestFocus() {
-            }
-        };
+        ScrollPane pane = new ScrollPane(tasksListBox);
         pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         pane.setFocusTraversable(false);
