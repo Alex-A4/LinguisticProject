@@ -4,11 +4,17 @@ import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,6 +150,7 @@ public class AnswersCheckerView extends ViewTextInterface {
         textBox.setPadding(new Insets(0, WINDOW_RIGHT_PADDING, 30, WINDOW_LEFT_PADDING));
 
         area = initTextField();
+        area.setEditable(false);
 
         choiceField = initChoiceVBox();
         ScrollPane choicePane = new ScrollPane();
@@ -168,6 +175,57 @@ public class AnswersCheckerView extends ViewTextInterface {
         HBox userActions = initUserActions();
 
         layout.getChildren().addAll(mHatBox, textBoxLabels, textBox, userActions);
+    }
+
+
+    /**
+     * Overriding this method to hide deleting button
+     * 
+     * Display user choice in choiceField like a record
+     * Make new record box which contains:
+     * ------------------
+     * textMeans        |
+     * userSelectedText |
+     * ------------------
+     */
+    @Override
+    protected void addUserChoiceToBox(String means, String text) {
+        HBox newRecordBox = new HBox(10);
+        newRecordBox.setAlignment(Pos.CENTER_LEFT);
+
+        Text textMeans = new Text();
+        Text userSelectedText = new Text();
+
+        //Box with means name and with text which user selected
+        VBox textBox = new VBox();
+
+        //textMeans will display which means of expressiveness user select
+        textMeans.setText("\n" + means.toUpperCase() +
+                " is");
+        textMeans.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
+        textMeans.setFill(getTextColors());
+
+        //userSelectedText will display which text user select
+        userSelectedText.setWrappingWidth(CHOICE_FIELD_WIDTH - 70);
+        userSelectedText.setText(text.trim());
+
+        //If user clicked on textBox, then the text will be selected in area
+        textBox.getChildren().addAll(textMeans, userSelectedText);
+        textBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                int start = area.getText().indexOf(userSelectedText.getText());
+                int end = userSelectedText.getText().length();
+                area.selectRange(start, start + end);
+            }
+        });
+        newRecordBox.getChildren().addAll(textBox);
+
+        //Add current text to collection
+        addUserChoice(means.toLowerCase(), text);
+
+        //Add current box to view
+        choiceField.getChildren().addAll(newRecordBox);
     }
 
     /**
@@ -211,10 +269,10 @@ public class AnswersCheckerView extends ViewTextInterface {
             public void changed(ObservableValue<? extends TreeItem<String>> observable,
                                 TreeItem<String> oldValue, TreeItem<String> newValue) {
 
-
                 //If selected student answer then get its text
-                if (newValue.getParent() != null && answersMap.containsKey(newValue.getValue())) {
-                    mPresenter.getAnswerText(newValue.getValue(), newValue.getParent().getValue());
+                if (newValue.getParent() != null && answersMap.containsKey(newValue.getParent().getValue())) {
+                    mPresenter.getAnswerText(newValue.getParent().getValue(), newValue.getValue());
+                    fillUserChoice();
                 }
             }
         });
