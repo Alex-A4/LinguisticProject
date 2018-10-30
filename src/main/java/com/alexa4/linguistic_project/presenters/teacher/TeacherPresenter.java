@@ -138,4 +138,8 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
     public HashMap<String, ArrayList<String>> getAnswersMap() {
         return mTextModel.getAnswersMap();
     }
+
+    public void getAnswerText(String userName, String taskName) {
+        mView.setText(mTextModel.getAnswerText(userName, taskName));
+    }
 }
