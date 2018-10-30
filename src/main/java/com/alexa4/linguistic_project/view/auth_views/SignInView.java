@@ -21,6 +21,7 @@ import javafx.scene.text.Font;
 public class SignInView implements ViewAuthInterface {
     private AuthentificationPresenter mPresenter;
     private TextField mTaUserSecondName;
+    private TextField mInitials;
     private PasswordField mPfPassword;
     private PasswordField mPfConfirmPassword;
 
@@ -77,18 +78,21 @@ public class SignInView implements ViewAuthInterface {
         mSignUpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                //If passwords is different
                 if (!mPfPassword.getText().equals(mPfConfirmPassword.getText())){
                     callAlert("Passwords do not much", null, "Passwords must be equals");
                     mPfPassword.requestFocus();
                     return;
                 }
 
-                if (mPfPassword.getText().equals("") || mTaUserSecondName.equals("")){
-                    callAlert("Empty fields", null, "User login or password is empty");
+                //If some of fields is empty
+                if (mPfPassword.getText().equals("") || mTaUserSecondName.getText().equals("")
+                        || mInitials.getText().equals("")){
+                    callAlert("Empty fields", null, "FIO, login or password is empty");
                     return;
                 }
 
-                mPresenter.tryToSignIn(mTaUserSecondName.getText(), mPfPassword.getText());
+                mPresenter.tryToSignIn(mTaUserSecondName.getText(), mPfPassword.getText(), mInitials.getText());
             }
         });
 
@@ -130,6 +134,26 @@ public class SignInView implements ViewAuthInterface {
         ColumnConstraints mLabelsColumn = new ColumnConstraints();
         mLabelsColumn.setHalignment(HPos.RIGHT);
         mLabelsColumn.setHgrow(Priority.ALWAYS);
+
+
+        Label mLUserInitials = new Label("Initials:");
+        mLUserInitials.setFont(new Font(13));
+
+        mInitials = new TextField("");
+        mInitials.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.TAB){
+                    mTaUserSecondName.requestFocus();
+                    event.consume();
+                }
+            }
+        });
+        mInitials.setMaxWidth(200);
+        mInitials.setFont(new Font(13));
+        mInitials.setPrefHeight(10);
+        mInitials.setTooltip(new Tooltip("Enter your login"));
+
 
 
         Label mLUserName = new Label("User login:");
@@ -180,14 +204,16 @@ public class SignInView implements ViewAuthInterface {
 
         //Add labels to first column
         pane.getColumnConstraints().add(0, mLabelsColumn);
-        pane.add(mLUserName, 0, 0);
-        pane.add(mLUserPassword, 0, 1);
-        pane.add(mLConfirmPassword, 0, 2);
+        pane.add(mLUserInitials, 0, 0);
+        pane.add(mLUserName, 0, 1);
+        pane.add(mLUserPassword, 0, 2);
+        pane.add(mLConfirmPassword, 0, 3);
 
         //Add text fields to the second column
-        pane.add(mTaUserSecondName, 1, 0);
-        pane.add(mPfPassword, 1, 1);
-        pane.add(mPfConfirmPassword, 1, 2);
+        pane.add(mInitials, 1, 0);
+        pane.add(mTaUserSecondName, 1, 1);
+        pane.add(mPfPassword, 1, 2);
+        pane.add(mPfConfirmPassword, 1, 3);
 
         return pane;
     }
