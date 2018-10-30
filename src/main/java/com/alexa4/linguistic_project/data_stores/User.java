@@ -6,7 +6,7 @@ public class User {
     //Variable which contains mode of user
     private final int userMode;
     //Variable which contains LastName + FirstName
-    private final String mLastFirstNames;
+    private final String mInitials;
 
     //The teacher can check the student work and evaluate it
     public static final int TEACHER_MODE = 1;
@@ -19,17 +19,17 @@ public class User {
      * @param userLogin the login name of user
      * @param userMode the mode of user
      */
-    public User (String userLogin, int userMode, String lastFirstNames) {
+    public User (String userLogin, int userMode, String initials) {
         this.mUserLogin = userLogin;
-        this.mLastFirstNames = lastFirstNames;
+        this.mInitials = initials;
 
         if (userMode == TEACHER_MODE || userMode == STUDENT_MODE)
             this.userMode = userMode;
         else this.userMode = STUDENT_MODE;
     }
 
-    public String getLastFirstNames() {
-        return mLastFirstNames;
+    public String getInitials() {
+        return mInitials;
     }
 
     public String getUserName() {
