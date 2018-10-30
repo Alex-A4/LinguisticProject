@@ -157,6 +157,7 @@ public class AnswersCheckerView extends ViewTextInterface {
         choicePane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         choicePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         choicePane.setContent(choiceField);
+        choicePane.setStyle("-fx-background-color:transparent;");
         choicePane.setBorder(new Border(new BorderStroke(
                 Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY,
                 BorderWidths.DEFAULT
@@ -180,7 +181,7 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Overriding this method to hide deleting button
-     * 
+     *
      * Display user choice in choiceField like a record
      * Make new record box which contains:
      * ------------------
