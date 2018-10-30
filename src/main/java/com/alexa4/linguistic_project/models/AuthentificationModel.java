@@ -59,9 +59,10 @@ public class AuthentificationModel {
      * If success then set currentUserName and send response
      * @param userName the user name
      * @param userPassword the user password
+     * @param initials the initials of user
      * @param callback the callback to send response to presenters
      */
-    public void tryToSignIn(String userName, String userPassword, SignInCallback callback) {
+    public void tryToSignIn(String userName, String userPassword, String initials, SignInCallback callback) {
         if (userName.length() % 2 == 0) {
             mUser.initUser(userName, User.STUDENT_MODE);
             callback.sendSignInResponse(true);
