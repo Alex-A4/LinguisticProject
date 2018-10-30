@@ -58,9 +58,12 @@ public class AuthentificationPresenter extends UserPresenter {
     /**
      * Trying to sign in new account in DB
      * If success then notify mView about it
+     * @param login the user's login
+     * @param userPassword the user's password
+     * @param initials the user's initials
      */
-    public void tryToSignIn(String userName, String userPassword){
-        mAuthModel.tryToSignIn(userName, userPassword, new AuthentificationModel.SignInCallback() {
+    public void tryToSignIn(String login, String userPassword, String initials){
+        mAuthModel.tryToSignIn(login, userPassword, initials, new AuthentificationModel.SignInCallback() {
             @Override
             public void sendSignInResponse(boolean response) {
                 if (response)
