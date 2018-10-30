@@ -310,4 +310,43 @@ public class TextModel {
 
         return answersMap;
     }
+
+    /**
+     * Reading file of student answer
+     * @param userName the name of user
+     * @param taskName the name of task which text need return
+     * @return the text of answer
+     */
+    public String getAnswerText(String userName, String taskName) {
+        String nameOfFile = taskName + "_" + userName;
+
+        mFoundedMeans = new HashMap<String, ArrayList<String>>();
+        mCurrentTaskName = taskName;
+
+        String text = null;
+
+        try {
+            Scanner scanner = new Scanner(new File(ANSWERS_FOLDER + nameOfFile + ".txt"));
+            StringBuilder builder = new StringBuilder();
+
+            scanner.useDelimiter("\n");
+
+            while(scanner.hasNext()) {
+                builder.append(scanner.next());
+                builder.append("\n");
+            }
+
+            text = builder.toString();
+
+            mMarkedText = text;
+            TextAdapter.buildMeansMap(mMarkedText, mFoundedMeans);
+            mNonMarkedText = TextAdapter.convertMarkedText(text);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return mNonMarkedText;
+    }
 }
