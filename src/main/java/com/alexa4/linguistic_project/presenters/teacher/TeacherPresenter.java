@@ -135,4 +135,7 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
         return mTextModel.saveFileChanges(text, fileName);
     }
 
+    public HashMap<String, ArrayList<String>> getAnswersMap() {
+        return mTextModel.getAnswersMap();
+    }
 }
