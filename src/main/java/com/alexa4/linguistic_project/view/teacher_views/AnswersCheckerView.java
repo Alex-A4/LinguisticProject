@@ -149,12 +149,11 @@ public class AnswersCheckerView extends ViewTextInterface {
         area = initTextField();
         area.setEditable(false);
 
-        textLabel.setText("");
-
         ScrollPane choicePane = initChoiceScrollPane();
 
         //Init box which contains head labels for textBox
         HBox textBoxLabels = initTextBoxLabels();
+        textLabel.setText("");
 
         //Init box which contains hierarchy of answers on current task
         VBox answersHierarchy = initAnswersHierarchy();
