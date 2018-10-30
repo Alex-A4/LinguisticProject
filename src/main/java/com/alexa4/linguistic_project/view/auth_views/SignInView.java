@@ -88,7 +88,7 @@ public class SignInView implements ViewAuthInterface {
                 //If some of fields is empty
                 if (mPfPassword.getText().equals("") || mTaUserSecondName.getText().equals("")
                         || mInitials.getText().equals("")){
-                    callAlert("Empty fields", null, "FIO, login or password is empty");
+                    callAlert("Empty fields", null, "Initials, login or password is empty");
                     return;
                 }
 
