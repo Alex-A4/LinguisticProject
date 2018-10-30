@@ -2,6 +2,8 @@ package com.alexa4.linguistic_project.view.teacher_views;
 
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -157,7 +159,7 @@ public class AnswersCheckerView extends ViewTextInterface {
         HBox textBoxLabels = initTextBoxLabels();
 
         //Init box which contains hierarchy of answers on current task
-        HBox answersHierarchy = initAnswersHierarchy();
+        VBox answersHierarchy = initAnswersHierarchy();
 
         textBox.getChildren().addAll(answersHierarchy, area, choicePane);
 
@@ -182,13 +184,42 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Initializing hierarchy of users answers
-     * TODO: Add logic
+     * TODO: Add logic of clicking
      * @return
      */
-    private HBox initAnswersHierarchy() {
-        HBox mHierarchy = new HBox();
+    private VBox initAnswersHierarchy() {
+        VBox mHierarchy = new VBox(10);
+        mHierarchy.setPrefWidth(150);
+        HashMap<String, ArrayList<String>> answersMap = mPresenter.getAnswersMap();
+
+        TreeItem<String> root = new TreeItem<>("Tasks");
+        TreeView<String> mAnswersTree = new TreeView<>(root);
+
+        answersMap.forEach((user, list) -> {
+            TreeItem<String> tasksRoot = new TreeItem<>(user);
+            root.getChildren().add(tasksRoot);
+
+            list.forEach(task -> {
+                TreeItem<String> item = new TreeItem<>(task);
+                tasksRoot.getChildren().add(item);
+            });
+        });
+
+        MultipleSelectionModel<TreeItem<String>> selectionModel = mAnswersTree.getSelectionModel();
+        selectionModel.selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends TreeItem<String>> observable,
+                                TreeItem<String> oldValue, TreeItem<String> newValue) {
 
 
+                //If selected student answer then get its text
+                if (newValue.getParent() != null && answersMap.containsKey(newValue.getValue())) {
+                    mPresenter.getAnswerText(newValue.getValue(), newValue.getParent().getValue());
+                }
+            }
+        });
+
+        mHierarchy.getChildren().add(mAnswersTree);
         return mHierarchy;
     }
 }
