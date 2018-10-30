@@ -319,7 +319,6 @@ public class TextModel {
      */
     public String getAnswerText(String userName, String taskName) {
         String nameOfFile = taskName + "_" + userName;
-
         mFoundedMeans = new HashMap<String, ArrayList<String>>();
         mCurrentTaskName = taskName;
 
