@@ -70,7 +70,7 @@ public class TextModel {
 
         for (File file: files)
             if (file.isFile())
-                list.add(file.getName().replace(".txt.", ""));
+                list.add(file.getName().replace(".txt", ""));
 
         return list;
     }
