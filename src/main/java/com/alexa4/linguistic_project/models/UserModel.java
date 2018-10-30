@@ -42,10 +42,11 @@ public class UserModel {
 
     /**
      * Initializing current user
+     * TODO: Add logic to get user's first and last names from dataBase
      * @param userName the login of user
      * @param mode the mode of user
      */
     public void initUser(String userName, int mode) {
-        currentUser = new User(userName, mode);
+        currentUser = new User(userName, mode, "Persons person");
     }
 }
