@@ -217,16 +217,7 @@ public abstract class ViewTextInterface implements ViewInterface {
 
         area = initTextField();
 
-        choiceField = initChoiceVBox();
-        ScrollPane choicePane = new ScrollPane();
-        choicePane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        choicePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        choicePane.setContent(choiceField);
-        choicePane.setStyle("-fx-background-color:transparent;");
-        choicePane.setBorder(new Border(new BorderStroke(
-                Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY,
-                BorderWidths.DEFAULT
-        )));
+        ScrollPane choicePane = initChoiceScrollPane();
 
         HBox textBoxLabels = initTextBoxLabels();
 
@@ -357,7 +348,7 @@ public abstract class ViewTextInterface implements ViewInterface {
      * Initializing text file where will display user's choice
      * @return
      */
-     protected VBox initChoiceVBox() {
+     protected ScrollPane initChoiceScrollPane() {
         choiceField = new VBox();
 
         choiceField.setPrefWidth(CHOICE_FIELD_WIDTH);
@@ -365,7 +356,17 @@ public abstract class ViewTextInterface implements ViewInterface {
 
         choiceField.setPadding(new Insets(10, 10, 10, 10));
 
-        return choiceField;
+         ScrollPane choicePane = new ScrollPane();
+         choicePane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+         choicePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+         choicePane.setContent(choiceField);
+         choicePane.setStyle("-fx-background-color:transparent;");
+         choicePane.setBorder(new Border(new BorderStroke(
+                 Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY,
+                 BorderWidths.DEFAULT
+         )));
+
+        return choicePane;
     }
 
 
