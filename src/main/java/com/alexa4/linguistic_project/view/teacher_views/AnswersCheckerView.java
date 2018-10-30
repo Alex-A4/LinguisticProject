@@ -4,16 +4,13 @@ import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -152,6 +149,8 @@ public class AnswersCheckerView extends ViewTextInterface {
         area = initTextField();
         area.setEditable(false);
 
+        textLabel.setText("");
+
         ScrollPane choicePane = initChoiceScrollPane();
 
         //Init box which contains head labels for textBox
@@ -234,8 +233,7 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Initializing hierarchy of users answers
-     * TODO: Add logic of clicking
-     * @return
+     * @return the box with hierarchy of students tasks
      */
     private VBox initAnswersHierarchy() {
         VBox mHierarchy = new VBox(10);
@@ -264,6 +262,7 @@ public class AnswersCheckerView extends ViewTextInterface {
                 //If selected student answer then get its text
                 if (newValue.getParent() != null && answersMap.containsKey(newValue.getParent().getValue())) {
                     mPresenter.getAnswerText(newValue.getParent().getValue(), newValue.getValue());
+                    textLabel.setText(newValue.getParent().getValue() + ": " + newValue.getValue());
                     fillUserChoice();
                 }
             }
