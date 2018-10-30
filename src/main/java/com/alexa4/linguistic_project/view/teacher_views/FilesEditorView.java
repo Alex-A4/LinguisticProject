@@ -165,6 +165,7 @@ public class FilesEditorView extends ViewTextInterface {
         newFile.setOnAction(event -> {
             freeUserChoices();
             area.clear();
+            textLabel.setText("");
             fileNameTF.clear();
         });
         taskMenu.getItems().add(newFile);
