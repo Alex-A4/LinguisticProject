@@ -163,7 +163,7 @@ public class TextModel {
     public boolean saveUserAnswer() {
         String fileName = mCurrentTaskName
                 + "_"
-                + UserModel.getUserModel().getCurrentUserName();
+                + UserModel.getUserModel().getUserLogin();
 
         mMarkedText = new String(mNonMarkedText);
 

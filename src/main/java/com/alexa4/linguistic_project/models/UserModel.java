@@ -18,15 +18,15 @@ public class UserModel {
      * Getting user name
      * @return the current user name
      */
-    public String getCurrentUserName() {
-        return currentUser.getUserName();
+    public String getUserLogin() {
+        return currentUser.getUserLogin();
     }
 
     /**
      * Getting user mode
      * @return
      */
-    public int getCurrentUserMode() {return currentUser.getUserMode(); }
+    public int getUserMode() {return currentUser.getUserMode(); }
 
 
     /**

@@ -32,7 +32,7 @@ public class User {
         return mInitials;
     }
 
-    public String getUserName() {
+    public String getUserLogin() {
         return mUserLogin;
     }
 

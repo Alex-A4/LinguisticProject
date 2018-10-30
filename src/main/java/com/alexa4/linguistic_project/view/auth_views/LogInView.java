@@ -185,7 +185,7 @@ public class LogInView implements ViewAuthInterface {
      */
     @Override
     public void logIn() {
-        if (UserModel.getUserModel().getCurrentUserMode() == User.STUDENT_MODE) {
+        if (UserModel.getUserModel().getUserMode() == User.STUDENT_MODE) {
             StudentPresenter studPres = new StudentPresenter();
             studPres.start();
         } else {

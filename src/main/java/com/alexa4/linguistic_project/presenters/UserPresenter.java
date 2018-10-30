@@ -14,11 +14,11 @@ public abstract class UserPresenter {
     }
 
     public final String getUserName() {
-        return mUserModel.getCurrentUserName();
+        return mUserModel.getUserLogin();
     }
 
     public final int getUserMode() {
-        return mUserModel.getCurrentUserMode();
+        return mUserModel.getUserMode();
     }
 
     /**
