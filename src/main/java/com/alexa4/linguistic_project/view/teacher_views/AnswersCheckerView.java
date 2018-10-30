@@ -127,6 +127,7 @@ public class AnswersCheckerView extends ViewTextInterface {
             item.setId(String.valueOf(i));
             item.setOnAction(event -> {
                 mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
+                textLabel.setText(TASK_CONST + fileNames.get(Integer.valueOf(item.getId())));
                 fillUserChoice();
             });
 
