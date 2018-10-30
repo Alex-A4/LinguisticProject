@@ -152,16 +152,7 @@ public class AnswersCheckerView extends ViewTextInterface {
         area = initTextField();
         area.setEditable(false);
 
-        choiceField = initChoiceVBox();
-        ScrollPane choicePane = new ScrollPane();
-        choicePane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        choicePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        choicePane.setContent(choiceField);
-        choicePane.setStyle("-fx-background-color:transparent;");
-        choicePane.setBorder(new Border(new BorderStroke(
-                Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY,
-                BorderWidths.DEFAULT
-        )));
+        ScrollPane choicePane = initChoiceScrollPane();
 
         //Init box which contains head labels for textBox
         HBox textBoxLabels = initTextBoxLabels();
