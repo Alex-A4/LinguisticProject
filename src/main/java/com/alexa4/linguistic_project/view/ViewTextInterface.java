@@ -222,6 +222,7 @@ public abstract class ViewTextInterface implements ViewInterface {
         choicePane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         choicePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         choicePane.setContent(choiceField);
+        choicePane.setStyle("-fx-background-color:transparent;");
         choicePane.setBorder(new Border(new BorderStroke(
                 Paint.valueOf("#000000"), BorderStrokeStyle.SOLID,  CornerRadii.EMPTY,
                 BorderWidths.DEFAULT
