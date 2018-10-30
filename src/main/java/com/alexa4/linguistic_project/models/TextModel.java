@@ -48,7 +48,7 @@ public class TextModel {
      * Reading all files name from data/tasks folder and add it to filesNameList
      * This list contains all names of tasks
      */
-    public void readAllTasksFiles() {
+    private void readAllTasksFiles() {
         File folder = new File(TASKS_FOLDER);
         File[] files = folder.listFiles();
         mTasksFilesNameList = new ArrayList<>();
@@ -57,6 +57,23 @@ public class TextModel {
                 mTasksFilesNameList.add(file.getName().replace(".txt", ""));
     }
 
+
+    /**
+     * Reading files with students answer
+     * @return the list with all answers
+     */
+    private ArrayList<String> readAnswerFiles() {
+        ArrayList<String> list = new ArrayList<>();
+
+        File folder = new File(ANSWERS_FOLDER);
+        File[] files = folder.listFiles();
+
+        for (File file: files)
+            if (file.isFile())
+                list.add(file.getName().replace(".txt.", ""));
+
+        return list;
+    }
 
 
 
@@ -181,6 +198,23 @@ public class TextModel {
 
 
     /**
+     * Decoding file name to array of
+     * [0] name of task
+     * [1] login of student
+     * @param fileName the name of decoding file
+     * @return the decoded name of file
+     */
+    public String[] decodeStudentAnswerFile(String fileName) {
+        String[] objects = new String[2];
+        int underLinePos = fileName.indexOf("_");
+        objects[0] = fileName.substring(0, underLinePos);
+        objects[1] = fileName.substring(underLinePos+1);
+
+        return objects;
+    }
+
+
+    /**
      * Clearing user choice for new task
      */
     public void clearUserChoice() {
@@ -247,5 +281,33 @@ public class TextModel {
             case 15: return "f";
             default: return String.valueOf(nextColor%16);
         }
+    }
+
+
+    /**
+     * Creating map based on students answers
+     *
+     * Map looks like: Student name - List of student answers
+     * @return the map of students answers
+     */
+    public HashMap<String, ArrayList<String>> getAnswersMap() {
+        HashMap<String, ArrayList<String>> answersMap = new HashMap<>();
+        ArrayList<String> files = readAnswerFiles();
+
+        //For each file get userName and name of task
+        for (String file: files) {
+            String[] objects = decodeStudentAnswerFile(file);
+
+            //If map contains key (user login) then add task to the list, else create this pair
+            if (answersMap.containsKey(objects[1]))
+                answersMap.get(objects[1]).add(objects[0]);
+            else {
+                answersMap.put(objects[1], new ArrayList<>());
+                answersMap.get(objects[1]).add(objects[0]);
+            }
+        }
+
+
+        return answersMap;
     }
 }
