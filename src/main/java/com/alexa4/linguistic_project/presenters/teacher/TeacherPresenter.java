@@ -139,6 +139,7 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
         tempPresenter.startModality();
         tempPresenter.getText(taskName);
         ((FilesEditorView) tempPresenter.mView).fillUserChoice();
+        ((FilesEditorView) tempPresenter.mView).updateTaskName(taskName);
     }
 
     /**
