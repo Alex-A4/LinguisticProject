@@ -195,7 +195,7 @@ public class FilesEditorView extends ViewTextInterface {
      * Filling choiceFiled by means of expressiveness which contained into file before editing
      * Firstly userChoice is clearing and then filling by existence means
      */
-    private void fillUserChoice() {
+    public void fillUserChoice() {
         freeUserChoices();
 
         HashMap<String, ArrayList<String>> foundMeans = mPresenter.getFoundMeans();
