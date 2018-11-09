@@ -62,7 +62,6 @@ public class AnswersCheckerView extends ViewTextInterface {
         HBox actions = new HBox(10);
         actions.setAlignment(Pos.CENTER);
 
-        //TODO: add logic to open window with original task marking
         Label openFullTask = new Label("Open task marking");
         openFullTask.setTextFill(Paint.valueOf("#0000AF"));
         openFullTask.setFont(new Font(15));
@@ -71,7 +70,10 @@ public class AnswersCheckerView extends ViewTextInterface {
         openFullTask.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (mTaskName == null)
+                    return;
 
+                mPresenter.runModalityEditorWithTaskName(mTaskName);
             }
         });
 
