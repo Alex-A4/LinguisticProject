@@ -135,13 +135,22 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
      * @param taskName the name of task which need open
      */
     public void runModalityEditorWithTaskName(@NotNull String taskName) {
+        TeacherPresenter tempPresenter = new TeacherPresenter(taskName);
+        tempPresenter.startModality();
+        tempPresenter.getText(taskName);
+        ((FilesEditorView) tempPresenter.mView).fillUserChoice();
+    }
+
+    /**
+     * Creating new stage and starts it
+     */
+    private void startModality() {
+        mView = new FilesEditorView(this);
         Stage tempStage = new Stage();
         tempStage.setTitle("Tasks editor");
         tempStage.initModality(Modality.NONE);
-
-        TeacherPresenter tempPresenter = new TeacherPresenter(taskName);
-        tempPresenter.start();
-        tempPresenter.getText(taskName);
+        tempStage.setScene(new Scene(mView.getLayout()));
+        tempStage.show();
     }
 
     /**
