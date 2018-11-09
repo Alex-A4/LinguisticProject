@@ -6,8 +6,11 @@ import com.alexa4.linguistic_project.presenters.UserPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
 import com.alexa4.linguistic_project.view.teacher_views.AnswersCheckerView;
 import com.alexa4.linguistic_project.view.teacher_views.FilesEditorView;
+import com.sun.istack.internal.NotNull;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +25,14 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
     public TeacherPresenter() {
         mTextModel = new TextModel();
         mPresenter = this;
+    }
+
+    /**
+     * Constructor which needs to create modality window
+     * @param taskName the name of selected task
+     */
+    private TeacherPresenter(String taskName) {
+        mTextModel = new TextModel();
     }
 
     /**
@@ -103,6 +114,7 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
         if (mView.getClass() == FilesEditorView.class)
             return;
 
+        mView.detachPresenter();
         mView = new FilesEditorView(this);
         mStage.setTitle("Tasks editor");
         mStage.setScene(new Scene(mView.getLayout()));
@@ -112,11 +124,25 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
         if (mView.getClass() == AnswersCheckerView.class)
             return;
 
+        mView.detachPresenter();
         mView = new AnswersCheckerView(this);
         mStage.setTitle("Answers checker");
         mStage.setScene(new Scene(mView.getLayout()));
     }
 
+    /**
+     * Running FilesEditorView like modality window and open task from input taskName
+     * @param taskName the name of task which need open
+     */
+    public void runModalityEditorWithTaskName(@NotNull String taskName) {
+        Stage tempStage = new Stage();
+        tempStage.setTitle("Tasks editor");
+        tempStage.initModality(Modality.NONE);
+
+        TeacherPresenter tempPresenter = new TeacherPresenter(taskName);
+        tempPresenter.start();
+        tempPresenter.getText(taskName);
+    }
 
     /**
      * Getting means of expressiveness which already exist in file
