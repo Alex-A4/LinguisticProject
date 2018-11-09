@@ -178,8 +178,7 @@ public class FilesEditorView extends ViewTextInterface {
             TaskDialog.getTaskName(new TaskDialog.TaskPickerCallback() {
                 @Override
                 public void sendTaskName(String taskName) {
-                    fileNameTF.setText(taskName);
-                    textLabel.setText(TASK_CONST + taskName);
+                    updateTaskName(taskName);
                     mPresenter.getText(taskName);
                     fillUserChoice();
                 }
@@ -189,6 +188,11 @@ public class FilesEditorView extends ViewTextInterface {
         taskMenu.getItems().add(getTask);
 
         return taskMenu;
+    }
+
+    public void updateTaskName(String taskName) {
+        fileNameTF.setText(taskName);
+        textLabel.setText(TASK_CONST + taskName);
     }
 
     /**
