@@ -7,10 +7,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.List;
  */
 public class AnswersCheckerView extends ViewTextInterface {
     private TeacherPresenter mPresenter;
+    private String mTaskName = null;
 
     public AnswersCheckerView(TeacherPresenter presenter) {
         super();
@@ -56,7 +59,25 @@ public class AnswersCheckerView extends ViewTextInterface {
      */
     @Override
     protected HBox initUserActions() {
-        return new HBox(10);
+        HBox actions = new HBox(10);
+        actions.setAlignment(Pos.CENTER);
+
+        //TODO: add logic to open window with original task marking
+        Label openFullTask = new Label("Open task marking");
+        openFullTask.setTextFill(Paint.valueOf("#0000AF"));
+        openFullTask.setFont(new Font(15));
+        openFullTask.setCursor(Cursor.CLOSED_HAND);
+        openFullTask.setPadding(new Insets(0,0,20,0));
+        openFullTask.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
+
+        actions.getChildren().add(openFullTask);
+
+        return actions;
     }
 
     @Override
@@ -263,6 +284,7 @@ public class AnswersCheckerView extends ViewTextInterface {
                 if (newValue.getParent() != null && answersMap.containsKey(newValue.getParent().getValue())) {
                     mPresenter.getAnswerText(newValue.getParent().getValue(), newValue.getValue());
                     textLabel.setText(newValue.getParent().getValue() + ": " + newValue.getValue());
+                    mTaskName = newValue.getValue();
                     fillUserChoice();
                 }
             }
