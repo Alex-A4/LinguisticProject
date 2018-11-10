@@ -150,6 +150,8 @@ public class TextModel {
      * @return is the userText correct
      */
     private boolean isUserTextCorrectness(String userText, ArrayList<String> originalMeans) {
+        if (originalMeans == null)
+            return false;
         for (String originalText: originalMeans) {
             //If original text is fully equals to userText
             if (originalText.equals(userText))
