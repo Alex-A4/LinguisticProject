@@ -115,6 +115,16 @@ public class TextModel {
     }
 
 
+    /**
+     * Verify the correctness of the user answers
+     * If the mark from the user marking is from 80% to 120% of original marking, then the mark is right
+     * @param originalMarking the original marking of the task
+     * @param userMarking the marking which user select
+     */
+    public void verifyCorrectnessOfAnswers(HashMap<String, ArrayList<String>> originalMarking,
+                                           HashMap<String, ArrayList<String>> userMarking) {
+
+    }
 
 
 
