@@ -120,10 +120,51 @@ public class TextModel {
      * If the mark from the user marking is from 80% to 120% of original marking, then the mark is right
      * @param originalMarking the original marking of the task
      * @param userMarking the marking which user select
+     * @return the collections of verified answers looks like: textOfChoice - boolean correctness
      */
-    public void verifyCorrectnessOfAnswers(HashMap<String, ArrayList<String>> originalMarking,
+    public HashMap<String, Boolean> verifyAndGetCorrectnessOfAnswers(HashMap<String, ArrayList<String>> originalMarking,
                                            HashMap<String, ArrayList<String>> userMarking) {
+        //Collection which contains pairs: text of means of expression - correctness of user choice
+        HashMap<String, Boolean> verifiedAnswers = new HashMap<>();
 
+        //Comparing each text from userMarking with each text from originalMarking
+        userMarking.forEach((userMeans, userTextList) -> {
+            userTextList.forEach((text) ->{
+                verifiedAnswers.put(text,
+                        isUserTextCorrectness(text, originalMarking.get(userMeans)));
+            });
+        });
+
+        verifiedAnswers.forEach((text, corr) ->{
+            System.out.println(text + " is " + corr);
+        });
+        return verifiedAnswers;
+    }
+
+
+    /**
+     * Comparing text of user choice and each text of original marking
+     * If the mark from the user marking is from 80% to 120% of original marking, then the mark is right
+     * @param userText the text of user which need verify
+     * @param originalMeans the list of text from originalMarking
+     * @return is the userText correct
+     */
+    private boolean isUserTextCorrectness(String userText, ArrayList<String> originalMeans) {
+        for (String originalText: originalMeans) {
+            //If original text is fully equals to userText
+            if (originalText.equals(userText))
+                return true;
+
+            //If userText is in originalText and userText length more then 80% of originalText length
+            if (originalText.contains(userText) && ((double) userText.length())/originalText.length() * 100 > 80.0)
+                return true;
+
+            //If userText contains originalText and userText length not more then 120% of originalText length
+            if (userText.contains(originalText) && ((double) userText.length())/originalText.length() * 100 < 120.0)
+                return true;
+        }
+
+        return false;
     }
 
 
