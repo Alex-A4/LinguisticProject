@@ -168,8 +168,15 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
      * @return the original marking of text
      */
     public HashMap<String, ArrayList<String>> getOriginalMeans(String taskName) {
+        //Updating mFoundedMeans to original task
         mTextModel.getText(taskName);
+
         return mTextModel.getFoundedMeans();
+    }
+
+    public HashMap<String, Boolean> verifyAndGetCorrectnessOfAnswers(HashMap<String, ArrayList<String>> originalMarking,
+                                                               HashMap<String, ArrayList<String>> userMarking) {
+        return mTextModel.verifyAndGetCorrectnessOfAnswers(originalMarking, userMarking);
     }
 
     /**
