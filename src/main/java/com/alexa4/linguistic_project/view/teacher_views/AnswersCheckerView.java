@@ -211,6 +211,18 @@ public class AnswersCheckerView extends ViewTextInterface {
         Text textMeans = new Text();
         Text userSelectedText = new Text();
 
+        Button correctnessButton = new Button();
+        correctnessButton.setStyle("-fx-background-color: #00000000;");
+        correctnessButton.setFont(new Font(20));
+        if (correctness) {
+            correctnessButton.setTextFill(Paint.valueOf("#00ff00"));
+            correctnessButton.setText("V");
+        } else {
+            correctnessButton.setTextFill(Paint.valueOf("#ff0000"));
+            correctnessButton.setText("X");
+        }
+
+
         //Box with means name and with text which user selected
         VBox textBox = new VBox();
 
@@ -234,7 +246,7 @@ public class AnswersCheckerView extends ViewTextInterface {
                 area.selectRange(start, start + end);
             }
         });
-        newRecordBox.getChildren().addAll(textBox);
+        newRecordBox.getChildren().addAll(textBox, correctnessButton);
 
         //Add current text to collection
         addUserChoice(means.toLowerCase(), text);
@@ -249,7 +261,7 @@ public class AnswersCheckerView extends ViewTextInterface {
      */
     private void fillUserChoice() {
         freeUserChoices();
-        
+
         HashMap<String, ArrayList<String>> userMarking = mPresenter.getFoundMeans();
         HashMap<String, ArrayList<String>> originalMarking = mPresenter.getOriginalMeans(mTaskName);
 
