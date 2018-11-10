@@ -135,9 +135,6 @@ public class TextModel {
             });
         });
 
-        verifiedAnswers.forEach((text, corr) ->{
-            System.out.println(text + " is " + corr);
-        });
         return verifiedAnswers;
     }
 
