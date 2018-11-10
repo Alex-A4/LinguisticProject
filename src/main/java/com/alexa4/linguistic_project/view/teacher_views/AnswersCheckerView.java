@@ -193,17 +193,18 @@ public class AnswersCheckerView extends ViewTextInterface {
 
 
     /**
-     * Overriding this method to hide deleting button
-     *
      * Display user choice in choiceField like a record
      * Make new record box which contains:
-     * ------------------
-     * textMeans        |
-     * userSelectedText |
-     * ------------------
+     *
+     * ------------------------------
+     * textMeans        | correctness
+     * userSelectedText | of choice
+     * -----------------------------
+     * @param means the name of means of expressiveness
+     * @param text the text of choice
+     * @param correctness is the text correct
      */
-    @Override
-    protected void addUserChoiceToBox(String means, String text) {
+    protected void addUserChoiceToBox(String means, String text, boolean correctness) {
         HBox newRecordBox = new HBox(10);
         newRecordBox.setAlignment(Pos.CENTER_LEFT);
 
@@ -252,11 +253,13 @@ public class AnswersCheckerView extends ViewTextInterface {
          * TODO: add logic when foundedMeans will be equals to means from original task (add reading text of original task)
          * TODO: and filling it then add logic of checking right selections
          */
-        HashMap<String, ArrayList<String>> foundMeans = mPresenter.getFoundMeans();
-        HashMap<String, ArrayList<String>> originalMeans = mPresenter.getOriginalMeans(mTaskName);
+        HashMap<String, ArrayList<String>> userMarking = mPresenter.getFoundMeans();
+        HashMap<String, ArrayList<String>> originalMarking = mPresenter.getOriginalMeans(mTaskName);
 
-        foundMeans.forEach((means, collection) -> collection
-                .forEach(text -> addUserChoiceToBox(means, text)));
+        HashMap<String, Boolean> correctness = mPresenter.verifyAndGetCorrectnessOfAnswers(originalMarking, userMarking);
+
+        userMarking.forEach((means, collection) -> collection
+                .forEach(text -> addUserChoiceToBox(means, text, correctness.get(text))));
     }
 
     /**
