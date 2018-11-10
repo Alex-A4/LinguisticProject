@@ -248,8 +248,13 @@ public class AnswersCheckerView extends ViewTextInterface {
      */
     private void fillUserChoice() {
         freeUserChoices();
-
+        /**
+         * TODO: add logic when foundedMeans will be equals to means from original task (add reading text of original task)
+         * TODO: and filling it then add logic of checking right selections
+         */
         HashMap<String, ArrayList<String>> foundMeans = mPresenter.getFoundMeans();
+        HashMap<String, ArrayList<String>> originalMeans = mPresenter.getOriginalMeans(mTaskName);
+
         foundMeans.forEach((means, collection) -> collection
                 .forEach(text -> addUserChoiceToBox(means, text)));
     }
