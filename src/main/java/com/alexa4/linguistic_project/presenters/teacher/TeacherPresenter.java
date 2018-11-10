@@ -163,6 +163,16 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
     }
 
     /**
+     * Reading original task getting founded means
+     * @param taskName the name of task
+     * @return the original marking of text
+     */
+    public HashMap<String, ArrayList<String>> getOriginalMeans(String taskName) {
+        mTextModel.getText(taskName);
+        return mTextModel.getFoundedMeans();
+    }
+
+    /**
      * Saving file with text and fileName
      * @param text the text of file
      * @param fileName the name of file
