@@ -240,7 +240,7 @@ public abstract class ViewTextInterface implements ViewInterface {
         Image image = null;
         try {
             File way = new File(new File("").getAbsolutePath() +
-                    "/src/main/resources/defaultUserIcon.jpg");
+                    "/resources/defaultUserIcon.jpg");
             image = new Image(way.toURI().toURL().toString());
         } catch (Exception e) {
             callAlert("Read exception", "File not found",
