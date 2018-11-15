@@ -102,7 +102,7 @@ public class AnswersCheckerView extends ViewTextInterface {
     @Override
     protected HBox initMenuBar() {
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(createTasksMenu(), createWindowsMenu());
+        menuBar.getMenus().addAll(/*createTasksMenu(),*/ createWindowsMenu());
 
         HBox barBox = new HBox(5);
         barBox.setAlignment(Pos.CENTER_LEFT);
@@ -142,32 +142,32 @@ public class AnswersCheckerView extends ViewTextInterface {
         windowMenu.getItems().addAll(filesEditor, checkTasks);
         return windowMenu;
     }
-
-    /**
-     * Creating menu with tasks
-     *
-     * @return the menu which contains list of tasks
-     */
-    private Menu createTasksMenu() {
-        Menu taskMenu = new Menu("Lessons");
-        List<String> fileNames = mPresenter.getFilesNameList();
-
-        //Menu items for opening files
-        if (fileNames != null)
-            for (int i = 0; i < fileNames.size(); i++) {
-                MenuItem item = new MenuItem(fileNames.get(i));
-                item.setId(String.valueOf(i));
-                item.setOnAction(event -> {
-                    mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
-                    textLabel.setText(TASK_CONST + fileNames.get(Integer.valueOf(item.getId())));
-                    fillUserChoice();
-                });
-
-                taskMenu.getItems().add(item);
-            }
-
-        return taskMenu;
-    }
+//
+//    /**
+//     * Creating menu with tasks
+//     *
+//     * @return the menu which contains list of tasks
+//     */
+//    private Menu createTasksMenu() {
+//        Menu taskMenu = new Menu("Lessons");
+//        List<String> fileNames = mPresenter.getFilesNameList();
+//
+//        //Menu items for opening files
+//        if (fileNames != null)
+//            for (int i = 0; i < fileNames.size(); i++) {
+//                MenuItem item = new MenuItem(fileNames.get(i));
+//                item.setId(String.valueOf(i));
+//                item.setOnAction(event -> {
+//                    mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
+//                    textLabel.setText(TASK_CONST + fileNames.get(Integer.valueOf(item.getId())));
+//                    fillUserChoice();
+//                });
+//
+//                taskMenu.getItems().add(item);
+//            }
+//
+//        return taskMenu;
+//    }
 
     /**
      * Overriding parent method to make own UI
