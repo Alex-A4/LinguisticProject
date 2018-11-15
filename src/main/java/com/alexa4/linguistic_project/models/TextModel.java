@@ -50,11 +50,17 @@ public class TextModel {
      */
     private void readAllTasksFiles() {
         File folder = new File(TASKS_FOLDER);
-        File[] files = folder.listFiles();
-        mTasksFilesNameList = new ArrayList<>();
-        for (File file: files)
-            if (file.isFile())
-                mTasksFilesNameList.add(file.getName().replace(".txt", ""));
+
+        //If the current folder exist, then read all tasks else create it
+        if (folder.exists()) {
+            File[] files = folder.listFiles();
+            mTasksFilesNameList = new ArrayList<>();
+            for (File file : files)
+                if (file.isFile())
+                    mTasksFilesNameList.add(file.getName().replace(".txt", ""));
+
+        } else folder.mkdirs();
+
     }
 
 
@@ -66,13 +72,17 @@ public class TextModel {
         ArrayList<String> list = new ArrayList<>();
 
         File folder = new File(ANSWERS_FOLDER);
-        File[] files = folder.listFiles();
+        if (folder.exists()) {
+            File[] files = folder.listFiles();
 
-        for (File file: files)
-            if (file.isFile())
-                list.add(file.getName().replace(".txt", ""));
+            for (File file : files)
+                if (file.isFile())
+                    list.add(file.getName().replace(".txt", ""));
 
-        return list;
+            return list;
+        } else folder.mkdirs();
+
+        return null;
     }
 
 
