@@ -146,7 +146,7 @@ public class LogInView implements ViewAuthInterface {
         mLUserName.setFont(new Font(13));
 
         //Text field to enter login
-        mTaUserSecondName = new TextField("admin");
+        mTaUserSecondName = new TextField("");
         mTaUserSecondName.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -167,7 +167,7 @@ public class LogInView implements ViewAuthInterface {
 
         //Text field to enter password
         mPfPassword = new PasswordField();
-        mPfPassword.setText("admin");
+        mPfPassword.setText("");
         mPfPassword.setMaxWidth(200);
         mPfPassword.setTooltip(new Tooltip("Enter your password"));
 
