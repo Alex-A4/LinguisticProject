@@ -55,6 +55,7 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Box contains TF with file name and save button
+     *
      * @return the box with actions
      */
     @Override
@@ -66,7 +67,7 @@ public class AnswersCheckerView extends ViewTextInterface {
         openFullTask.setTextFill(Paint.valueOf("#0000AF"));
         openFullTask.setFont(new Font(15));
         openFullTask.setCursor(Cursor.CLOSED_HAND);
-        openFullTask.setPadding(new Insets(0,0,20,0));
+        openFullTask.setPadding(new Insets(0, 0, 20, 0));
         openFullTask.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -95,6 +96,7 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Initializing menu bar
+     *
      * @return the menu bar
      */
     @Override
@@ -121,16 +123,21 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Creating menu which contains list of window we can open
+     *
      * @return the menu of windows
      */
     private Menu createWindowsMenu() {
         Menu windowMenu = new Menu("Windows");
 
         MenuItem filesEditor = new MenuItem("Files editor");
-        filesEditor.setOnAction(e -> {mPresenter.runFilesEditor();});
+        filesEditor.setOnAction(e -> {
+            mPresenter.runFilesEditor();
+        });
 
         MenuItem checkTasks = new MenuItem("Check tasks");
-        checkTasks.setOnAction(e -> {mPresenter.runAnswersChecker();});
+        checkTasks.setOnAction(e -> {
+            mPresenter.runAnswersChecker();
+        });
 
         windowMenu.getItems().addAll(filesEditor, checkTasks);
         return windowMenu;
@@ -138,6 +145,7 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Creating menu with tasks
+     *
      * @return the menu which contains list of tasks
      */
     private Menu createTasksMenu() {
@@ -145,17 +153,18 @@ public class AnswersCheckerView extends ViewTextInterface {
         List<String> fileNames = mPresenter.getFilesNameList();
 
         //Menu items for opening files
-        for (int i = 0; i < fileNames.size(); i++) {
-            MenuItem item = new MenuItem(fileNames.get(i));
-            item.setId(String.valueOf(i));
-            item.setOnAction(event -> {
-                mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
-                textLabel.setText(TASK_CONST + fileNames.get(Integer.valueOf(item.getId())));
-                fillUserChoice();
-            });
+        if (fileNames != null)
+            for (int i = 0; i < fileNames.size(); i++) {
+                MenuItem item = new MenuItem(fileNames.get(i));
+                item.setId(String.valueOf(i));
+                item.setOnAction(event -> {
+                    mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
+                    textLabel.setText(TASK_CONST + fileNames.get(Integer.valueOf(item.getId())));
+                    fillUserChoice();
+                });
 
-            taskMenu.getItems().add(item);
-        }
+                taskMenu.getItems().add(item);
+            }
 
         return taskMenu;
     }
@@ -195,13 +204,14 @@ public class AnswersCheckerView extends ViewTextInterface {
     /**
      * Display user choice in choiceField like a record
      * Make new record box which contains:
-     *
+     * <p>
      * ------------------------------
      * textMeans        | correctness
      * userSelectedText | of choice
      * -----------------------------
-     * @param means the name of means of expressiveness
-     * @param text the text of choice
+     *
+     * @param means       the name of means of expressiveness
+     * @param text        the text of choice
      * @param correctness is the text correct
      */
     protected void addUserChoiceToBox(String means, String text, boolean correctness) {
@@ -273,6 +283,7 @@ public class AnswersCheckerView extends ViewTextInterface {
 
     /**
      * Initializing hierarchy of users answers
+     *
      * @return the box with hierarchy of students tasks
      */
     private VBox initAnswersHierarchy() {
