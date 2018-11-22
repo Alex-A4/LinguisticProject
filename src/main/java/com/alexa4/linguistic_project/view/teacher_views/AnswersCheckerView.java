@@ -103,7 +103,7 @@ public class AnswersCheckerView extends ViewTextInterface {
     @Override
     protected HBox initMenuBar() {
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(/*createTasksMenu(),*/ createWindowsMenu());
+        menuBar.getMenus().addAll(createWindowsMenu());
 
         HBox barBox = new HBox(5);
         barBox.setAlignment(Pos.CENTER_LEFT);
