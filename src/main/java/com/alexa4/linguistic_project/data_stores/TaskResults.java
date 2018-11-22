@@ -48,11 +48,6 @@ public class TaskResults {
         mNotFoundedMeans.forEach((means, list) -> {
             mCountOfWrongAnswers += list.size();
         });
-        
-        System.out.println("mNotFoundedMeans = " + mNotFoundedMeans);
-        System.out.println("mUserAnswers = " + mUserAnswers);
-        System.out.println("mCountOfCorrectAnswers = " + mCountOfCorrectAnswers);
-        System.out.println("mCountOfWrongAnswers = " + mCountOfWrongAnswers);
     }
 
     public HashMap<String, Boolean> getCorrectAnswers() {
