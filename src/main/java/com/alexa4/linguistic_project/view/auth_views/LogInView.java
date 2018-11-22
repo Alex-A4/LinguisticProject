@@ -143,7 +143,7 @@ public class LogInView implements ViewAuthInterface {
         pane.setAlignment(Pos.CENTER);
 
         Label mLUserName = new Label("Логин:");
-        mLUserName.setFont(new Font(13));
+        mLUserName.setFont(new Font(15));
 
         //Text field to enter login
         mTaUserSecondName = new TextField("");
@@ -157,13 +157,13 @@ public class LogInView implements ViewAuthInterface {
             }
         });
         mTaUserSecondName.setMaxWidth(200);
-        mTaUserSecondName.setFont(new Font(13));
+        mTaUserSecondName.setFont(new Font(15));
         mTaUserSecondName.setPrefHeight(10);
         mTaUserSecondName.setTooltip(new Tooltip("Введите логин"));
 
 
         Label mLUserPassword = new Label("Пароль:");
-        mLUserPassword.setFont(new Font(13));
+        mLUserPassword.setFont(new Font(15));
 
         //Text field to enter password
         mPfPassword = new PasswordField();

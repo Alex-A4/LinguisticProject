@@ -137,7 +137,7 @@ public class SignInView implements ViewAuthInterface {
 
 
         Label mLUserInitials = new Label("Инициалы:");
-        mLUserInitials.setFont(new Font(13));
+        mLUserInitials.setFont(new Font(15));
 
         mInitials = new TextField("");
         mInitials.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -150,14 +150,14 @@ public class SignInView implements ViewAuthInterface {
             }
         });
         mInitials.setMaxWidth(200);
-        mInitials.setFont(new Font(13));
+        mInitials.setFont(new Font(15));
         mInitials.setPrefHeight(10);
         mInitials.setTooltip(new Tooltip("Введите инициалы"));
 
 
 
         Label mLUserName = new Label("Логин:");
-        mLUserName.setFont(new Font(13));
+        mLUserName.setFont(new Font(15));
 
         //Text field to enter login
         mTaUserSecondName = new TextField("");
@@ -171,13 +171,13 @@ public class SignInView implements ViewAuthInterface {
             }
         });
         mTaUserSecondName.setMaxWidth(200);
-        mTaUserSecondName.setFont(new Font(13));
+        mTaUserSecondName.setFont(new Font(15));
         mTaUserSecondName.setPrefHeight(10);
         mTaUserSecondName.setTooltip(new Tooltip("Введите логин"));
 
 
         Label mLUserPassword = new Label("Пароль:");
-        mLUserPassword.setFont(new Font(13));
+        mLUserPassword.setFont(new Font(15));
 
         //Text field to enter password
         mPfPassword = new PasswordField();
@@ -194,13 +194,13 @@ public class SignInView implements ViewAuthInterface {
         });
 
         Label mLConfirmPassword = new Label("Повторить пароль:");
-        mLUserPassword.setFont(new Font(13));
+        mLConfirmPassword.setFont(new Font(15));
 
         //Text field to confirm password
         mPfConfirmPassword = new PasswordField();
         mPfConfirmPassword.setMaxWidth(200);
         mPfConfirmPassword.setTooltip(new Tooltip("Повторить пароль"));
-        mPfConfirmPassword.setFont(new Font(13));
+        mPfConfirmPassword.setFont(new Font(15));
 
         //Add labels to first column
         pane.getColumnConstraints().add(0, mLabelsColumn);
