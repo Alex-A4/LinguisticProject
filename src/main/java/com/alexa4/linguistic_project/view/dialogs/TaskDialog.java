@@ -6,10 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
@@ -25,6 +22,7 @@ import java.util.List;
 
 /**
  * Dialog window to open/save file of task
+ * //TODO: add labels to understand what to do
  */
 public class TaskDialog {
     /**
@@ -50,8 +48,11 @@ public class TaskDialog {
         stage.setTitle("Выбор задания");
 
         //Init parent layout
-        VBox layout = new VBox(20);
-        layout.setPadding(new Insets(20));
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(10));
+
+        Label fileName = new Label("Имя файла");
+        fileName.setFont(new Font(15));
 
         //Init area where will set name of current task
         TextField nameOfTask = new TextField();
@@ -63,6 +64,7 @@ public class TaskDialog {
 
         //Box with tasks
         VBox tasksListBox = new VBox(10);
+        tasksListBox.setPadding(new Insets(0,0,0,20));
         tasksListBox.setBorder(new Border(new BorderStroke(Paint.valueOf("#000000"),
                 BorderStrokeStyle.NONE,CornerRadii.EMPTY, BorderWidths.EMPTY)));
 
@@ -100,6 +102,9 @@ public class TaskDialog {
             });
         }
 
+        Label listOfTasks = new Label("Список заданий:");
+        listOfTasks.setFont(new Font(15));
+
 
         //Init scrollPane with tasks list
         ScrollPane pane = new ScrollPane(tasksListBox);
@@ -128,9 +133,9 @@ public class TaskDialog {
 
         layout.setVgrow(buttonBox, Priority.ALWAYS);
 
-        layout.getChildren().addAll(nameOfTask, pane, buttonBox);
+        layout.getChildren().addAll(fileName, nameOfTask, listOfTasks, pane, buttonBox);
 
-        Scene scene = new Scene(layout, 350, 270);
+        Scene scene = new Scene(layout, 350, 330);
         stage.setScene(scene);
         stage.showAndWait();
     }
@@ -182,8 +187,11 @@ public class TaskDialog {
         stage.setTitle("Сохранить задание");
 
         //Init parent layout
-        VBox layout = new VBox(20);
-        layout.setPadding(new Insets(20));
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(10));
+
+        Label fileNameL = new Label("Имя файла");
+        fileNameL.setFont(new Font(15));
 
         //Init area where will set name of current task
         TextField nameOfTask = new TextField(previousFileName);
@@ -196,6 +204,7 @@ public class TaskDialog {
 
         //Box with tasks
         VBox tasksListBox = new VBox(10);
+        tasksListBox.setPadding(new Insets(0,0,0,20));
         tasksListBox.setBorder(new Border(new BorderStroke(Paint.valueOf("#000000"),
                 BorderStrokeStyle.NONE,CornerRadii.EMPTY, BorderWidths.EMPTY)));
 
@@ -209,6 +218,8 @@ public class TaskDialog {
             text.setFont(new Font(20));
         }
 
+        Label listOfTasks = new Label("Список заданий:");
+        listOfTasks.setFont(new Font(15));
 
         //Init scrollPane with tasks list
         ScrollPane pane = new ScrollPane(tasksListBox) {
@@ -248,7 +259,7 @@ public class TaskDialog {
 
         layout.setVgrow(buttonBox, Priority.ALWAYS);
 
-        layout.getChildren().addAll(nameOfTask, pane, buttonBox);
+        layout.getChildren().addAll(fileNameL, nameOfTask, listOfTasks, pane, buttonBox);
 
         Scene scene = new Scene(layout, 350, 270);
         stage.setScene(scene);
