@@ -1,5 +1,6 @@
 package com.alexa4.linguistic_project.presenters.teacher;
 
+import com.alexa4.linguistic_project.data_stores.TaskResults;
 import com.alexa4.linguistic_project.models.TextModel;
 import com.alexa4.linguistic_project.presenters.TextInterface;
 import com.alexa4.linguistic_project.presenters.UserPresenter;
@@ -174,9 +175,11 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
         return mTextModel.getFoundedMeans();
     }
 
-    public HashMap<String, Boolean> verifyAndGetCorrectnessOfAnswers(HashMap<String, ArrayList<String>> originalMarking,
-                                                               HashMap<String, ArrayList<String>> userMarking) {
-        return mTextModel.verifyAndGetCorrectnessOfAnswers(originalMarking, userMarking);
+    public TaskResults verifyAndGetCorrectnessOfAnswers(
+            HashMap<String, ArrayList<String>> originalMarking,
+            HashMap<String, ArrayList<String>> userMarking) {
+
+        return mTextModel.verifyAndGetTaskResultAnswers(originalMarking, userMarking);
     }
 
     /**

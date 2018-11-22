@@ -1,5 +1,6 @@
 package com.alexa4.linguistic_project.view.teacher_views;
 
+import com.alexa4.linguistic_project.data_stores.TaskResults;
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
 import javafx.beans.value.ChangeListener;
@@ -275,10 +276,18 @@ public class AnswersCheckerView extends ViewTextInterface {
         HashMap<String, ArrayList<String>> userMarking = mPresenter.getFoundMeans();
         HashMap<String, ArrayList<String>> originalMarking = mPresenter.getOriginalMeans(mTaskName);
 
-        HashMap<String, Boolean> correctness = mPresenter.verifyAndGetCorrectnessOfAnswers(originalMarking, userMarking);
+        TaskResults results = mPresenter.verifyAndGetCorrectnessOfAnswers(originalMarking, userMarking);
 
+        //Add correct user answers
         userMarking.forEach((means, collection) -> collection
-                .forEach(text -> addUserChoiceToBox(means, text, correctness.get(text))));
+                .forEach(text -> addUserChoiceToBox(means, text, results.getCorrectAnswers().get(text))));
+
+        //Add wrong user answers
+        results.getNotFoundedMeans().forEach((means, collection) ->
+            collection.forEach(text -> {
+                addUserChoiceToBox(means, text, false);
+            })
+        );
     }
 
     /**
