@@ -72,7 +72,7 @@ public class SignInView implements ViewAuthInterface {
         mButtonsBox.setAlignment(Pos.CENTER);
 
         Button mSignUpButton = new Button("Зарегистрироваться");
-        mSignUpButton.setFont(new Font(20));
+        mSignUpButton.setFont(new Font(18));
         mSignUpButton.setTextFill(Paint.valueOf("#ffffff"));
         mSignUpButton.setStyle("-fx-background-color: #28A745;");
         mSignUpButton.setOnAction(new EventHandler<ActionEvent>() {
