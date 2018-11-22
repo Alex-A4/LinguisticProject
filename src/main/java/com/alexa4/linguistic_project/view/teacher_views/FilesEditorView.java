@@ -67,8 +67,7 @@ public class FilesEditorView extends ViewTextInterface {
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         Button saveBtn = new Button("Сохранить");
-        saveBtn.setPrefSize(80, 40);
-        saveBtn.setFont(new Font(20));
+        saveBtn.setFont(new Font(18));
         saveBtn.setTextFill(Paint.valueOf("#F00000"));
         saveBtn.setOnAction(event -> {
 
