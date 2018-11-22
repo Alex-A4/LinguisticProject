@@ -18,7 +18,6 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Class is responsible for displaying window
@@ -64,7 +63,7 @@ public class AnswersCheckerView extends ViewTextInterface {
         HBox actions = new HBox(10);
         actions.setAlignment(Pos.CENTER);
 
-        Label openFullTask = new Label("Open task marking");
+        Label openFullTask = new Label("Открыть оригинальную разметку");
         openFullTask.setTextFill(Paint.valueOf("#0000AF"));
         openFullTask.setFont(new Font(15));
         openFullTask.setCursor(Cursor.CLOSED_HAND);
@@ -128,14 +127,14 @@ public class AnswersCheckerView extends ViewTextInterface {
      * @return the menu of windows
      */
     private Menu createWindowsMenu() {
-        Menu windowMenu = new Menu("Windows");
+        Menu windowMenu = new Menu("Окна");
 
-        MenuItem filesEditor = new MenuItem("Files editor");
+        MenuItem filesEditor = new MenuItem("Редактор");
         filesEditor.setOnAction(e -> {
             mPresenter.runFilesEditor();
         });
 
-        MenuItem checkTasks = new MenuItem("Check tasks");
+        MenuItem checkTasks = new MenuItem("Проверка заданий");
         checkTasks.setOnAction(e -> {
             mPresenter.runAnswersChecker();
         });
@@ -143,32 +142,7 @@ public class AnswersCheckerView extends ViewTextInterface {
         windowMenu.getItems().addAll(filesEditor, checkTasks);
         return windowMenu;
     }
-//
-//    /**
-//     * Creating menu with tasks
-//     *
-//     * @return the menu which contains list of tasks
-//     */
-//    private Menu createTasksMenu() {
-//        Menu taskMenu = new Menu("Lessons");
-//        List<String> fileNames = mPresenter.getFilesNameList();
-//
-//        //Menu items for opening files
-//        if (fileNames != null)
-//            for (int i = 0; i < fileNames.size(); i++) {
-//                MenuItem item = new MenuItem(fileNames.get(i));
-//                item.setId(String.valueOf(i));
-//                item.setOnAction(event -> {
-//                    mPresenter.getText(fileNames.get(Integer.valueOf(item.getId())));
-//                    textLabel.setText(TASK_CONST + fileNames.get(Integer.valueOf(item.getId())));
-//                    fillUserChoice();
-//                });
-//
-//                taskMenu.getItems().add(item);
-//            }
-//
-//        return taskMenu;
-//    }
+
 
     /**
      * Overriding parent method to make own UI
@@ -300,7 +274,7 @@ public class AnswersCheckerView extends ViewTextInterface {
         mHierarchy.setPrefWidth(150);
         HashMap<String, ArrayList<String>> answersMap = mPresenter.getAnswersMap();
 
-        TreeItem<String> root = new TreeItem<>("Tasks");
+        TreeItem<String> root = new TreeItem<>("Студенты:");
         TreeView<String> mAnswersTree = new TreeView<>(root);
 
         answersMap.forEach((user, list) -> {

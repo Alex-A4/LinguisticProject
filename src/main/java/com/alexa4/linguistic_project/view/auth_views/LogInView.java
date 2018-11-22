@@ -59,7 +59,7 @@ public class LogInView implements ViewAuthInterface {
         mButtonBox.setAlignment(Pos.CENTER);
 
         //Button sign in if user was not registered, will start new View to sign up new user
-        Label mHaveAccount = new Label("Have no account?");
+        Label mHaveAccount = new Label("Нет аккаунта?");
         mHaveAccount.setTextFill(Paint.valueOf("#0000AF"));
         mHaveAccount.setCursor(Cursor.CLOSED_HAND);
         mHaveAccount.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -71,7 +71,7 @@ public class LogInView implements ViewAuthInterface {
 
 
         //Button to log in account
-        Button mSignInButton = new Button("Log in");
+        Button mSignInButton = new Button("Войти");
         mSignInButton.setTextFill(Paint.valueOf("#ffffff"));
         mSignInButton.setStyle("-fx-background-color: #28A745;");
         mSignInButton.setFont(new Font(14));
@@ -82,14 +82,14 @@ public class LogInView implements ViewAuthInterface {
                 String userPassword = mPfPassword.getText();
 
                 if (userName.equals("") || userPassword.equals("")){
-                    callAlert("Incorrect data", null, "Login or password is empty");
+                    callAlert("Неправильные данные", null, "Логин или пароль пустые");
                     return;
                 }
 
                 if (!userName.replaceAll("[\\W|\\s]+", "").equals(userName) ||
                         !userPassword.replaceAll("[\\W|\\s]+", "").equals(userPassword)){
 
-                    callAlert("Wrong symbol", null, "Login must not have wrong symbols!");
+                    callAlert("Неправильный символ", null, "Логин должен содержать только цифры и буквы!");
                     return;
                 }
 
@@ -123,7 +123,7 @@ public class LogInView implements ViewAuthInterface {
         HBox labelBox = new HBox(15);
         labelBox.setAlignment(Pos.CENTER);
 
-        Label mLWelcome = new Label("Log in your account");
+        Label mLWelcome = new Label("Добро пожаловать");
         mLWelcome.setFont(new Font(18));
         labelBox.getChildren().add(mLWelcome);
 
@@ -142,7 +142,7 @@ public class LogInView implements ViewAuthInterface {
         pane.setVgap(15);
         pane.setAlignment(Pos.CENTER);
 
-        Label mLUserName = new Label("User login:");
+        Label mLUserName = new Label("Логин:");
         mLUserName.setFont(new Font(13));
 
         //Text field to enter login
@@ -159,17 +159,17 @@ public class LogInView implements ViewAuthInterface {
         mTaUserSecondName.setMaxWidth(200);
         mTaUserSecondName.setFont(new Font(13));
         mTaUserSecondName.setPrefHeight(10);
-        mTaUserSecondName.setTooltip(new Tooltip("Enter your login"));
+        mTaUserSecondName.setTooltip(new Tooltip("Введите логин"));
 
 
-        Label mLUserPassword = new Label("Password:");
+        Label mLUserPassword = new Label("Пароль:");
         mLUserPassword.setFont(new Font(13));
 
         //Text field to enter password
         mPfPassword = new PasswordField();
         mPfPassword.setText("");
         mPfPassword.setMaxWidth(200);
-        mPfPassword.setTooltip(new Tooltip("Enter your password"));
+        mPfPassword.setTooltip(new Tooltip("Введите пароль"));
 
         pane.add(mLUserName, 0, 0);
         pane.add(mTaUserSecondName, 1, 0);
@@ -199,7 +199,8 @@ public class LogInView implements ViewAuthInterface {
      */
     @Override
     public void logInError() {
-        callAlert("Logging error", "This account does'nt exist", "Check your data and try again");
+        callAlert("Ошибка авторизации", "Такой аккаунт не существует",
+                "Проверьте данные и попробуйте еще");
     }
 
 

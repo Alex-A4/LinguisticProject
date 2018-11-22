@@ -71,7 +71,7 @@ public class SignInView implements ViewAuthInterface {
         HBox mButtonsBox = new HBox(20);
         mButtonsBox.setAlignment(Pos.CENTER);
 
-        Button mSignUpButton = new Button("Sign up");
+        Button mSignUpButton = new Button("Зарегистрироваться");
         mSignUpButton.setFont(new Font(20));
         mSignUpButton.setTextFill(Paint.valueOf("#ffffff"));
         mSignUpButton.setStyle("-fx-background-color: #28A745;");
@@ -80,7 +80,7 @@ public class SignInView implements ViewAuthInterface {
             public void handle(ActionEvent event) {
                 //If passwords is different
                 if (!mPfPassword.getText().equals(mPfConfirmPassword.getText())){
-                    callAlert("Passwords do not much", null, "Passwords must be equals");
+                    callAlert("Пароли не совпадают", null, "Пароли должны совпадать");
                     mPfPassword.requestFocus();
                     return;
                 }
@@ -88,7 +88,7 @@ public class SignInView implements ViewAuthInterface {
                 //If some of fields is empty
                 if (mPfPassword.getText().equals("") || mTaUserSecondName.getText().equals("")
                         || mInitials.getText().equals("")){
-                    callAlert("Empty fields", null, "Initials, login or password is empty");
+                    callAlert("Пустые поля", null, "Инициалы, логин или пароли пустые");
                     return;
                 }
 
@@ -111,7 +111,7 @@ public class SignInView implements ViewAuthInterface {
         HBox mLabelBox = new HBox(10);
         mLabelBox.setAlignment(Pos.CENTER);
 
-        Label mTopLabel = new Label("Sign in");
+        Label mTopLabel = new Label("Регистрация");
         mTopLabel.setFont(new Font(18));
 
         mLabelBox.getChildren().addAll(mTopLabel);
@@ -136,7 +136,7 @@ public class SignInView implements ViewAuthInterface {
         mLabelsColumn.setHgrow(Priority.ALWAYS);
 
 
-        Label mLUserInitials = new Label("Initials:");
+        Label mLUserInitials = new Label("Инициалы:");
         mLUserInitials.setFont(new Font(13));
 
         mInitials = new TextField("");
@@ -152,11 +152,11 @@ public class SignInView implements ViewAuthInterface {
         mInitials.setMaxWidth(200);
         mInitials.setFont(new Font(13));
         mInitials.setPrefHeight(10);
-        mInitials.setTooltip(new Tooltip("Enter your login"));
+        mInitials.setTooltip(new Tooltip("Введите инициалы"));
 
 
 
-        Label mLUserName = new Label("User login:");
+        Label mLUserName = new Label("Логин:");
         mLUserName.setFont(new Font(13));
 
         //Text field to enter login
@@ -173,16 +173,16 @@ public class SignInView implements ViewAuthInterface {
         mTaUserSecondName.setMaxWidth(200);
         mTaUserSecondName.setFont(new Font(13));
         mTaUserSecondName.setPrefHeight(10);
-        mTaUserSecondName.setTooltip(new Tooltip("Enter your login"));
+        mTaUserSecondName.setTooltip(new Tooltip("Введите логин"));
 
 
-        Label mLUserPassword = new Label("Password:");
+        Label mLUserPassword = new Label("Пароль:");
         mLUserPassword.setFont(new Font(13));
 
         //Text field to enter password
         mPfPassword = new PasswordField();
         mPfPassword.setMaxWidth(200);
-        mPfPassword.setTooltip(new Tooltip("Enter your password"));
+        mPfPassword.setTooltip(new Tooltip("Введите пароль"));
         mPfPassword.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -193,13 +193,13 @@ public class SignInView implements ViewAuthInterface {
             }
         });
 
-        Label mLConfirmPassword = new Label("Confirm password:");
+        Label mLConfirmPassword = new Label("Повторить пароль:");
         mLUserPassword.setFont(new Font(13));
 
         //Text field to confirm password
         mPfConfirmPassword = new PasswordField();
         mPfConfirmPassword.setMaxWidth(200);
-        mPfConfirmPassword.setTooltip(new Tooltip("Confirm your password"));
+        mPfConfirmPassword.setTooltip(new Tooltip("Повторить пароль"));
         mPfConfirmPassword.setFont(new Font(13));
 
         //Add labels to first column
@@ -248,6 +248,6 @@ public class SignInView implements ViewAuthInterface {
      */
     @Override
     public void signInError() {
-        callAlert("Sign in error", "Can not sign in new account", "Incredible error");
+        callAlert("Ошибка регистрации", "Невозможно зарегистрировать", "Непредвиденная ошибка");
     }
 }

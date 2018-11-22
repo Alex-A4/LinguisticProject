@@ -107,7 +107,7 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
     @Override
     public void start() {
         mView = new FilesEditorView(this);
-        mStage.setTitle("Tasks editor");
+        mStage.setTitle("Редактор заданий");
         mStage.setScene(new Scene(mView.getLayout()));
     }
 
@@ -117,7 +117,7 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
 
         mView.detachPresenter();
         mView = new FilesEditorView(this);
-        mStage.setTitle("Tasks editor");
+        mStage.setTitle("Редактор заданий");
         mStage.setScene(new Scene(mView.getLayout()));
     }
 
@@ -127,7 +127,7 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
 
         mView.detachPresenter();
         mView = new AnswersCheckerView(this);
-        mStage.setTitle("Answers checker");
+        mStage.setTitle("Проверка заданий");
         mStage.setScene(new Scene(mView.getLayout()));
     }
 
@@ -149,7 +149,7 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
     private void startModality() {
         mView = new FilesEditorView(this);
         Stage tempStage = new Stage();
-        tempStage.setTitle("Tasks editor");
+        tempStage.setTitle("Редактор заданий");
         tempStage.initModality(Modality.NONE);
         tempStage.setScene(new Scene(mView.getLayout()));
         tempStage.show();

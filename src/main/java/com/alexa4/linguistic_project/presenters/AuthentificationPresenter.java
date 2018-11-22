@@ -21,7 +21,7 @@ public class AuthentificationPresenter extends UserPresenter {
 
     public void startLogInView() {
         mView = new LogInView(this);
-        mStage.setTitle("Log in");
+        mStage.setTitle("Авторизация");
         mStage.setScene(new Scene(mView.getLayout()));
     }
 
@@ -31,7 +31,7 @@ public class AuthentificationPresenter extends UserPresenter {
     public void startSignInView() {
         mView.detachPresenter();
         mView = new SignInView(this);
-        mStage.setTitle("Sign in");
+        mStage.setTitle("Регистрация");
         mStage.setScene(new Scene(mView.getLayout()));
     }
 

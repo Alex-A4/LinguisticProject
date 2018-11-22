@@ -3,7 +3,6 @@ package com.alexa4.linguistic_project.view;
 import com.alexa4.linguistic_project.data_stores.MeansOfExpressiveness;
 import com.alexa4.linguistic_project.data_stores.User;
 import com.alexa4.linguistic_project.presenters.AuthentificationPresenter;
-import com.alexa4.linguistic_project.view.auth_views.LogInView;
 import com.alexa4.linguistic_project.view.dialogs.AlertDialog;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
@@ -38,7 +37,7 @@ public abstract class ViewTextInterface implements ViewInterface {
     protected static final int WINDOW_LEFT_PADDING = 30;
     protected static final int WINDOW_RIGHT_PADDING = 30;
 
-    protected static final String TASK_CONST = "Task: ";
+    protected static final String TASK_CONST = "Задание: ";
 
     public ViewTextInterface() {
     }
@@ -254,7 +253,7 @@ public abstract class ViewTextInterface implements ViewInterface {
 
         Label mUserNameLabel = new Label();
 
-        String userMode = getUserMode() == User.STUDENT_MODE ? "Student:  " : "Teacher:  ";
+        String userMode = getUserMode() == User.STUDENT_MODE ? "Студен:  " : "Преподаватель:  ";
         mUserNameLabel.setText(userMode + getUserName());
 
         HBox menuBox = initMenuBar();
@@ -276,9 +275,9 @@ public abstract class ViewTextInterface implements ViewInterface {
      * @return
      */
     private Menu initFileMenuItem() {
-         Menu menu = new Menu("File");
+         Menu menu = new Menu("Файл");
 
-         MenuItem file = new MenuItem("Change user");
+         MenuItem file = new MenuItem("Сменить пользователя");
          //Go to LogInView
          file.setOnAction(e -> {
              new AuthentificationPresenter().start();
@@ -350,7 +349,7 @@ public abstract class ViewTextInterface implements ViewInterface {
         textBox.getChildren().add(textLabel);
         textBox.setAlignment(Pos.CENTER_LEFT);
 
-        Label choiceLabel = new Label("Selected means of expression");
+        Label choiceLabel = new Label("Выбранные средства выразительности:");
         choiceLabel.setFont(new Font(16));
         HBox choiceBox = new HBox();
         choiceBox.getChildren().add(choiceLabel);

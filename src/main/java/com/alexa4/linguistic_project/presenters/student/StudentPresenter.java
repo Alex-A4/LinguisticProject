@@ -82,7 +82,7 @@ public class StudentPresenter extends UserPresenter implements TextInterface {
     @Override
     public void start() {
         mView = new LessonsView(this);
-        mStage.setTitle("Lessons");
+        mStage.setTitle("Решение заданий");
         mStage.setScene(new Scene(mView.getLayout()));
     }
 

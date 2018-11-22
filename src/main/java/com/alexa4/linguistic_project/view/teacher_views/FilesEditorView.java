@@ -58,15 +58,15 @@ public class FilesEditorView extends ViewTextInterface {
         fileActions.setPadding(new Insets(0, WINDOW_RIGHT_PADDING, 30, WINDOW_LEFT_PADDING));
 
         HBox fileNameBox = new HBox(10);
-        Label fileNameLabel = new Label("File name: ");
+        Label fileNameLabel = new Label("Название файла: ");
         fileNameBox.setAlignment(Pos.CENTER_LEFT);
         fileNameTF = new TextField("");
-        fileNameTF.setTooltip(new Tooltip("Enter file name"));
+        fileNameTF.setTooltip(new Tooltip("Введите название файла"));
         fileNameBox.getChildren().addAll(fileNameLabel, fileNameTF);
 
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
-        Button saveBtn = new Button("Save");
+        Button saveBtn = new Button("Сохранить");
         saveBtn.setPrefSize(80, 40);
         saveBtn.setFont(new Font(20));
         saveBtn.setTextFill(Paint.valueOf("#F00000"));
@@ -74,7 +74,7 @@ public class FilesEditorView extends ViewTextInterface {
 
             //If fileName is empty
             if (fileNameTF.getText().equals("")) {
-                callAlert("File name", null, "File name must not be empty");
+                callAlert("Имя файла", null, "Имя файла не должно быть пустым");
                 return;
             }
 
@@ -82,17 +82,12 @@ public class FilesEditorView extends ViewTextInterface {
                 @Override
                 public void sendResultOfSaving(boolean result) {
                     if (!result)
-                        callAlert("Saving error", null,
-                                "File" + fileNameTF.getText() + "could not be saved");
-                    else callSuccess("Saving success", null,
-                            "File " + fileNameTF.getText() + ".txt saved");
+                        callAlert("Ошибка сохранения", null,
+                                "Файл " + fileNameTF.getText() + " не может быть сохранен");
+                    else callSuccess("Успешно!", null,
+                            "Файл " + fileNameTF.getText() + ".txt сохранен");
                 }
             });
-//            if (!mPresenter.saveFileChanges(area.getText(), fileNameTF.getText()))
-//                callAlert("Saving error", null,
-//                        "File" + fileNameTF.getText() + "could not be saved");
-//            else callSuccess("Saving success", null,
-//                    "File " + fileNameTF.getText() + ".txt saved");
         });
         buttonBox.getChildren().add(saveBtn);
 
@@ -141,12 +136,12 @@ public class FilesEditorView extends ViewTextInterface {
     }
 
     private Menu createWindowsMenu() {
-        Menu windowMenu = new Menu("Windows");
+        Menu windowMenu = new Menu("Окна");
 
-        MenuItem filesEditor = new MenuItem("Files editor");
+        MenuItem filesEditor = new MenuItem("Редактор");
         filesEditor.setOnAction(e -> {mPresenter.runFilesEditor();});
 
-        MenuItem checkTasks = new MenuItem("Check tasks");
+        MenuItem checkTasks = new MenuItem("Проверка заданий");
         checkTasks.setOnAction(e -> {mPresenter.runAnswersChecker();});
 
         windowMenu.getItems().addAll(filesEditor, checkTasks);
@@ -158,10 +153,10 @@ public class FilesEditorView extends ViewTextInterface {
      * @return the Menu of tasks
      */
     private Menu createTasksMenu() {
-        Menu taskMenu = new Menu("Tasks");
+        Menu taskMenu = new Menu("Задания");
 
         //Menu item response for creating new file
-        MenuItem newFile = new MenuItem("Add new task");
+        MenuItem newFile = new MenuItem("Добавить новое");
         newFile.setOnAction(event -> {
             freeUserChoices();
             area.clear();
@@ -173,7 +168,7 @@ public class FilesEditorView extends ViewTextInterface {
         //Adding separator which split "Add new file" button and others
         taskMenu.getItems().add(new SeparatorMenuItem());
 
-        MenuItem getTask = new MenuItem("Choose task");
+        MenuItem getTask = new MenuItem("Выбрать");
         getTask.setOnAction(event -> {
             TaskDialog.getTaskName(new TaskDialog.TaskPickerCallback() {
                 @Override

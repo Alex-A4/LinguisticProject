@@ -47,7 +47,7 @@ public class TaskDialog {
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
-        stage.setTitle("Get task");
+        stage.setTitle("Выбор задания");
 
         //Init parent layout
         VBox layout = new VBox(20);
@@ -109,11 +109,11 @@ public class TaskDialog {
         pane.setStyle("-fx-background-color:transparent;");
 
         //Init button to send task name
-        Button openBtn = new Button("Open");
+        Button openBtn = new Button("Открыть");
         openBtn.setFont(new Font(18));
         openBtn.setOnAction(e -> {
             if (nameOfTask.getText().equals("")) {
-                nameOfTask.setText("Choose the file");
+                nameOfTask.setText("Выберите файл");
                 return;
             }
 
@@ -179,7 +179,7 @@ public class TaskDialog {
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
-        stage.setTitle("Save task");
+        stage.setTitle("Сохранить задание");
 
         //Init parent layout
         VBox layout = new VBox(20);
@@ -187,7 +187,7 @@ public class TaskDialog {
 
         //Init area where will set name of current task
         TextField nameOfTask = new TextField(previousFileName);
-        nameOfTask.setTooltip(new Tooltip("Enter the name of file"));
+        nameOfTask.setTooltip(new Tooltip("Введите имя файла"));
         nameOfTask.setFocusTraversable(false);
         nameOfTask.setAlignment(Pos.CENTER);
         nameOfTask.setPrefHeight(30);
@@ -222,7 +222,7 @@ public class TaskDialog {
         pane.setStyle("-fx-background-color:transparent;");
 
         //Init button to send task name
-        Button openBtn = new Button("Save");
+        Button openBtn = new Button("Сохранить");
         openBtn.setFont(new Font(18));
         //Trying to save file
         openBtn.setOnAction(e -> {
@@ -231,13 +231,13 @@ public class TaskDialog {
                 //If fileName equals to some existence tasks names
                 //then ask user does he want to rewrite file
                 if (fileName.equals(tasksNamesList.get(i))) {
-                    if (AlertDialog.callConfirmationAlert("Rewrite file?",
-                            "Are you sure want to rewrite file: ", fileName) == AlertDialog.CONFIRM_CANCEL)
+                    if (AlertDialog.callConfirmationAlert("Перезаписать фалй?",
+                            "Вы действительно хотите перезаписать файл: ", fileName) == AlertDialog.CONFIRM_CANCEL)
                         return;
                 }
             if (TeacherPresenter.getPresenter() != null)
                 callback.sendResultOfSaving(TeacherPresenter.getPresenter().saveFileChanges(textOfTask, fileName));
-            else AlertDialog.callErrorAlert("Saving error", null, "File could not be saved");
+            else AlertDialog.callErrorAlert("Ошибка сохранения", null, "Файл не может быть сохранен");
 
             stage.close();
         });

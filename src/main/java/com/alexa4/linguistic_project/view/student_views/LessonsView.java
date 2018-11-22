@@ -71,7 +71,7 @@ public class LessonsView extends ViewTextInterface {
      * @return
      */
     private Menu createTasksMenu() {
-        Menu taskMenu = new Menu("Lessons");
+        Menu taskMenu = new Menu("Задания");
         List<String> fileNames = mPresenter.getFilesNameList();
         for (int i = 0; i < fileNames.size(); i++) {
             MenuItem item = new MenuItem(fileNames.get(i));
@@ -108,17 +108,17 @@ public class LessonsView extends ViewTextInterface {
 
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
-        Button saveBtn = new Button("Save result");
+        Button saveBtn = new Button("Сохранить");
         saveBtn.setPrefSize(120, 40);
         saveBtn.setFont(new Font(15));
         saveBtn.setTextFill(Paint.valueOf("#F00000"));
         saveBtn.setOnAction(event -> {
 
             if (!mPresenter.saveUserAnswer())
-                callAlert("Saving error", null,
-                        "The answer could not be saved");
-            else callSuccess("Saving success", null,
-                    "The answer saved successfully");
+                callAlert("Ошибка сохранения", null,
+                        "Ответ не может быть сохранен");
+            else callSuccess("Успешно!", null,
+                    "Ответ был успешно сохранен");
 
         });
         buttonBox.getChildren().add(saveBtn);
