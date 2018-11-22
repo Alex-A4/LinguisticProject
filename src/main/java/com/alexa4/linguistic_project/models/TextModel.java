@@ -1,6 +1,7 @@
 package com.alexa4.linguistic_project.models;
 
 import com.alexa4.linguistic_project.adapters.TextAdapter;
+import com.alexa4.linguistic_project.data_stores.TaskResults;
 import javafx.scene.paint.Paint;
 
 import java.io.File;
@@ -132,11 +133,12 @@ public class TextModel {
      * If the mark from the user marking is from 80% to 120% of original marking, then the mark is right
      *
      * @param originalMarking the original marking of the task
+     *        If the user has right answers then right text will be delete from original marking
      * @param userMarking     the marking which user select
      * @return the collections of verified answers looks like: textOfChoice - boolean correctness
      */
-    public HashMap<String, Boolean> verifyAndGetCorrectnessOfAnswers(HashMap<String, ArrayList<String>> originalMarking,
-                                                                     HashMap<String, ArrayList<String>> userMarking) {
+    public TaskResults verifyAndGetTaskResultAnswers(HashMap<String, ArrayList<String>> originalMarking,
+                                                        HashMap<String, ArrayList<String>> userMarking) {
         //Collection which contains pairs: text of means of expression - correctness of user choice
         HashMap<String, Boolean> verifiedAnswers = new HashMap<>();
 
@@ -148,13 +150,14 @@ public class TextModel {
             });
         });
 
-        return verifiedAnswers;
+        return new TaskResults(verifiedAnswers, originalMarking);
     }
 
 
     /**
      * Comparing text of user choice and each text of original marking
      * If the mark from the user marking is from 80% to 120% of original marking, then the mark is right
+     *  and delete this text from originalMeans
      *
      * @param userText      the text of user which need verify
      * @param originalMeans the list of text from originalMarking
@@ -163,18 +166,28 @@ public class TextModel {
     private boolean isUserTextCorrectness(String userText, ArrayList<String> originalMeans) {
         if (originalMeans == null)
             return false;
-        for (String originalText : originalMeans) {
+        for (int i = 0; i < originalMeans.size(); i++) {
             //If original text is fully equals to userText
-            if (originalText.equals(userText))
+            if (originalMeans.get(i).equals(userText)) {
+                originalMeans.remove(i);
                 return true;
+            }
 
             //If userText is in originalText and userText length more then 80% of originalText length
-            if (originalText.contains(userText) && ((double) userText.length()) / originalText.length() * 100 > 80.0)
+            double percent = ((double) userText.length()) / originalMeans.get(i).length() * 100;
+            System.out.println("text = " + userText + " percent = " + percent);
+            if (originalMeans.get(i).contains(userText)
+                    && percent > 80.0) {
+                originalMeans.remove(i);
                 return true;
+            }
 
             //If userText contains originalText and userText length not more then 120% of originalText length
-            if (userText.contains(originalText) && ((double) userText.length()) / originalText.length() * 100 < 120.0)
+            if (userText.contains(originalMeans.get(i))
+                    && percent < 120.0) {
+                originalMeans.remove(i);
                 return true;
+            }
         }
 
         return false;
@@ -295,10 +308,10 @@ public class TextModel {
      */
     public void addUserChoice(String means, String text) {
         if (mUserChoiceList.containsKey(means))
-            mUserChoiceList.get(means).add(text);
+            mUserChoiceList.get(means).add(text.trim());
         else {
             ArrayList<String> temp = new ArrayList<>();
-            temp.add(text);
+            temp.add(text.trim());
             mUserChoiceList.put(means, temp);
         }
     }
