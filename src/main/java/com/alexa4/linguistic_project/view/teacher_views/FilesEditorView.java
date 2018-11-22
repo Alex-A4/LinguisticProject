@@ -167,7 +167,7 @@ public class FilesEditorView extends ViewTextInterface {
         //Adding separator which split "Add new file" button and others
         taskMenu.getItems().add(new SeparatorMenuItem());
 
-        MenuItem getTask = new MenuItem("Выбрать");
+        MenuItem getTask = new MenuItem("Открыть");
         getTask.setOnAction(event -> {
             TaskDialog.getTaskName(new TaskDialog.TaskPickerCallback() {
                 @Override
