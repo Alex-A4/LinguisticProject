@@ -2,6 +2,8 @@ package com.alexa4.linguistic_project.view;
 
 import com.alexa4.linguistic_project.data_stores.MeansOfExpressiveness;
 import com.alexa4.linguistic_project.data_stores.User;
+import com.alexa4.linguistic_project.presenters.AuthentificationPresenter;
+import com.alexa4.linguistic_project.view.auth_views.LogInView;
 import com.alexa4.linguistic_project.view.dialogs.AlertDialog;
 import com.sun.istack.internal.NotNull;
 import javafx.event.ActionEvent;
@@ -256,6 +258,7 @@ public abstract class ViewTextInterface implements ViewInterface {
         mUserNameLabel.setText(userMode + getUserName());
 
         HBox menuBox = initMenuBar();
+         ((MenuBar) menuBox.getChildren().get(0)).getMenus().add(0, initFileMenuItem());
 
         mUserBox.getChildren().addAll(mImageView, mUserNameLabel);
 
@@ -269,7 +272,25 @@ public abstract class ViewTextInterface implements ViewInterface {
     }
 
     /**
+     * Creating item of menu which allow to change user
+     * @return
+     */
+    private Menu initFileMenuItem() {
+         Menu menu = new Menu("File");
+
+         MenuItem file = new MenuItem("Change user");
+         //Go to LogInView
+         file.setOnAction(e -> {
+             new AuthentificationPresenter().start();
+         });
+
+         menu.getItems().add(file);
+        return menu;
+    }
+
+    /**
      * Abstract method to initialize menuBar. SubClass fill HBox
+     * The 0 child of HBox must be MenuBar
      * @return the menuBar which will set on top
      */
     protected abstract HBox initMenuBar();
