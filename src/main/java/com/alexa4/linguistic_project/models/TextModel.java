@@ -141,7 +141,6 @@ public class TextModel {
                                                         HashMap<String, ArrayList<String>> userMarking) {
         //Collection which contains pairs: text of means of expression - correctness of user choice
         HashMap<String, Boolean> verifiedAnswers = new HashMap<>();
-
         //Comparing each text from userMarking with each text from originalMarking
         userMarking.forEach((userMeans, userTextList) -> {
             userTextList.forEach((text) -> {
@@ -167,6 +166,7 @@ public class TextModel {
         if (originalMeans == null)
             return false;
         for (int i = 0; i < originalMeans.size(); i++) {
+            double percent = ((double) userText.length()) / originalMeans.get(i).length() * 100;
             //If original text is fully equals to userText
             if (originalMeans.get(i).equals(userText)) {
                 originalMeans.remove(i);
@@ -174,8 +174,6 @@ public class TextModel {
             }
 
             //If userText is in originalText and userText length more then 80% of originalText length
-            double percent = ((double) userText.length()) / originalMeans.get(i).length() * 100;
-            System.out.println("text = " + userText + " percent = " + percent);
             if (originalMeans.get(i).contains(userText)
                     && percent > 80.0) {
                 originalMeans.remove(i);
@@ -307,11 +305,15 @@ public class TextModel {
      * @param text  the text which user select
      */
     public void addUserChoice(String means, String text) {
-        if (mUserChoiceList.containsKey(means))
-            mUserChoiceList.get(means).add(text.trim());
+        text = text.trim();
+
+        if (mUserChoiceList.containsKey(means)) {
+            if (!mUserChoiceList.get(means).contains(text))
+                mUserChoiceList.get(means).add(text);
+        }
         else {
             ArrayList<String> temp = new ArrayList<>();
-            temp.add(text.trim());
+            temp.add(text);
             mUserChoiceList.put(means, temp);
         }
     }
