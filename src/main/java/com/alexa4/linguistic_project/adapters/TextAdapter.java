@@ -45,22 +45,21 @@ public class TextAdapter {
             while (true) {
 
                 if (markedText.contains("<"+means.getText()+">")) {
+                    String tempText = markedText.substring(markedText.indexOf("<" + means.getText() + ">") +
+                                    means.getText().length() + 2,
+                            markedText.indexOf("</" + means.getText() + ">")).trim();
+
                     //If current means exists into collection, then add sentence to list
-                    if (map.containsKey(means.getText()))
-                        map.get(means.getText()).add(
-                                markedText.substring(markedText.indexOf("<" + means.getText() + ">") +
-                                        means.getText().length() + 2,
-                                        markedText.indexOf("</" + means.getText() + ">"))
-                        );
+                    if (map.containsKey(means.getText())) {
+                        //If map do not has instance of sentence
+                        if (!map.get(means.getText()).contains(tempText))
+                            map.get(means.getText()).add(tempText);
+                    }
                     //If current means was not exist into collection, then create new KEY and add
                     //sentence to the list
                     else {
                         map.put(means.getText(), new ArrayList<>());
-                        map.get(means.getText()).add(
-                                markedText.substring(markedText.indexOf("<" + means.getText() + ">")+
-                                                means.getText().length() + 2,
-                                        markedText.indexOf("</" + means.getText() + ">"))
-                        );
+                        map.get(means.getText()).add(tempText);
                     }
 
                     //Delete markers of means
