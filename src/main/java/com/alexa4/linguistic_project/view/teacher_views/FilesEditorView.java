@@ -1,5 +1,6 @@
 package com.alexa4.linguistic_project.view.teacher_views;
 
+import com.alexa4.linguistic_project.data_stores.TaskConfig;
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
 import com.alexa4.linguistic_project.view.dialogs.TaskDialog;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 public class FilesEditorView extends ViewTextInterface {
     private TeacherPresenter mPresenter;
     private TextField fileNameTF;
+    private CheckBox mSelfTesting;
 
     public FilesEditorView(TeacherPresenter presenter) {
         super();
@@ -57,6 +59,10 @@ public class FilesEditorView extends ViewTextInterface {
         HBox fileActions = new HBox(20);
         fileActions.setPadding(new Insets(0, WINDOW_RIGHT_PADDING, 30, WINDOW_LEFT_PADDING));
 
+        //Initializing checkBox for self-testing
+        mSelfTesting = new CheckBox("Самопроверка");
+
+        //Initializing box with file name
         HBox fileNameBox = new HBox(10);
         Label fileNameLabel = new Label("Название файла: ");
         fileNameBox.setAlignment(Pos.CENTER_LEFT);
@@ -64,6 +70,7 @@ public class FilesEditorView extends ViewTextInterface {
         fileNameTF.setTooltip(new Tooltip("Введите название файла"));
         fileNameBox.getChildren().addAll(fileNameLabel, fileNameTF);
 
+        //Initializing box with save button
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         Button saveBtn = new Button("Сохранить");
@@ -77,7 +84,9 @@ public class FilesEditorView extends ViewTextInterface {
                 return;
             }
 
-            TaskDialog.saveTask(area.getText(), fileNameTF.getText(), new TaskDialog.TaskSaverCallback() {
+            //TODO: add sending config
+            TaskDialog.saveTask(area.getText(), fileNameTF.getText(), initConfig(),
+                    new TaskDialog.TaskSaverCallback() {
                 @Override
                 public void sendResultOfSaving(boolean result) {
                     if (!result)
@@ -90,11 +99,29 @@ public class FilesEditorView extends ViewTextInterface {
         });
         buttonBox.getChildren().add(saveBtn);
 
-        fileActions.setHgrow(fileNameBox, Priority.ALWAYS);
+
+        VBox actions = new VBox(10);
+        actions.setAlignment(Pos.CENTER_LEFT);
+        actions.getChildren().addAll(mSelfTesting, fileNameBox);
+
+        fileActions.setHgrow(actions, Priority.ALWAYS);
         fileActions.setHgrow(buttonBox, Priority.ALWAYS);
-        fileActions.getChildren().addAll(fileNameBox, buttonBox);
+        fileActions.getChildren().addAll(actions, buttonBox);
 
         return fileActions;
+    }
+
+
+    /**
+     * Creating config based on self-testing checkbox
+     */
+    private TaskConfig initConfig() {
+        TaskConfig config = new TaskConfig();
+
+        if (mSelfTesting.isSelected())
+            config.addFlagToConfig(TaskConfig.Flag.SELF_TESTING);
+
+        return  config;
     }
 
     @Override
