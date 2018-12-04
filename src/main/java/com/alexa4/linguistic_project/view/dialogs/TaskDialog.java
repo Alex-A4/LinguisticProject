@@ -23,7 +23,6 @@ import java.util.List;
 
 /**
  * Dialog window to open/save file of task
- * //TODO: add labels to understand what to do
  */
 public class TaskDialog {
     /**

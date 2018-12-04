@@ -84,7 +84,6 @@ public class FilesEditorView extends ViewTextInterface {
                 return;
             }
 
-            //TODO: add sending config
             TaskDialog.saveTask(area.getText(), fileNameTF.getText(), initConfig(),
                     new TaskDialog.TaskSaverCallback() {
                 @Override
