@@ -234,7 +234,7 @@ public class TextModel {
 
         try {
             new File(TASKS_FOLDER).mkdirs();
-            writeTextToFile(TASKS_FOLDER + fileName + ".txt", text, config);
+            writeTextToFile(TASKS_FOLDER + fileName + ".txt", mMarkedText, config);
         } catch (Exception e) {
             return false;
         }
