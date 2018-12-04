@@ -9,10 +9,14 @@ import java.util.ArrayList;
  */
 public class TaskConfig {
     public static class Flag {
+
         public static final String SELF_TESTING = "SELF-TESTING";
     }
-
     private ArrayList<String> mFlags;
+    public ArrayList<String> getFlags() {
+        return mFlags;
+    }
+
 
     public TaskConfig() {
         mFlags = new ArrayList<>();
