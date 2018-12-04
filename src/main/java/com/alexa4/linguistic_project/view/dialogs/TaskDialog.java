@@ -1,5 +1,6 @@
 package com.alexa4.linguistic_project.view.dialogs;
 
+import com.alexa4.linguistic_project.data_stores.TaskConfig;
 import com.alexa4.linguistic_project.models.TextModel;
 import com.alexa4.linguistic_project.presenters.teacher.TeacherPresenter;
 import javafx.event.EventHandler;
@@ -172,7 +173,7 @@ public class TaskDialog {
      * @param textOfTask the text which need to save
      * @param callback the callback where need send result of saving
      */
-    public static void saveTask(String textOfTask, String previousFileName, TaskSaverCallback callback) {
+    public static void saveTask(String textOfTask, String previousFileName, TaskConfig config, TaskSaverCallback callback) {
         //Getting list of tasks names
         List<String> tasksNamesList = new TextModel().getTasksListOfFiles();
 
@@ -247,7 +248,7 @@ public class TaskDialog {
                         return;
                 }
             if (TeacherPresenter.getPresenter() != null)
-                callback.sendResultOfSaving(TeacherPresenter.getPresenter().saveFileChanges(textOfTask, fileName));
+                callback.sendResultOfSaving(TeacherPresenter.getPresenter().saveFileChanges(textOfTask, fileName, config));
             else AlertDialog.callErrorAlert("Ошибка сохранения", null, "Файл не может быть сохранен");
 
             stage.close();
