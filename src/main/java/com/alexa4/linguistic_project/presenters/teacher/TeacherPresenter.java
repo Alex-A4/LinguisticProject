@@ -210,4 +210,11 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
     public void getAnswerText(String userName, String taskName) {
         mView.setText(mTextModel.getAnswerText(userName, taskName));
     }
+
+    /**
+     * Getting config of task
+     */
+    public TaskConfig getConfig() {
+        return mTextModel.getConfig();
+    }
 }
