@@ -201,6 +201,7 @@ public class FilesEditorView extends ViewTextInterface {
                 public void sendTaskName(String taskName) {
                     updateTaskName(taskName);
                     mPresenter.getText(taskName);
+                    setConfigurations();
                     fillUserChoice();
                 }
             });
@@ -211,6 +212,21 @@ public class FilesEditorView extends ViewTextInterface {
         return taskMenu;
     }
 
+
+    /**
+     * Setting configurations of task for UI
+     */
+    private void setConfigurations() {
+        TaskConfig config = mPresenter.getConfig();
+
+        if (config.getFlags().contains(TaskConfig.Flag.SELF_TESTING))
+            mSelfTesting.setSelected(true);
+    }
+
+
+    /**
+     * Updating label of task name
+     */
     public void updateTaskName(String taskName) {
         fileNameTF.setText(taskName);
         textLabel.setText(TASK_CONST + taskName);
