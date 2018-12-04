@@ -6,7 +6,9 @@ import com.alexa4.linguistic_project.data_stores.TaskResults;
 import javafx.scene.paint.Paint;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 
 public class TextModel {
@@ -223,7 +225,7 @@ public class TextModel {
      * @param fileName the name of file
      * @return writing status
      */
-    public boolean saveFileChanges(String text, String fileName) {
+    public boolean saveFileChanges(String text, String fileName, TaskConfig config) {
         mNonMarkedText = text;
         mMarkedText = text;
 
@@ -231,25 +233,44 @@ public class TextModel {
                 .forEach(choice -> tryToAddMeansToText(means, choice)));
 
         try {
-            writeTextToFile(TASKS_FOLDER, fileName, mMarkedText);
+            new File(TASKS_FOLDER).mkdirs();
+            writeTextToFile(TASKS_FOLDER + fileName + ".txt", text, config);
         } catch (Exception e) {
             return false;
         }
+
         return true;
+    }
+
+    private void writeConfigToFile(FileOutputStream stream, TaskConfig config) throws IOException {
+        for (String conf: config.getFlags()) {
+            stream.write(conf.getBytes());
+        }
     }
 
     /**
      * Writing bytes to file
      *
-     * @param filePath the full path of file which need to save
      * @param text     the text which need to write into file
      */
-    private void writeTextToFile(String filePath, String fileName, String text) throws Exception {
-        new File(filePath).mkdirs();
-        FileOutputStream stream = new FileOutputStream(new File(filePath + fileName + ".txt"));
+    private void writeTextToFile(String fileName, String text, TaskConfig config) throws Exception {
+        FileOutputStream stream = null;
 
-        stream.write(text.getBytes());
-        stream.close();
+        try {
+            stream = new FileOutputStream(new File(fileName));
+
+            //Writing config to file
+            if (config != null)
+                writeConfigToFile(stream, config);
+
+            //Writing text to file
+            stream.write(text.getBytes());
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (stream != null)
+                stream.close();
+        }
     }
 
     /**
@@ -287,7 +308,8 @@ public class TextModel {
                 .forEach(choice -> tryToAddMeansToText(means, choice)));
 
         try {
-            writeTextToFile(ANSWERS_FOLDER, fileName, mMarkedText);
+            new File(ANSWERS_FOLDER).mkdirs();
+            writeTextToFile(ANSWERS_FOLDER + fileName + ".txt", mMarkedText, null);
         } catch (Exception e) {
             return false;
         }
