@@ -1,5 +1,6 @@
 package com.alexa4.linguistic_project.presenters.teacher;
 
+import com.alexa4.linguistic_project.data_stores.TaskConfig;
 import com.alexa4.linguistic_project.data_stores.TaskResults;
 import com.alexa4.linguistic_project.models.TextModel;
 import com.alexa4.linguistic_project.presenters.TextInterface;
@@ -187,8 +188,8 @@ public class TeacherPresenter extends UserPresenter implements TextInterface {
      * @param text the text of file
      * @param fileName the name of file
      */
-    public boolean saveFileChanges(String text, String fileName) {
-        return mTextModel.saveFileChanges(text, fileName);
+    public boolean saveFileChanges(String text, String fileName, TaskConfig config) {
+        return mTextModel.saveFileChanges(text, fileName, config);
     }
 
 
