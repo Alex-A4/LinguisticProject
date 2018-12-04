@@ -1,6 +1,7 @@
 package com.alexa4.linguistic_project.models;
 
 import com.alexa4.linguistic_project.adapters.TextAdapter;
+import com.alexa4.linguistic_project.data_stores.TaskConfig;
 import com.alexa4.linguistic_project.data_stores.TaskResults;
 import javafx.scene.paint.Paint;
 
@@ -21,11 +22,14 @@ public class TextModel {
 
     //List of files with tasks
     private ArrayList<String> mTasksFilesNameList = null;
-
     public List<String> getTasksListOfFiles() {
         return mTasksFilesNameList;
     }
 
+    private TaskConfig mConfig;
+    public TaskConfig getConfig() {
+        return mConfig;
+    }
 
     //Text with the markers of means
     private String mMarkedText = null;
@@ -116,8 +120,11 @@ public class TextModel {
             text = builder.toString();
 
             mMarkedText = text;
+
+            mConfig = initConfig();
+
             TextAdapter.buildMeansMap(mMarkedText, mFoundedMeans);
-            mNonMarkedText = TextAdapter.convertMarkedText(text);
+            mNonMarkedText = TextAdapter.convertMarkedText(mMarkedText);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,6 +132,23 @@ public class TextModel {
 
 
         return mNonMarkedText;
+    }
+
+
+    /**
+     * Initializing configuration of the task's text
+     * @return the config of task
+     */
+    private TaskConfig initConfig() {
+        TaskConfig config = new TaskConfig();
+
+        //If the text contains flag for self-testing then add it to config
+        if (mMarkedText.contains(TaskConfig.Flag.SELF_TESTING)) {
+            config.addFlagToConfig(TaskConfig.Flag.SELF_TESTING);
+            mMarkedText = mMarkedText.replace(TaskConfig.Flag.SELF_TESTING, "");
+        }
+
+        return config;
     }
 
 
