@@ -19,8 +19,10 @@ public class TaskResults {
 
     //Count of right answers which user select
     private int mCountOfCorrectAnswers;
-    //Count of wrong answers which user select
-    private int mCountOfWrongAnswers;
+    //Count of not founded answers
+    private int mCountOfNotFounded;
+    //Count of extra answers which user select
+    private int mCountOfExtraAnswers;
 
 
     /**
@@ -30,8 +32,9 @@ public class TaskResults {
      */
     public TaskResults(HashMap<String, Boolean> correctAnswers, HashMap<String,
             ArrayList<String>> notCorrectAnswers) {
-        mCountOfWrongAnswers = 0;
+        mCountOfNotFounded = 0;
         mCountOfCorrectAnswers = 0;
+        mCountOfExtraAnswers = 0;
 
         mUserAnswers = correctAnswers;
         mNotFoundedMeans = notCorrectAnswers;
@@ -41,12 +44,12 @@ public class TaskResults {
             if (isCorrect) {
                 mCountOfCorrectAnswers++;
             }
-            else mCountOfWrongAnswers++;
+            else mCountOfExtraAnswers++;
         });
 
         //Check means which user do not found
         mNotFoundedMeans.forEach((means, list) -> {
-            mCountOfWrongAnswers += list.size();
+            mCountOfNotFounded += list.size();
         });
     }
 
@@ -62,7 +65,11 @@ public class TaskResults {
         return mCountOfCorrectAnswers;
     }
 
-    public int getCountOfWrongAnswers() {
-        return mCountOfWrongAnswers;
+    public int getCountOfNotFounded() {
+        return mCountOfNotFounded;
+    }
+
+    public int getCountOfExtraAnswers() {
+        return mCountOfExtraAnswers;
     }
 }
