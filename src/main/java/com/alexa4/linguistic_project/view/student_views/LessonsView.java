@@ -234,10 +234,10 @@ public class LessonsView extends ViewTextInterface {
      * Checking user answers if SELF-TESTING mode is activate
      */
     private void checkAnswers() {
+        HashMap<String, ArrayList<String>> userMarking = mPresenter.getUserMarking();
+
         freeUserChoices();
 
-        //TODO: Fix this
-        HashMap<String, ArrayList<String>> userMarking = mPresenter.getUserMarking();
         HashMap<String, ArrayList<String>> originalMarking = mPresenter.getOriginalMeans(mTaskName);
 
         TaskResults results = mPresenter.verifyAndGetCorrectnessOfAnswers(originalMarking, userMarking);
