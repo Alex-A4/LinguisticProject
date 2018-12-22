@@ -149,7 +149,7 @@ public class LessonsView extends ViewTextInterface {
 
         fileActions.setHgrow(statBox, Priority.ALWAYS);
         fileActions.setHgrow(buttonBox, Priority.ALWAYS);
-        fileActions.getChildren().addAll(buttonBox, statBox);
+        fileActions.getChildren().addAll(statBox, buttonBox);
 
         return fileActions;
     }
