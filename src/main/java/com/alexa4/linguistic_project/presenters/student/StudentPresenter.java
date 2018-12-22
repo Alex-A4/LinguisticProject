@@ -1,6 +1,7 @@
 package com.alexa4.linguistic_project.presenters.student;
 
 import com.alexa4.linguistic_project.data_stores.TaskConfig;
+import com.alexa4.linguistic_project.data_stores.TaskResults;
 import com.alexa4.linguistic_project.models.TextModel;
 import com.alexa4.linguistic_project.presenters.TextInterface;
 import com.alexa4.linguistic_project.presenters.UserPresenter;
@@ -9,6 +10,8 @@ import com.alexa4.linguistic_project.view.student_views.LessonsView;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class StudentPresenter extends UserPresenter implements TextInterface {
@@ -98,5 +101,28 @@ public class StudentPresenter extends UserPresenter implements TextInterface {
 
     public TaskConfig getConfig() {
         return mTextModel.getConfig();
+    }
+
+    /**
+     * Reading original task getting founded means
+     * @param taskName the name of task
+     * @return the original marking of text
+     */
+    public HashMap<String, ArrayList<String>> getOriginalMeans(String taskName) {
+        //Updating mFoundedMeans to original task
+        mTextModel.getText(taskName);
+
+        return mTextModel.getFoundedMeans();
+    }
+
+    public HashMap<String, ArrayList<String>> getUserMarking(){
+        return mTextModel.getUserChoiceList();
+    }
+
+    public TaskResults verifyAndGetCorrectnessOfAnswers(
+            HashMap<String, ArrayList<String>> originalMarking,
+            HashMap<String, ArrayList<String>> userMarking) {
+
+        return mTextModel.verifyAndGetTaskResultAnswers(originalMarking, userMarking);
     }
 }
