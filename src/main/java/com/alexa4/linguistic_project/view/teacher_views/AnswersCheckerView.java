@@ -26,6 +26,8 @@ import java.util.HashMap;
 public class AnswersCheckerView extends ViewTextInterface {
     private TeacherPresenter mPresenter;
     private String mTaskName = null;
+    //Label with text statistic
+    private Label mStatistic;
 
     public AnswersCheckerView(TeacherPresenter presenter) {
         super();
@@ -62,6 +64,7 @@ public class AnswersCheckerView extends ViewTextInterface {
     protected HBox initUserActions() {
         HBox actions = new HBox(10);
         actions.setAlignment(Pos.CENTER);
+        actions.setPadding(new Insets(0,30,30,30));
 
         Label openFullTask = new Label("Открыть оригинальную разметку");
         openFullTask.setTextFill(Paint.valueOf("#0000AF"));
@@ -77,8 +80,20 @@ public class AnswersCheckerView extends ViewTextInterface {
                 mPresenter.runModalityEditorWithTaskName(mTaskName);
             }
         });
+        HBox openBox = new HBox();
+        openBox.getChildren().add(openFullTask);
+        openBox.setAlignment(Pos.CENTER_RIGHT);
 
-        actions.getChildren().add(openFullTask);
+        mStatistic = new Label();
+
+        HBox statBox = new HBox();
+        statBox.getChildren().add(mStatistic);
+        statBox.setAlignment(Pos.BOTTOM_RIGHT);
+        statBox.setMinHeight(70);
+
+        actions.setHgrow(statBox, Priority.ALWAYS);
+        actions.setHgrow(openBox, Priority.ALWAYS);
+        actions.getChildren().addAll(openBox, statBox);
 
         return actions;
     }
@@ -262,6 +277,12 @@ public class AnswersCheckerView extends ViewTextInterface {
                 addUserChoiceToBox(means, text, false);
             })
         );
+        int sum = results.getCountOfCorrectAnswers() + results.getCountOfNotFounded();
+        String statistic = "Статистика:\n"
+                + "Правильно: " + results.getCountOfCorrectAnswers() + " - " + (results.getCountOfCorrectAnswers() / sum)+ "%\n"
+                + "Не найдено: " + results.getCountOfNotFounded() + " - " + (results.getCountOfNotFounded() / sum)+ "%\n"
+                + "Лишние: " + results.getCountOfExtraAnswers();
+        mStatistic.setText(statistic);
     }
 
     /**
