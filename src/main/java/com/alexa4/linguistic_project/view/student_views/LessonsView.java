@@ -1,5 +1,6 @@
 package com.alexa4.linguistic_project.view.student_views;
 
+import com.alexa4.linguistic_project.data_stores.TaskConfig;
 import com.alexa4.linguistic_project.presenters.student.StudentPresenter;
 import com.alexa4.linguistic_project.view.ViewTextInterface;
 import javafx.geometry.Insets;
@@ -18,6 +19,8 @@ import java.util.List;
  */
 public class LessonsView extends ViewTextInterface {
     private StudentPresenter mPresenter = null;
+    private TaskConfig mConfig = null;
+    private Button saveBtn;
 
 
     /**
@@ -80,6 +83,10 @@ public class LessonsView extends ViewTextInterface {
                 String fileName = fileNames.get(Integer.valueOf(item.getId()));
                 textLabel.setText(TASK_CONST + fileName);
                 getText(fileName);
+                mConfig = mPresenter.getConfig();
+                if (mConfig.getFlags().contains(TaskConfig.Flag.SELF_TESTING))
+                    saveBtn.setText("Проверить");
+                else saveBtn.setText("Сохранить");
                 freeUserChoices();
             });
 
@@ -108,18 +115,21 @@ public class LessonsView extends ViewTextInterface {
 
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
-        Button saveBtn = new Button("Сохранить");
+        saveBtn = new Button("Сохранить");
         saveBtn.setPrefSize(120, 40);
         saveBtn.setFont(new Font(15));
         saveBtn.setTextFill(Paint.valueOf("#F00000"));
         saveBtn.setOnAction(event -> {
-
-            if (!mPresenter.saveUserAnswer())
-                callAlert("Ошибка сохранения", null,
-                        "Ответ не может быть сохранен");
-            else callSuccess("Успешно!", null,
-                    "Ответ был успешно сохранен");
-
+            //If this is self-testing mode
+            if (mConfig.getFlags().contains(TaskConfig.Flag.SELF_TESTING)) {
+                //TODO: add logic to show statistic
+            } else { //If this is test-mode
+                if (!mPresenter.saveUserAnswer())
+                    callAlert("Ошибка сохранения", null,
+                            "Ответ не может быть сохранен");
+                else callSuccess("Успешно!", null,
+                        "Ответ был успешно сохранен");
+            }
         });
         buttonBox.getChildren().add(saveBtn);
 
