@@ -246,6 +246,14 @@ public class LessonsView extends ViewTextInterface {
         userMarking.forEach((means, collection) -> collection
                 .forEach(text -> addUserChoiceToBox(means, text, results.getCorrectAnswers().get(text))));
 
+        HBox separator = new HBox();
+        Label label = new Label("\n\nНе найденные:");
+        label.setTextFill(Paint.valueOf("#ff0000"));
+        label.setFont(new Font(17));
+        separator.getChildren().add(label);
+
+        choiceField.getChildren().add(separator);
+
         //Add wrong user answers
         results.getNotFoundedMeans().forEach((means, collection) ->
                 collection.forEach(text -> {
