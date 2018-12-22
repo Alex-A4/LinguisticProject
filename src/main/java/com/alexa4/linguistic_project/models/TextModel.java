@@ -20,7 +20,9 @@ public class TextModel {
     //Map contains text, which user select
     //Key is a means of choice, value is a list with texts which user select
     private HashMap<String, ArrayList<String>> mUserChoiceList;
-
+    public HashMap<String, ArrayList<String>> getUserChoiceList() {
+        return mUserChoiceList;
+    }
 
     //List of files with tasks
     private ArrayList<String> mTasksFilesNameList = null;
