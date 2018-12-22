@@ -1,5 +1,6 @@
 package com.alexa4.linguistic_project.presenters.student;
 
+import com.alexa4.linguistic_project.data_stores.TaskConfig;
 import com.alexa4.linguistic_project.models.TextModel;
 import com.alexa4.linguistic_project.presenters.TextInterface;
 import com.alexa4.linguistic_project.presenters.UserPresenter;
@@ -95,4 +96,7 @@ public class StudentPresenter extends UserPresenter implements TextInterface {
         return mTextModel.saveUserAnswer();
     }
 
+    public TaskConfig getConfig() {
+        return mTextModel.getConfig();
+    }
 }
