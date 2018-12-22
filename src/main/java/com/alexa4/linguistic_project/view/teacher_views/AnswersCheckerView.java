@@ -277,10 +277,10 @@ public class AnswersCheckerView extends ViewTextInterface {
                 addUserChoiceToBox(means, text, false);
             })
         );
-        int sum = results.getCountOfCorrectAnswers() + results.getCountOfNotFounded();
+        double sum = results.getCountOfCorrectAnswers() + results.getCountOfNotFounded();
         String statistic = "Статистика:\n"
-                + "Правильно: " + results.getCountOfCorrectAnswers() + " - " + (results.getCountOfCorrectAnswers() / sum)+ "%\n"
-                + "Не найдено: " + results.getCountOfNotFounded() + " - " + (results.getCountOfNotFounded() / sum)+ "%\n"
+                + "Правильно: " + results.getCountOfCorrectAnswers() + " - " + (results.getCountOfCorrectAnswers() / sum * 100)+ "%\n"
+                + "Не найдено: " + results.getCountOfNotFounded() + " - " + (results.getCountOfNotFounded() / sum * 100)+ "%\n"
                 + "Лишние: " + results.getCountOfExtraAnswers();
         mStatistic.setText(statistic);
     }
