@@ -12,8 +12,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class TextModel {
-    private static final String TASKS_FOLDER = "data/tasks/";
-    private static final String ANSWERS_FOLDER = "data/answers/";
+    private static final String pathToCatalog = new File("").getAbsolutePath();
+    private static final String TASKS_FOLDER = pathToCatalog + "/data/tasks/";
+    private static final String ANSWERS_FOLDER = pathToCatalog + "/data/answers/";
 
     private String mCurrentTaskName = null;
 
@@ -53,6 +54,7 @@ public class TextModel {
     public TextModel() {
         clearUserChoice();
         readAllTasksFiles();
+        System.out.println("pathToCatalog = " + pathToCatalog);
     }
 
     /**
@@ -311,6 +313,7 @@ public class TextModel {
 
         try {
             new File(ANSWERS_FOLDER).mkdirs();
+
             writeTextToFile(ANSWERS_FOLDER + fileName + ".txt", mMarkedText, null);
         } catch (Exception e) {
             return false;
