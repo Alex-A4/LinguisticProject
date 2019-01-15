@@ -36,7 +36,7 @@ public class AuthentificationModel {
             return;
         }
 
-        if (userName.length() % 2 == 0) {
+        if (userName.length() != 0) {
             mUser.initUser(userName, User.STUDENT_MODE);
             callback.sendLogInResponse(true);
             return;
